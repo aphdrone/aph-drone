@@ -123,7 +123,7 @@ const CATALOGUE = [
 //  La page espace-stagiaires.html passe les infos via
 //  sessionStorage pour éviter de les mettre dans l'URL
 // ════════════════════════════════════════════════════════════
-const data = JSON.parse(sessionStorage.getItem('aph_stagiaire') || 'null');
+const data = JSON.parse(localStorage.getItem('aph_stagiaire') || 'null');
 
 if (!data) {
   // Pas connecté → retour à l'espace stagiaires
