@@ -79,6 +79,12 @@
   display:flex;align-items:center;justify-content:center;color:var(--main)}
 .doc-card h3{font-family:var(--font);font-size:13px;font-weight:800;color:var(--black);margin-bottom:4px}
 .doc-card p{font-size:12px;color:var(--text-l);line-height:1.5}
+.section-titre{
+  font-family:var(--font);font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;color:var(--main);
+  padding:8px 0 6px;border-bottom:2px solid var(--main);
+  margin-top:8px;
+}
 .btn-logout{
   background:none;border:1px solid var(--grey-m);padding:8px 18px;
   font-family:var(--font);font-size:11px;font-weight:700;
@@ -275,13 +281,7 @@ const STAGIAIRES = {
 //  DOCUMENTS DISPONIBLES PAR DÉFAUT DANS CHAQUE ESPACE
 // ═══════════════════════════════════════════════════════════
 
-const DOCS_DEFAUT = [
-  { titre:"Support de cours",      desc:"Votre cours complet en PDF",         icone:"📄" },
-  { titre:"Fiches mémo",           desc:"Fiches de révision par chapitre",     icone:"📋" },
-  { titre:"QCM d'entraînement",    desc:"Exercices pour préparer l'examen",    icone:"✅" },
-  { titre:"Réglementation DGAC",   desc:"Textes officiels et guides pratiques",icone:"⚖️" },
-  { titre:"Attestation",           desc:"Votre attestation de formation",       icone:"🏆" },
-];
+// (DOCS_DEFAUT supprimé — cartes gérées directement ci-dessous)
 
 // ═══════════════════════════════════════════════════════════
 //  LOGIQUE DE CONNEXION
@@ -306,32 +306,54 @@ function connexion() {
   const grid = document.getElementById('docGrid');
   grid.innerHTML = '';
 
-  // Sauvegarder en session pour la page formations-stagiaire
+  // Sauvegarder en session
   sessionStorage.setItem('aph_stagiaire', JSON.stringify(stagiaire));
 
-  // Carte Support de cours → page formations-stagiaire.html
+  // ── SECTION FORMALITÉS ──────────────────────────────────
+  grid.innerHTML += `<div class="section-titre" style="grid-column:1/-1">📁 Formalités</div>`;
+
+  grid.innerHTML += `
+    <a href="../pages/stagiaires/reglement-interieur.html" class="doc-card" style="text-decoration:none">
+      <div class="doc-icon" style="font-size:22px">📜</div>
+      <div><h3>Règlement intérieur</h3><p>Règles de fonctionnement et de conduite durant la formation</p></div>
+    </a>
+    <a href="../pages/stagiaires/formulaire-satisfaction.html" class="doc-card" style="text-decoration:none">
+      <div class="doc-icon" style="font-size:22px">⭐</div>
+      <div><h3>Formulaire de satisfaction</h3><p>Donnez votre avis sur la formation suivie</p></div>
+    </a>
+    <a href="../pages/stagiaires/formulaire-reclamation.html" class="doc-card" style="text-decoration:none">
+      <div class="doc-icon" style="font-size:22px">📝</div>
+      <div><h3>Formulaire de réclamation</h3><p>Signalez un problème ou déposez une réclamation</p></div>
+    </a>
+    <a href="../pages/stagiaires/formulaire-cresus.html" class="doc-card" style="text-decoration:none">
+      <div class="doc-icon" style="font-size:22px">📋</div>
+      <div><h3>Formulaire CRESUS</h3><p>Questionnaire de recueil des éléments stagiaire</p></div>
+    </a>
+    <a href="../pages/stagiaires/attestation-presence.html" class="doc-card" style="text-decoration:none">
+      <div class="doc-icon" style="font-size:22px">🏅</div>
+      <div><h3>Attestation de présence</h3><p>Téléchargez votre attestation de présence en formation</p></div>
+    </a>`;
+
+  // ── SECTION SUPPORTS DE COURS ───────────────────────────
+  grid.innerHTML += `<div class="section-titre" style="grid-column:1/-1">📚 Supports de cours</div>`;
+
   grid.innerHTML += `
     <a href="../pages/formations-stagiaire.html" class="doc-card" style="border-color:var(--main);grid-column:1/-1;text-decoration:none">
-      <div class="doc-icon" style="background:var(--main);color:#fff">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
-      </div>
+      <div class="doc-icon" style="background:var(--main);color:#fff;font-size:22px">🎓</div>
       <div>
-        <h3>Mes supports de cours</h3>
-        <p>Accédez à vos formations débloquées — ${stagiaire.formations_debloquees.length} formation(s) disponible(s)</p>
+        <h3>Mes formations</h3>
+        <p>Accédez à vos supports de cours — ${stagiaire.formations_debloquees.length} formation(s) débloquée(s)</p>
       </div>
     </a>`;
 
-  // Cartes documents
-  DOCS_DEFAUT.forEach(doc => {
-    grid.innerHTML += `
-      <a href="../pages/formations-stagiaire.html" class="doc-card" style="text-decoration:none">
-        <div class="doc-icon" style="font-size:20px">${doc.icone}</div>
-        <div>
-          <h3>${doc.titre}</h3>
-          <p>${doc.desc}</p>
-        </div>
-      </a>`;
-  });
+  // ── SECTION E-LEARNING ──────────────────────────────────
+  grid.innerHTML += `<div class="section-titre" style="grid-column:1/-1">💻 E-Learning</div>`;
+
+  grid.innerHTML += `
+    <a href="../pages/stagiaires/elearning.html" class="doc-card" style="text-decoration:none">
+      <div class="doc-icon" style="font-size:22px">🖥️</div>
+      <div><h3>Espace E-Learning</h3><p>Accédez à vos modules de formation en ligne</p></div>
+    </a>`;
 }
 
 function deconnexion() {
