@@ -3,139 +3,93 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Préparation MÉTÉO — APH Drone</title>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<title>Check-list Météo Pré-vol — APH Drone</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../../assets/css/shared.css"/>
 <style>
+body{background:var(--grey)}
+.cl-wrap{max-width:900px;margin:0 auto;padding:40px 24px 80px}
 
-/* ── PAGE ───────────────────────────────────── */
-.meteo-page { background: #eef1f5; padding-bottom: 80px; }
+/* ÉCRAN VERROU */
+.lock-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));background:var(--grey)}
+.lock-box{background:#fff;border:1px solid var(--grey-m);border-top:4px solid var(--main);border-radius:12px;padding:48px 40px;width:100%;max-width:400px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.lock-icon{font-size:48px;margin-bottom:20px}
+.lock-box h2{font-family:var(--font);font-size:1.3rem;font-weight:800;color:var(--black);margin-bottom:8px}
+.lock-box p{font-size:13px;color:var(--text-l);line-height:1.7;margin-bottom:28px}
+.lock-input{width:100%;border:1px solid var(--grey-m);border-radius:6px;padding:14px 16px;font-size:15px;font-family:var(--body);text-align:center;letter-spacing:.16em;text-transform:uppercase;outline:none;transition:.2s;margin-bottom:12px}
+.lock-input:focus{border-color:var(--main)}
+.lock-btn{width:100%;background:var(--main);color:#fff;border:none;border-radius:8px;padding:14px;font-family:var(--font);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;transition:.2s}
+.lock-btn:hover{background:var(--main-d)}
+.lock-err{font-size:12px;color:#c62828;margin-top:10px;display:none}
+.lock-contact{margin-top:20px;font-size:12px;color:var(--text-l)}
+.lock-contact a{color:var(--main);font-weight:700}
 
-/* HERO */
-.meteo-hero { background: var(--grey); border-bottom: 1px solid var(--grey-m); padding: 52px 0 44px; }
-.hero-wrap { display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
-.hero-left h1 { font-family: var(--font); font-size: clamp(2rem,3.5vw,3rem); font-weight: 800; color: var(--black); margin: 8px 0 12px; }
-.hero-left .sub { font-size: 14px; color: var(--text-l); line-height: 1.8; max-width: 500px; }
-
-/* CLOCK */
-.clock-box {
-  background: #fff;
-  border: 1px solid var(--grey-m);
-  border-top: 4px solid var(--main);
-  border-radius: 12px;
-  padding: 24px 28px;
-  min-width: 260px;
-  box-shadow: 0 4px 20px rgba(0,0,0,.06);
-  flex-shrink: 0;
-}
-.live-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--main); margin-bottom: 16px; }
-.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #4caf50; animation: blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-.utc-time { font-family: "Share Tech Mono",monospace; font-size: 40px; color: var(--black); line-height: 1; }
-.utc-label { font-family: var(--font); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--text-l); margin: 3px 0 14px; }
-.time-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-top: 1px solid var(--grey-m); }
-.time-row-label { font-family: var(--font); font-size: 10px; font-weight: 600; color: var(--text-l); }
-.time-row-val { font-family: "Share Tech Mono",monospace; font-size: 12px; color: var(--black); }
-
-/* STATUS */
-.status-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
-.s-pill { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--grey-m); border-radius: 6px; padding: 7px 14px; font-family: var(--font); font-size: 11px; font-weight: 600; color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.04); }
-.s-dot { width: 7px; height: 7px; border-radius: 50%; }
-.ok { background: #43a047; }
-.warn { background: #fb8c00; }
-.err { background: #e53935; }
-.load { background: #b0bec5; animation: blink 2s infinite; }
-
-/* SECTION LABEL */
-.sec-title { font-family: var(--font); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--main); display: flex; align-items: center; gap: 12px; margin: 36px 0 16px; }
-.sec-title::after { content:""; flex:1; height:1px; background:var(--grey-m); }
-
-/* CARD */
-.mcard {
-  background: #fff;
-  border: 1px solid var(--grey-m);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 16px rgba(0,0,0,.05);
-  transition: box-shadow .25s, transform .25s;
-}
-.mcard:hover { box-shadow: 0 8px 32px rgba(0,0,0,.1); transform: translateY(-2px); }
-.mcard-head { padding: 16px 22px; border-bottom: 1px solid var(--grey-m); display: flex; align-items: center; justify-content: space-between; background: #fafcff; }
-.mcard-head h2 { font-family: var(--font); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--main); margin: 0; }
-.mcard-body { padding: 22px; }
-.mcard-body.no-pad { padding: 0; }
-
-/* REFRESH */
-.btn-ref { display: inline-flex; align-items: center; gap: 5px; background: none; border: 1px solid var(--grey-m); border-radius: 6px; padding: 5px 12px; font-family: var(--font); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-l); cursor: pointer; transition: .2s; text-decoration: none; }
-.btn-ref:hover { border-color: var(--main); color: var(--main); }
-.btn-ref svg { width: 11px; height: 11px; }
-
-/* GRILLES */
-.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-.span2 { grid-column: span 2; }
-
-/* METAR */
-.metar-raw { font-family: "Share Tech Mono",monospace; font-size: 11px; line-height: 1.8; background: var(--grey); border: 1px solid var(--grey-m); border-radius: 6px; padding: 12px 14px; word-break: break-all; color: var(--black); margin-bottom: 16px; }
-.m-vals { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
-.m-val { background: var(--grey); border-radius: 8px; padding: 14px 10px; text-align: center; border: 1px solid transparent; transition: .2s; }
-.m-val:hover { border-color: var(--main); background: #fff; }
-.m-val .v { font-family: var(--font); font-size: 18px; font-weight: 800; color: var(--main); }
-.m-val .v.w { color: #e65100; }
-.m-val .v.d { color: #c62828; }
-.m-val .v.g { color: #2e7d32; }
-.m-val .l { font-family: var(--font); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-l); margin-top: 4px; }
-
-/* IFRAME CARTES */
-.map-f { width: 100%; height: 400px; border: none; display: block; border-radius: 0 0 12px 12px; }
-
-/* KP */
-.kp-wrap { display: flex; align-items: center; gap: 20px; margin-bottom: 18px; }
-.kp-circle { width: 90px; height: 90px; border-radius: 50%; border: 4px solid var(--main); background: var(--grey); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; transition: all .6s; }
-.kp-n { font-family: var(--font); font-size: 34px; font-weight: 800; color: var(--main); line-height: 1; }
-.kp-u { font-family: var(--font); font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-l); }
-.kp-r h3 { font-family: var(--font); font-size: 14px; font-weight: 800; color: var(--black); margin-bottom: 5px; }
-.kp-r p { font-size: 12px; color: var(--text-l); line-height: 1.6; }
-.kp-bar { height: 8px; border-radius: 4px; background: linear-gradient(to right,#43a047,#8bc34a,#fdd835,#fb8c00,#e53935,#8e24aa); position: relative; margin: 14px 0 4px; }
-.kp-needle { position: absolute; top: -6px; width: 3px; height: 20px; background: var(--black); border-radius: 2px; transform: translateX(-50%); transition: left 1s cubic-bezier(.34,1.56,.64,1); box-shadow: 0 2px 4px rgba(0,0,0,.2); }
-.kp-scale { display: flex; justify-content: space-between; font-family: "Share Tech Mono",monospace; font-size: 9px; color: var(--text-l); }
-.kp-tbl { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 14px; }
-.kp-tbl th { padding: 7px 10px; text-align: left; font-family: var(--font); font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-l); background: var(--grey); }
-.kp-tbl td { padding: 7px 10px; border-bottom: 1px solid var(--grey-m); }
-.kp-tbl tr:last-child td { border: none; }
-.kp-active td { font-weight: 700; }
-
-/* CHECKLIST TEASER */
-.cl-teaser { text-align: center; padding: 40px 32px; }
-.cl-teaser .icon { font-size: 52px; margin-bottom: 16px; }
-.cl-teaser h3 { font-family: var(--font); font-size: 18px; font-weight: 800; color: var(--black); margin-bottom: 10px; }
-.cl-teaser p { font-size: 13px; color: var(--text-l); line-height: 1.8; max-width: 420px; margin: 0 auto 24px; }
-.cl-items-preview { display: flex; flex-direction: column; gap: 8px; margin: 0 auto 28px; max-width: 380px; text-align: left; }
-.cl-preview-item { display: flex; align-items: center; gap: 10px; padding: 9px 14px; background: var(--grey); border-radius: 6px; font-size: 12px; color: var(--text-l); font-family: var(--font); }
-.cl-preview-item::before { content:""; width:14px; height:14px; border:1.5px solid var(--main); border-radius:3px; flex-shrink:0; }
-.btn-cl { display: inline-flex; align-items: center; gap: 8px; background: var(--main); color: #fff; border: none; border-radius: 8px; padding: 14px 32px; font-family: var(--font); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; cursor: pointer; transition: .2s; text-decoration: none; }
-.btn-cl:hover { background: var(--main-d); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(90,111,130,.3); }
-.cl-note { margin-top: 12px; font-size: 11px; color: var(--text-l); }
-
-/* LIENS */
-.link-list { display: flex; flex-direction: column; gap: 8px; }
-.lnk { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--grey); border: 1px solid transparent; border-radius: 8px; text-decoration: none; color: var(--text); font-family: var(--font); font-size: 12px; font-weight: 700; transition: .2s; }
-.lnk:hover { border-color: var(--main); background: #fff; color: var(--main); }
-.lnk svg { color: var(--main); flex-shrink: 0; }
-.lnk span { font-size: 11px; color: var(--text-l); display: block; font-weight: 400; font-family: var(--body); margin-top: 1px; }
-
-/* LOADING / ERR */
-.loading-box { padding: 32px; text-align: center; }
-.loading-box p { font-family: var(--font); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--text-l); animation: blink 1.5s infinite; }
-.err-box { background: #fff5f5; border-left: 3px solid #e53935; border-radius: 0 6px 6px 0; padding: 12px 16px; font-size: 12px; color: #c62828; }
-.err-box a { color: var(--main); }
-
-@media(max-width:900px) {
-  .g2,.g3 { grid-template-columns: 1fr; }
-  .span2 { grid-column: span 1; }
-  .hero-wrap { flex-direction: column; }
-  .clock-box { width: 100%; }
-  .m-vals { grid-template-columns: repeat(2,1fr); }
+/* DOC */
+.cl-doc{background:#fff;border:1px solid var(--grey-m);border-radius:12px;overflow:hidden;margin-bottom:28px;box-shadow:0 4px 20px rgba(0,0,0,.06);display:none}
+.cl-head{background:var(--main);padding:24px 32px;display:flex;align-items:center;justify-content:space-between}
+.cl-head h1{font-family:var(--font);font-size:1.3rem;font-weight:800;color:#fff;margin:0}
+.cl-head p{font-size:11px;color:rgba(255,255,255,.7);margin-top:4px}
+.cl-head-right{text-align:right;font-family:var(--font);font-size:11px;color:rgba(255,255,255,.7)}
+.cl-head-right strong{display:block;color:#fff;font-size:14px}
+.cl-mission{padding:18px 32px;background:var(--grey);border-bottom:1px solid var(--grey-m)}
+.cl-mission-title{font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--main);margin-bottom:12px}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.mf label{font-family:var(--font);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-l);display:block;margin-bottom:5px}
+.mf input{width:100%;border:1px solid var(--grey-m);border-radius:6px;padding:9px 12px;font-size:13px;font-family:var(--body);outline:none;transition:.2s}
+.mf input:focus{border-color:var(--main)}
+.cl-section{padding:0 32px}
+.cl-section-title{font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--main);padding:10px 14px;margin:0 -32px;display:flex;align-items:center;gap:8px}
+.cl-list{list-style:none;padding:0;margin:0}
+.cl-item{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid var(--grey-m);transition:.15s;cursor:pointer}
+.cl-item:last-child{border:none}
+.cl-item:hover{background:var(--grey);margin:0 -32px;padding-left:32px;padding-right:32px}
+.cl-item input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--main);cursor:pointer}
+.cl-item label{cursor:pointer;flex:1}
+.cl-item label strong{display:block;font-size:13px;color:var(--text);margin-bottom:2px}
+.cl-item label span{font-size:11px;color:var(--text-l)}
+.cl-check-icon{width:22px;height:22px;border-radius:50%;background:var(--grey);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:.3s;font-size:12px;color:var(--text-l)}
+.cl-item.checked .cl-check-icon{background:#e8f5e9;color:#2e7d32}
+.cl-item.checked label strong{color:var(--text-l);text-decoration:line-through}
+.cl-score-bar{padding:16px 32px;background:var(--grey);border-top:1px solid var(--grey-m);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.score-big{font-family:var(--font);font-size:28px;font-weight:800;color:var(--main)}
+.score-lbl{font-family:var(--font);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-l)}
+.progress-bar{height:8px;background:var(--grey-m);border-radius:4px;overflow:hidden;margin-top:6px;min-width:160px}
+.progress-fill{height:100%;background:var(--main);border-radius:4px;transition:width .4s}
+.verdict-pills{display:flex;gap:8px;flex-wrap:wrap}
+.vp{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border:2px solid var(--grey-m);cursor:pointer;transition:.2s;background:#fff}
+.vp:hover{border-color:var(--main)}
+.vp.ok{background:#e8f5e9;border-color:#43a047;color:#2e7d32}
+.vp.warn{background:#fff3e0;border-color:#fb8c00;color:#e65100}
+.vp.stop{background:#ffebee;border-color:#e53935;color:#c62828}
+.form-section{padding:20px 32px}
+.form-sec-title{font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--main);margin-bottom:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
+.fg label{font-family:var(--font);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text);display:block;margin-bottom:5px}
+.fg label span{color:#8b1a1a}
+.fg input{width:100%;border:1px solid var(--grey-m);border-radius:6px;padding:11px 14px;font-size:13px;font-family:var(--body);outline:none;transition:.2s}
+.fg input:focus{border-color:var(--main)}
+.divider{height:1px;background:var(--grey-m);margin:0 32px}
+.sig-section{padding:20px 32px}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.sig-label{font-family:var(--font);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-l);display:block;margin-bottom:8px}
+.sig-name{font-family:var(--font);font-size:14px;font-weight:800;color:var(--black);margin-bottom:3px}
+.sig-role{font-size:12px;color:var(--text-l);margin-bottom:10px}
+canvas{border:1px solid var(--grey-m);border-radius:6px;cursor:crosshair;display:block;background:#fafafa;touch-action:none;width:100%;height:110px}
+.canvas-actions{display:flex;align-items:center;gap:8px;margin-top:8px}
+.btn-clear{background:none;border:1px solid var(--grey-m);border-radius:6px;padding:5px 12px;font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;color:var(--text-l);transition:.2s}
+.btn-clear:hover{border-color:var(--main);color:var(--main)}
+.sig-ok{font-size:11px;color:var(--main)}
+.sig-date{font-size:11px;color:var(--text-l);margin-top:6px}
+.btn-submit{display:block;width:calc(100% - 64px);margin:0 32px 20px;background:var(--main);color:#fff;border:none;border-radius:8px;padding:16px;font-family:var(--font);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;cursor:pointer;transition:.2s}
+.btn-submit:hover{background:var(--main-d);box-shadow:0 4px 16px rgba(90,111,130,.3)}
+.btn-submit:disabled{background:var(--grey-m);cursor:not-allowed;box-shadow:none}
+.err-msg{display:none;margin:0 32px 14px;background:#fff0f0;border-left:3px solid #8b1a1a;border-radius:0 6px 6px 0;padding:10px 14px;font-size:12px;color:#8b1a1a}
+.ok-msg{display:none;margin:0 32px 24px;background:#f0faf4;border:1px solid #4caf50;border-left:4px solid #4caf50;border-radius:6px;padding:20px 24px}
+.ok-msg strong{font-family:var(--font);font-size:14px;font-weight:800;color:#2e7d32;display:block;margin-bottom:6px}
+.ok-msg p{font-size:13px;color:#4a5568;line-height:1.6}
+.ok-msg a{color:var(--main);font-weight:700}
+@media(max-width:768px){
+  .mission-grid,.sig-grid,.form-row{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -145,10 +99,6 @@
   <div class="header-top">
     <div class="container">
       <div class="header-top-links">
-        <a href="../../pages/apropos.html">À propos</a>
-        <a href="../../pages/certifications.html">Certifications</a>
-        <a href="../../pages/equipements.html">Équipements</a>
-        <a href="../../pages/zone-intervention.html">Zone d'intervention</a>
         <a href="../../pages/contact.html" class="tel">✆ 06 95 39 07 76</a>
       </div>
     </div>
@@ -160,52 +110,8 @@
       </a>
       <nav class="main-nav" id="mainNav">
         <ul class="nav-list">
-          <li class="nav-item has-dropdown">
-            <a href="#">APH Drone <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
-            <ul class="dropdown">
-              <li><a href="../../pages/apropos.html">À propos</a></li>
-              <li><a href="../../pages/equipe.html">L'équipe</a></li>
-              <li><a href="../../pages/zone-intervention.html">Zone d'intervention</a></li>
-              <li><a href="../../pages/partenaires.html">Nos partenaires et clients</a></li>
-              <li><a href="../../pages/temoignages.html">Témoignages</a></li>
-              <li><a href="../../pages/actualites.html">Actualités</a></li>
-              <li><a href="../../pages/recrutement.html">Recrutement</a></li>
-            </ul>
-          </li>
-          <li class="nav-item has-dropdown">
-            <a href="../../pages/prestations.html">Prestations <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
-            <ul class="dropdown">
-              <li><a href="../../pages/prestations/inspection.html">Inspection technique</a></li>
-              <li><a href="../../pages/prestations/thermographie.html">Thermographie</a></li>
-              <li><a href="../../pages/prestations/agriculture.html">Agriculture de précision</a></li>
-              <li><a href="../../pages/prestations/cartographie.html">Cartographie &amp; 3D</a></li>
-              <li><a href="../../pages/prestations/surveillance.html">Surveillance</a></li>
-              <li><a href="../../pages/prestations/photo-video.html">Photo &amp; vidéo</a></li>
-            </ul>
-          </li>
-          <li class="nav-item has-dropdown">
-            <a href="../../pages/formations.html">Formations <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
-            <ul class="dropdown">
-              <li><a href="../../pages/formations/cats-sts.html">CATS STS</a></li>
-              <li><a href="../../pages/formations/vol-nuit.html">Vol de nuit</a></li>
-              <li><a href="../../pages/formations/securite-secours.html">Sécurité &amp; Secours</a></li>
-              <li><a href="../../pages/formations/initiation-a1a3.html">Initiation A1/A3</a></li>
-            </ul>
-          </li>
-          <li class="nav-item has-dropdown active">
-            <a href="#">Outils en ligne <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
-            <ul class="dropdown">
-              <li><a href="../../pages/outils/reglementation.html">Réglementation</a></li>
-              <li><a href="../../pages/outils/meteo.html">Préparation MÉTÉO</a></li>
-              <li><a href="../../pages/outils/preparation-vol.html">Préparation de vol</a></li>
-              <li><a href="../../pages/outils/elearning.html">Drone e-learning</a></li>
-              <li><a href="../../pages/outils/qcm.html">QCM</a></li>
-            </ul>
-          </li>
-          <li class="nav-item"><a href="../../pages/actualites.html">Actualités</a></li>
-          <li class="nav-item"><a href="../../pages/contact.html">Contact</a></li>
-          <li class="nav-item"><a href="../../pages/espace-stagiaires.html" style="color:var(--main);font-weight:800">Espace stagiaires</a></li>
-          <li class="nav-item"><a href="../../pages/espace-clients.html" style="color:var(--main);font-weight:800">Espace clients</a></li>
+          <li class="nav-item"><a href="../../pages/outils/meteo.html">← Retour Météo</a></li>
+          <li class="nav-item"><a href="../../pages/espace-stagiaires.html">Mon espace</a></li>
         </ul>
       </nav>
       <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -213,410 +119,339 @@
   </div>
 </div>
 
-<div class="meteo-page">
-
-<!-- HERO -->
-<section class="meteo-hero">
-  <div class="container">
-    <div class="breadcrumb" style="margin-bottom:20px">
-      <a href="../../index.html">Accueil</a><span>›</span>
-      <span style="color:var(--text-l)">Outils en ligne</span><span>›</span>
-      <span style="color:var(--text)">Préparation MÉTÉO</span>
-    </div>
-    <div class="hero-wrap">
-      <div class="hero-left">
-        <p class="page-tag">Météorologie opérationnelle</p>
-        <h1>Préparation MÉTÉO</h1>
-        <p class="sub">Données en temps réel pour télépilotes professionnels — METAR · TAF · Vents · Indice KP · Check-list pré-vol</p>
-        <div class="status-bar" id="statusBar">
-          <div class="s-pill"><span class="s-dot load"></span>Chargement...</div>
-        </div>
-      </div>
-      <div class="clock-box">
-        <div class="live-badge"><span class="live-dot"></span>En direct — LFSX Luxeuil</div>
-        <div class="utc-time" id="clkUTC">--:--:--</div>
-        <div class="utc-label">Heure UTC</div>
-        <div class="time-row">
-          <span class="time-row-label">Heure locale</span>
-          <span class="time-row-val" id="clkLocal">--:--:--</span>
-        </div>
-        <div class="time-row">
-          <span class="time-row-label">Date</span>
-          <span class="time-row-val" style="font-size:11px" id="clkDate">--</span>
-        </div>
-      </div>
-    </div>
+<!-- ÉCRAN VERROU -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <div class="lock-icon">🔒</div>
+    <h2>Accès sécurisé</h2>
+    <p>Cette check-list est réservée aux télépilotes APH Drone.<br/>Saisissez votre code d'accès pour continuer.</p>
+    <input type="text" class="lock-input" id="lockCode" placeholder="Votre code" autocapitalize="characters" autocomplete="off"/>
+    <button class="lock-btn" id="lockBtn">Accéder →</button>
+    <p class="lock-err" id="lockErr">Code incorrect — vérifiez votre code stagiaire</p>
+    <p class="lock-contact">Code perdu ? <a href="mailto:aphdrone@gmail.com">aphdrone@gmail.com</a></p>
   </div>
-</section>
+</div>
 
-<div class="container">
+<!-- CHECK-LIST -->
+<div class="cl-wrap" id="clWrap" style="display:none">
+<div class="cl-doc" id="clDoc">
 
-  <!-- METAR + TAF -->
-  <p class="sec-title">📡 Observations aéronautiques LFSX</p>
-  <div class="g2" style="margin-bottom:0">
-    <div class="mcard span2">
-      <div class="mcard-head">
-        <h2>METAR — Luxeuil-Saint-Sauveur (LFSX)</h2>
-        <button class="btn-ref" onclick="loadMetar()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Actualiser
-        </button>
-      </div>
-      <div class="mcard-body">
-        <div id="mL" class="loading-box"><p>Chargement METAR LFSX...</p></div>
-        <div id="mO" style="display:none">
-          <p style="font-family:var(--font);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-l);margin-bottom:6px">Message brut</p>
-          <div class="metar-raw" id="mRaw"></div>
-          <div class="m-vals" id="mVals"></div>
-        </div>
-        <div id="mE" class="err-box" style="display:none">METAR indisponible — <a href="https://www.aviationweather.gov/metar" target="_blank">aviationweather.gov</a></div>
-      </div>
+  <div class="cl-head">
+    <div>
+      <h1>✅ Check-list Météo Pré-vol</h1>
+      <p>APH Drone SARL — 44 rue Georges Moulimard — 70300 Luxeuil-les-Bains</p>
     </div>
-    <div class="mcard span2" style="margin-top:20px">
-      <div class="mcard-head">
-        <h2>TAF — Prévision aéronautique LFSX</h2>
-        <button class="btn-ref" onclick="loadTAF()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Actualiser
-        </button>
-      </div>
-      <div class="mcard-body">
-        <div id="tL" class="loading-box"><p>Chargement TAF LFSX...</p></div>
-        <div id="tO" style="display:none"><div class="metar-raw" id="tRaw"></div></div>
-        <div id="tE" class="err-box" style="display:none">TAF indisponible — <a href="https://www.aviationweather.gov/taf" target="_blank">aviationweather.gov</a></div>
-      </div>
+    <div class="cl-head-right">
+      <strong id="dateDisplay">--/--/----</strong>
+      <span id="heureDisplay">-- UTC</span>
     </div>
   </div>
 
-  <!-- CARTES ANIMÉES -->
-  <p class="sec-title">🗺️ Cartes météo animées</p>
-  <div class="g2">
-    <div class="mcard">
-      <div class="mcard-head">
-        <h2>💨 Carte des vents</h2>
-        <a href="https://www.windy.com/?wind,47.820,6.370,9" target="_blank" class="btn-ref">Plein écran ↗</a>
-      </div>
-      <div class="mcard-body no-pad">
-        <iframe class="map-f" src="https://embed.windy.com/embed2.html?lat=47.820&lon=6.370&detailLat=47.820&detailLon=6.370&width=650&height=400&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1" allowfullscreen loading="lazy" title="Vents"></iframe>
-      </div>
-    </div>
-    <div class="mcard">
-      <div class="mcard-head">
-        <h2>🌧️ Précipitations &amp; nuages</h2>
-        <a href="https://www.windy.com/?rain,47.820,6.370,9" target="_blank" class="btn-ref">Plein écran ↗</a>
-      </div>
-      <div class="mcard-body no-pad">
-        <iframe class="map-f" src="https://embed.windy.com/embed2.html?lat=47.820&lon=6.370&detailLat=47.820&detailLon=6.370&width=650&height=400&zoom=8&level=surface&overlay=rain&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1" allowfullscreen loading="lazy" title="Pluie"></iframe>
-      </div>
+  <div class="cl-mission">
+    <div class="cl-mission-title">Informations de mission</div>
+    <div class="mission-grid">
+      <div class="mf"><label>Lieu de vol</label><input type="text" id="lieu" placeholder="Zone, commune..."/></div>
+      <div class="mf"><label>Drone utilisé</label><input type="text" id="drone" placeholder="DJI Mini 4 Pro, Mavic 3 MS..."/></div>
+      <div class="mf"><label>Heure de vol prévue</label><input type="text" id="heurePrevue" placeholder="Ex : 14h00 UTC"/></div>
     </div>
   </div>
 
-
-  <!-- TEMSI + WINTEM -->
-  <p class="sec-title">🗺️ TEMSI &amp; WINTEM — Météo-France Aéroweb</p>
-  <div class="g2">
-
-    <!-- TEMSI -->
-    <div class="mcard">
-      <div class="mcard-body" style="padding:0;position:relative;overflow:hidden;border-radius:12px">
-        <div style="background:linear-gradient(135deg,#0b1f35 0%,#1a3a5c 60%,#0b1f35 100%);padding:36px 32px 40px">
-          <p style="font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.5);margin-bottom:14px">Météo-France Aéroweb</p>
-          <h2 style="font-family:var(--font);font-size:2rem;font-weight:800;color:#fff;line-height:1.1;margin-bottom:10px;text-transform:uppercase">TEMSI France</h2>
-          <h3 style="font-family:var(--font);font-size:1.1rem;font-weight:300;color:rgba(255,255,255,.4);letter-spacing:.04em;margin-bottom:20px;border:2px solid rgba(255,255,255,.15);display:inline-block;padding:2px 14px">Temps Significatif</h3>
-          <p style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:28px;max-width:340px">Carte des phénomènes météo significatifs en route — givrage, turbulences, CB, plafonds. Mise à jour toutes les 3h par Météo-France.</p>
-          <a href="https://aviation.meteo.fr" target="_blank" style="display:inline-block;background:#8b1a1a;color:#fff;font-family:var(--font);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:13px 28px;text-decoration:none;transition:.2s;border-radius:2px">
-            Accéder à la carte →
-          </a>
-          <p style="margin-top:12px;font-size:11px;color:rgba(255,255,255,.3)">🔐 Connexion Aéroweb requise</p>
-        </div>
-        <!-- Déco ligne piste -->
-        <div style="position:absolute;top:0;right:-20px;bottom:0;width:200px;pointer-events:none;overflow:hidden">
-          <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.15">
-            <path d="M180 0 L60 300" stroke="white" stroke-width="3"/>
-            <path d="M160 0 L40 300" stroke="white" stroke-width="1.5"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- WINTEM -->
-    <div class="mcard">
-      <div class="mcard-body" style="padding:0;position:relative;overflow:hidden;border-radius:12px">
-        <div style="background:linear-gradient(135deg,#0d2137 0%,#1c4060 60%,#0d2137 100%);padding:36px 32px 40px">
-          <p style="font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.5);margin-bottom:14px">Météo-France Aéroweb</p>
-          <h2 style="font-family:var(--font);font-size:2rem;font-weight:800;color:#fff;line-height:1.1;margin-bottom:10px;text-transform:uppercase">WINTEM</h2>
-          <h3 style="font-family:var(--font);font-size:1.1rem;font-weight:300;color:rgba(255,255,255,.4);letter-spacing:.04em;margin-bottom:20px;border:2px solid rgba(255,255,255,.15);display:inline-block;padding:2px 14px">Vents &amp; Températures</h3>
-          <p style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:28px;max-width:340px">Carte des vents et températures en altitude par niveaux de vol (FL50 à FL390). Indispensable pour les vols en zones contrôlées ou longue distance.</p>
-          <a href="https://aviation.meteo.fr" target="_blank" style="display:inline-block;background:#8b1a1a;color:#fff;font-family:var(--font);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;padding:13px 28px;text-decoration:none;transition:.2s;border-radius:2px">
-            Accéder à la carte →
-          </a>
-          <p style="margin-top:12px;font-size:11px;color:rgba(255,255,255,.3)">🔐 Connexion Aéroweb requise</p>
-        </div>
-        <!-- Déco ligne piste -->
-        <div style="position:absolute;top:0;right:-20px;bottom:0;width:200px;pointer-events:none;overflow:hidden">
-          <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:.15">
-            <path d="M180 0 L60 300" stroke="white" stroke-width="3"/>
-            <path d="M160 0 L40 300" stroke="white" stroke-width="1.5"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
+  <div class="cl-section">
+    <div class="cl-section-title">☁ Conditions générales</div>
+    <ul class="cl-list">
+      <li class="cl-item" id="li1"><input type="checkbox" id="c1"/><div class="cl-check-icon" id="ic1">○</div><label for="c1"><strong>Vent inférieur au seuil opérationnel</strong><span>Open A1/A3 : &lt; 12 m/s — STS : selon constructeur</span></label></li>
+      <li class="cl-item" id="li2"><input type="checkbox" id="c2"/><div class="cl-check-icon" id="ic2">○</div><label for="c2"><strong>Visibilité suffisante (VLOS)</strong><span>Minimum recommandé : 500 m — Vérifier brume et brouillard</span></label></li>
+      <li class="cl-item" id="li3"><input type="checkbox" id="c3"/><div class="cl-check-icon" id="ic3">○</div><label for="c3"><strong>Plafond nuageux acceptable</strong><span>Hauteur des nuages vs altitude de vol prévue</span></label></li>
+      <li class="cl-item" id="li4"><input type="checkbox" id="c4"/><div class="cl-check-icon" id="ic4">○</div><label for="c4"><strong>Absence de précipitations</strong><span>Pluie, grêle, neige — risque pour les équipements</span></label></li>
+      <li class="cl-item" id="li5"><input type="checkbox" id="c5"/><div class="cl-check-icon" id="ic5">○</div><label for="c5"><strong>Température dans les limites constructeur</strong><span>Vérifier les spécifications de l'appareil (min/max)</span></label></li>
+    </ul>
   </div>
 
-  <!-- KP + SPACEWEATHER + LIENS -->
-  <p class="sec-title">☀️ Activité solaire &amp; ressources</p>
-  <div class="g3">
+  <div class="cl-section">
+    <div class="cl-section-title">☀ Activité atmosphérique &amp; solaire</div>
+    <ul class="cl-list">
+      <li class="cl-item" id="li6"><input type="checkbox" id="c6"/><div class="cl-check-icon" id="ic6">○</div><label for="c6"><strong>Absence d'orage prévu sur la zone</strong><span>Radar et prévisions à 3h vérifiés</span></label></li>
+      <li class="cl-item" id="li7"><input type="checkbox" id="c7"/><div class="cl-check-icon" id="ic7">○</div><label for="c7"><strong>Indice KP ≤ 4</strong><span>KP &gt; 4 : perturbations GPS possibles — KP &gt; 6 : vol déconseillé</span></label></li>
+      <li class="cl-item" id="li8"><input type="checkbox" id="c8"/><div class="cl-check-icon" id="ic8">○</div><label for="c8"><strong>Vents en altitude cohérents avec le vol prévu</strong><span>Cisaillement possible même par beau temps en surface</span></label></li>
+    </ul>
+  </div>
 
-    <!-- KP -->
-    <div class="mcard">
-      <div class="mcard-head">
-        <h2>Indice KP — NOAA</h2>
-        <button class="btn-ref" onclick="loadKP()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Actualiser
-        </button>
-      </div>
-      <div class="mcard-body">
-        <div id="kL" class="loading-box"><p>Chargement indice KP...</p></div>
-        <div id="kO" style="display:none">
-          <div class="kp-wrap">
-            <div class="kp-circle" id="kpC">
-              <div class="kp-n" id="kpN">—</div>
-              <div class="kp-u">KP</div>
-            </div>
-            <div class="kp-r">
-              <h3 id="kpT">—</h3>
-              <p id="kpD">—</p>
-            </div>
-          </div>
-          <div class="kp-bar"><div class="kp-needle" id="kpNeedle" style="left:0%"></div></div>
-          <div class="kp-scale"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
-          <table class="kp-tbl">
-            <thead><tr><th>KP</th><th>Niveau</th><th>Impact GPS</th></tr></thead>
-            <tbody>
-              <tr id="r02"><td><b style="color:#43a047">0–2</b></td><td>Calme</td><td>✅ Optimal</td></tr>
-              <tr id="r3"><td><b style="color:#7cb342">3</b></td><td>Légèrement actif</td><td>✅ Négligeable</td></tr>
-              <tr id="r4"><td><b style="color:#fb8c00">4</b></td><td>Actif</td><td>⚠️ Léger</td></tr>
-              <tr id="r56"><td><b style="color:#e53935">5–6</b></td><td>Tempête G1–G2</td><td>⚠️ Dégradé</td></tr>
-              <tr id="r79"><td><b style="color:#8e24aa">7–9</b></td><td>Tempête G3–G5</td><td>🚫 Critique</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div id="kE" class="err-box" style="display:none">KP indisponible — <a href="https://www.spaceweatherlive.com" target="_blank">spaceweatherlive.com</a></div>
-      </div>
+  <div class="cl-section">
+    <div class="cl-section-title">⚖ Réglementation &amp; documentation</div>
+    <ul class="cl-list">
+      <li class="cl-item" id="li9"><input type="checkbox" id="c9"/><div class="cl-check-icon" id="ic9">○</div><label for="c9"><strong>NOTAMs consultés pour la zone de vol</strong><span>Alpha Tango / SIA — espaces temporaires, TFR</span></label></li>
+      <li class="cl-item" id="li10"><input type="checkbox" id="c10"/><div class="cl-check-icon" id="ic10">○</div><label for="c10"><strong>Fenêtre de vol compatible (lever/coucher soleil)</strong><span>Heures officielles vérifiées</span></label></li>
+      <li class="cl-item" id="li11"><input type="checkbox" id="c11"/><div class="cl-check-icon" id="ic11">○</div><label for="c11"><strong>TAF consulté sur la durée de mission prévue</strong><span>Évolution météo sur 6 à 24 heures</span></label></li>
+      <li class="cl-item" id="li12"><input type="checkbox" id="c12"/><div class="cl-check-icon" id="ic12">○</div><label for="c12"><strong>Plan de vol déposé si requis</strong><span>Catégorie spécifique / zones contrôlées / &gt; 120 m AGL</span></label></li>
+    </ul>
+  </div>
+
+  <div class="cl-section">
+    <div class="cl-section-title">🗺 Cartes aéronautiques Aéroweb</div>
+    <ul class="cl-list">
+      <li class="cl-item" id="li13"><input type="checkbox" id="c13"/><div class="cl-check-icon" id="ic13">○</div><label for="c13"><strong>TEMSI France consultée</strong><span>Temps significatif : givrage, turbulences, CB — mise à jour toutes les 3h</span></label></li>
+      <li class="cl-item" id="li14"><input type="checkbox" id="c14"/><div class="cl-check-icon" id="ic14">○</div><label for="c14"><strong>WINTEM consultée</strong><span>Vents et températures en altitude par niveau de vol (FL50 à FL390)</span></label></li>
+    </ul>
+  </div>
+
+  <!-- SCORE -->
+  <div class="cl-score-bar">
+    <div>
+      <div class="score-big" id="scoreNum">0/14</div>
+      <div class="score-lbl">points validés</div>
     </div>
-
-    <!-- SPACEWEATHERLIVE IFRAME -->
-    <div class="mcard">
-      <div class="mcard-head">
-        <h2>🌌 SpaceWeatherLive</h2>
-        <a href="https://www.spaceweatherlive.com/fr/activite-solaire/indice-kp.html" target="_blank" class="btn-ref">Voir ↗</a>
-      </div>
-      <div class="mcard-body no-pad">
-        <iframe class="map-f" src="https://www.spaceweatherlive.com/fr/activite-solaire/indice-kp.html" loading="lazy" title="SpaceWeatherLive KP" sandbox="allow-scripts allow-same-origin"></iframe>
-      </div>
+    <div style="flex:1;min-width:160px">
+      <div class="score-lbl">Progression</div>
+      <div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0%"></div></div>
     </div>
-
-    <!-- LIENS -->
-    <div class="mcard">
-      <div class="mcard-head"><h2>🔗 Sources officielles</h2></div>
-      <div class="mcard-body">
-        <div class="link-list">
-          <a href="https://www.aviationweather.gov/metar" target="_blank" class="lnk">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg>
-            <div>Aviation Weather Center<span>METAR · TAF · SIGMET</span></div>
-          </a>
-          <a href="https://www.spaceweatherlive.com/fr/activite-solaire/indice-kp.html" target="_blank" class="lnk">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/></svg>
-            <div>SpaceWeatherLive<span>Indice KP · Aurores · Solaire</span></div>
-          </a>
-          <a href="https://www.windy.com/?47.820,6.370,10" target="_blank" class="lnk">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
-            <div>Windy<span>Vents · Pluie · Nuages</span></div>
-          </a>
-          <a href="https://aviation.meteo.fr" target="_blank" class="lnk">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>
-            <div>Aéroweb Météo-France<span>Bulletins aviation officiels</span></div>
-          </a>
-          <a href="https://www.notaminfo.com" target="_blank" class="lnk">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
-            <div>NotamInfo<span>NOTAMs France en temps réel</span></div>
-          </a>
-          <a href="https://www.swpc.noaa.gov/products/planetary-k-index" target="_blank" class="lnk">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <div>NOAA SWPC<span>KP officiel · Prévisions 3 jours</span></div>
-          </a>
-        </div>
+    <div>
+      <div class="score-lbl" style="margin-bottom:8px">Verdict</div>
+      <div class="verdict-pills">
+        <button class="vp" id="vOk" onclick="setVerdict('ok')">✅ Autorisé</button>
+        <button class="vp" id="vWarn" onclick="setVerdict('warn')">⚠️ Sous conditions</button>
+        <button class="vp" id="vStop" onclick="setVerdict('stop')">🚫 Reporté</button>
       </div>
     </div>
   </div>
 
-  <!-- CHECK-LIST TEASER -->
-  <p class="sec-title">✅ Check-list météo pré-vol</p>
-  <div class="mcard">
-    <div class="mcard-body">
-      <div class="cl-teaser">
-        <div class="icon">📋</div>
-        <h3>Check-list météo professionnelle</h3>
-        <p>12 points de vérification en 3 sections — Conditions générales, Activité atmosphérique &amp; solaire, Réglementation &amp; documentation. Conçue pour les télépilotes professionnels APH Drone.</p>
-        <div class="cl-items-preview">
-          <div class="cl-preview-item">Vent inférieur au seuil opérationnel</div>
-          <div class="cl-preview-item">Indice KP ≤ 4 — GPS fiable</div>
-          <div class="cl-preview-item">NOTAMs consultés pour la zone</div>
-          <div class="cl-preview-item" style="opacity:.5;font-style:italic">+ 9 autres points de vérification...</div>
+  <!-- FORMULAIRE -->
+  <div class="divider"></div>
+  <div class="form-section">
+    <div class="form-sec-title">Vos informations</div>
+    <div class="form-row">
+      <div class="fg"><label>Prénom <span>*</span></label><input type="text" id="prenom" placeholder="Votre prénom"/></div>
+      <div class="fg"><label>Nom <span>*</span></label><input type="text" id="nom" placeholder="Votre nom"/></div>
+    </div>
+    <div class="form-row">
+      <div class="fg"><label>Email <span>*</span></label><input type="email" id="email" placeholder="votre@email.fr"/></div>
+      <div class="fg"><label>Code stagiaire</label><input type="text" id="codeStagiaire" placeholder="Ex : SC2024" readonly style="background:var(--grey);color:var(--text-l)"/></div>
+    </div>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="divider"></div>
+  <div class="sig-section">
+    <div class="form-sec-title">Signatures</div>
+    <div class="sig-grid">
+      <div>
+        <span class="sig-label">Signature du télépilote</span>
+        <p style="font-size:12px;color:var(--text-l);margin-bottom:10px">Dessinez votre signature :</p>
+        <canvas id="sigCanvas"></canvas>
+        <div class="canvas-actions">
+          <button class="btn-clear" onclick="clearSig()">✕ Effacer</button>
+          <span class="sig-ok" id="sigStatus"></span>
         </div>
-        <a href="../../pages/outils/checklist-meteo.html" class="btn-cl">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Accéder à la check-list complète
-        </a>
-        <p class="cl-note">🔒 Réservé aux stagiaires APH Drone — Code d'accès requis</p>
+      </div>
+      <div>
+        <span class="sig-label">Visa responsable opération</span>
+        <div class="sig-name">Arnaud MOREAU</div>
+        <div class="sig-role">Gérant — APH Drone SARL</div>
+        <img src="data:image/png;base64,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uP/zn/8UbOXOO+9sA/Tk7umfNGmSufXWW81nn32WVcaf//xnoyl/DAIQgECtE0D8a72Ha6x9CuM7bNgwoxj8fqY9+vLu197+TFu+fLm566678oL5aLSvPf3NmzfPTM5nCEAAAjVJAPGvyW6t3UZprX/UqFEFGygHv7322isv3aOPPmq3B/7666919zTdL+HXej8GAQhAIAkEEP8k9HKNtDHoqH/TTTe1o/5cp723337bTvdrp0CmHXjggUz3ZwLhMwQgUPMEEP+a7+LaaeBzzz1nJOB+pvV9Rebr0aNHVrJ58+aZW265xYwZMybrerdu3eyefo3+MQhAAAJJIYD4J6WnY97Ozz//3IwYMcKsWLHCtyVau9dIvkGDBnXplEfr/MOHD6+7pg/yCxg4cKDBuz8LC18gAIEEEED8E9DJtdBERfMrNOpfZZVVrHd/586ds5qsdX6J/w8//FB3XUf1HnLIIUz31xHhAwQgkCQCiH+SejumbdUa/ZNPPmmWLVvm2wLF799///2z0uiI3htvvNHMnz8/6/qOO+5onfwaN26cdZ0vEIAABJJAAPFPQi/HvI06ue/111/3bYUO4NFIvnXr1nXpJk6caK677jrz0Ucf1V3Thw022MCcdNJJplOnTlnX+QIBCEAgKQQQ/6T0dEzbqfV6BfVZvHixbwt23XVXs+eee9al+eKLL8z1119vnn/++bpr+qClgaOPPto11n9WQr5AAAIQqGECiH8Nd24tNE2j9ldffdW3KXLck4d/ixYtbDqF/b3hhhvMgw8+aFKpVFbefffd1xx11FF5R/tmJeILBCAAgRongPjXeAfHuXkSbo3cZ86c6duM3r17m169etk0ivx32223mTvvvDPLwU83FcTn1FNPtdP+vgVyEwIQgECNE0D8a7yD49w8be97880380bvmW3SqF/H766xxhpW7OXVLwe/pUuXZiYz6623nhV+t0N+shLyBQIQgEACCCD+CejkuDbxgw8+MOPGjfOt/i677GJ0gI+O6L3nnnusg9+XX36ZladRo0bmhBNOMDq4B4MABCAAAWP+FwkFGhCIEAHF3teo/6uvvvKslcL3amufxF3T/H/729+MZgsyTfv5Dz30ULutT85+GAQgAAEIIP78BiJKQNP2kydP9q2dQvNqv77W+LWlL3cvvzLrcB+t86+99tq+ZXETAhCAQJII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" alt="Signature" style="height:70px;width:auto;display:block"/>
+        <div class="sig-date" id="sigDate"></div>
       </div>
     </div>
+  </div>
+
+  <button class="btn-submit" id="btnSubmit" onclick="soumettre()">✓ Valider et enregistrer →</button>
+  <div class="err-msg" id="errMsg"></div>
+  <div class="ok-msg" id="okMsg">
+    <strong>✅ Check-list enregistrée avec succès !</strong>
+    <p>Transmise à APH Drone SARL et enregistrée pour traçabilité.<br/>
+    <a href="../../pages/outils/meteo.html">← Retour Météo</a> &nbsp;|&nbsp; <a href="../../pages/espace-stagiaires.html">Mon espace</a></p>
   </div>
 
 </div>
 </div>
-
-<!-- FOOTER -->
-<footer id="footer">
-  <div class="footer-main">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <p class="logo-text" style="color:#fff;margin-bottom:14px">APH Drone</p>
-          <p class="footer-brand-text">Opérateur drone professionnel certifié DGAC — France.</p>
-          <p class="footer-phone">✆ 06 95 39 07 76</p>
-          <p style="font-size:12px;color:rgba(255,255,255,.5)">aphdrone@gmail.com</p>
-        </div>
-        <div class="footer-col">
-          <h4>Outils en ligne</h4>
-          <ul>
-            <li><a href="../../pages/outils/meteo.html">Préparation MÉTÉO</a></li>
-            <li><a href="../../pages/outils/reglementation.html">Réglementation</a></li>
-            <li><a href="../../pages/outils/preparation-vol.html">Préparation de vol</a></li>
-            <li><a href="../../pages/outils/qcm.html">QCM</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Espaces</h4>
-          <ul>
-            <li><a href="../../pages/espace-stagiaires.html">Espace stagiaires</a></li>
-            <li><a href="../../pages/espace-clients.html">Espace clients</a></li>
-            <li><a href="../../pages/contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Légal</h4>
-          <ul>
-            <li><a href="../../pages/mentions-legales.html">Mentions légales</a></li>
-            <li><a href="../../pages/confidentialite.html">Confidentialité</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="container">
-      <p class="footer-copyright">Copyright © 2024–2026 APH Drone SARL</p>
-      <div class="footer-legal">
-        <a href="../../pages/mentions-legales.html">Mentions légales</a>
-        <a href="../../pages/confidentialite.html">Confidentialité</a>
-      </div>
-    </div>
-  </div>
-</footer>
 
 <script src="../../assets/js/main.js"></script>
 <script>
-// HORLOGE
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPBITkYUAJaMLsmWDYMJNjD6i4WVjiQpqOARuYKpm-ExOWoeWorrci8L5YZUdbZkqP/exec";
+
+// ── STAGIAIRES ───────────────────────────────────────────────
+const STAGIAIRES = {
+  "admin9878": { nom:"", prenom:"", email:"", admin:true },
+  "SC2024":    { nom:"Coulibaly", prenom:"Salif", email:"" },
+  "LM202401":  { nom:"Martin", prenom:"Lucas", email:"" },
+  "EB202402":  { nom:"Bernard", prenom:"Emma", email:"" },
+  "ND202403":  { nom:"Dubois", prenom:"Noah", email:"" },
+  "LT202404":  { nom:"Thomas", prenom:"Léa", email:"" },
+  "HR202405":  { nom:"Robert", prenom:"Hugo", email:"" },
+  "CR202406":  { nom:"Richard", prenom:"Chloé", email:"" },
+  "LP202407":  { nom:"Petit", prenom:"Louis", email:"" },
+  "CD202408":  { nom:"Durand", prenom:"Camille", email:"" },
+  "EL202409":  { nom:"Leroy", prenom:"Ethan", email:"" },
+  "MM202410":  { nom:"Moreau", prenom:"Manon", email:"" },
+  "TS202411":  { nom:"Simon", prenom:"Théo", email:"" },
+  "IL202412":  { nom:"Laurent", prenom:"Inès", email:"" },
+  "ML202513":  { nom:"Lefebvre", prenom:"Maxime", email:"" },
+  "JM202514":  { nom:"Michel", prenom:"Jade", email:"" },
+  "AG202515":  { nom:"Garcia", prenom:"Antoine", email:"" },
+  "LD202516":  { nom:"David", prenom:"Lucie", email:"" },
+  "RB202517":  { nom:"Bertrand", prenom:"Raphaël", email:"" },
+  "AR202518":  { nom:"Roux", prenom:"Anaïs", email:"" },
+  "BV202519":  { nom:"Vincent", prenom:"Baptiste", email:"" },
+  "CF202520":  { nom:"Fournier", prenom:"Clara", email:"" },
+  "AM202521":  { nom:"Morel", prenom:"Alexis", email:"" },
+  "ZG202522":  { nom:"Girard", prenom:"Zoé", email:"" },
+  "QA202523":  { nom:"Andre", prenom:"Quentin", email:"" },
+  "PL202524":  { nom:"Lefevre", prenom:"Pauline", email:"" },
+  "RM202625":  { nom:"Mercier", prenom:"Romain", email:"" },
+  "SD202626":  { nom:"Dupont", prenom:"Sophie", email:"" },
+  "NL202627":  { nom:"Lambert", prenom:"Nicolas", email:"" },
+  "MB202628":  { nom:"Bonnet", prenom:"Marine", email:"" },
+  "JF202629":  { nom:"François", prenom:"Julien", email:"" },
+  "AM202630":  { nom:"Martinez", prenom:"Amandine", email:"" },
+  "PL202631":  { nom:"Legrand", prenom:"Pierre", email:"" },
+  "AG202632":  { nom:"Garnier", prenom:"Audrey", email:"" },
+  "CF202633":  { nom:"Faure", prenom:"Clément", email:"" },
+  "LR202634":  { nom:"Rousseau", prenom:"Laure", email:"" },
+  "SB202635":  { nom:"Blanc", prenom:"Sébastien", email:"" },
+  "MG202636":  { nom:"Guerin", prenom:"Mathilde", email:"" },
+  "FM202737":  { nom:"Muller", prenom:"Florian", email:"" },
+  "EH202738":  { nom:"Henry", prenom:"Elodie", email:"" },
+  "AR202739":  { nom:"Roussel", prenom:"Alexis", email:"" },
+  "CN202740":  { nom:"Nicolas", prenom:"Céline", email:"" },
+  "DP202741":  { nom:"Perrin", prenom:"Damien", email:"" },
+  "VM202742":  { nom:"Morin", prenom:"Virginie", email:"" },
+  "AM202743":  { nom:"Mathieu", prenom:"Arnaud", email:"" },
+  "NC202744":  { nom:"Clement", prenom:"Nathalie", email:"" },
+  "BG202745":  { nom:"Gauthier", prenom:"Benoît", email:"" },
+  "SD202746":  { nom:"Dumont", prenom:"Stéphanie", email:"" },
+  "KL202747":  { nom:"Lopez", prenom:"Kevin", email:"" },
+  "AF202748":  { nom:"Fontaine", prenom:"Aurélie", email:"" },
+  "TC202849":  { nom:"Chevalier", prenom:"Thibault", email:"" },
+  "MR202850":  { nom:"Robin", prenom:"Mélanie", email:"" },
+};
+
+let verdict = '';
+
+// ── VERROU ───────────────────────────────────────────────────
+document.getElementById('lockBtn').addEventListener('click', deverrouiller);
+document.getElementById('lockCode').addEventListener('keypress', e => { if(e.key==='Enter') deverrouiller(); });
+// Pas d\'auto-déverrouillage — code toujours requis
+
+function deverrouiller() {
+  const code = document.getElementById('lockCode').value.trim().toUpperCase();
+  const key = Object.keys(STAGIAIRES).find(k => k.toUpperCase() === code);
+  const data = key ? STAGIAIRES[key] : null;
+
+  if (!data) {
+    document.getElementById('lockErr').style.display = 'block';
+    return;
+  }
+
+  // Masquer le verrou, afficher la check-list
+  document.getElementById('lockScreen').style.display = 'none';
+  document.getElementById('clWrap').style.display = 'block';
+  document.getElementById('clDoc').style.display = 'block';
+
+  // Pré-remplir nom/prénom uniquement si pas admin
+  if (!data.admin) {
+    document.getElementById('prenom').value = data.prenom || '';
+    document.getElementById('nom').value = data.nom || '';
+    document.getElementById('codeStagiaire').value = key;
+  } else {
+    document.getElementById('codeStagiaire').value = 'ADMIN';
+  }
+
+  // Heure/date
+  tick();
+}
+
+// ── HORLOGE ──────────────────────────────────────────────────
 function tick() {
   const n = new Date();
-  document.getElementById('clkUTC').textContent = n.toUTCString().split(' ')[4];
-  document.getElementById('clkLocal').textContent = n.toLocaleTimeString('fr-FR');
-  document.getElementById('clkDate').textContent = n.toLocaleDateString('fr-FR',{weekday:'long',day:'2-digit',month:'long'});
+  document.getElementById('dateDisplay').textContent = n.toLocaleDateString('fr-FR');
+  document.getElementById('heureDisplay').textContent = n.toUTCString().split(' ')[4] + ' UTC';
+  document.getElementById('sigDate').textContent = 'Fait le ' + n.toLocaleDateString('fr-FR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
 }
-setInterval(tick,1000); tick();
+setInterval(tick, 1000);
 
-function s(id){document.getElementById(id).style.display='block';}
-function h(id){document.getElementById(id).style.display='none';}
+// ── CHECK-LIST ───────────────────────────────────────────────
+document.querySelectorAll('.cl-list input[type=checkbox]').forEach(cb => {
+  cb.addEventListener('change', function() {
+    const n = this.id.replace('c','');
+    const li = document.getElementById('li'+n);
+    const ic = document.getElementById('ic'+n);
+    if (this.checked) {
+      li.classList.add('checked');
+      ic.textContent = '✓'; ic.style.background = '#e8f5e9'; ic.style.color = '#2e7d32';
+    } else {
+      li.classList.remove('checked');
+      ic.textContent = '○'; ic.style.background = ''; ic.style.color = '';
+    }
+    updateScore();
+  });
+});
 
-// METAR
-function loadMetar(){
-  s('mL');h('mO');h('mE');
-  fetch('https://corsproxy.io/?'+encodeURIComponent('https://aviationweather.gov/api/data/metar?ids=LFSX&format=json&hours=2'))
-  .then(r=>r.json()).then(data=>{
-    h('mL');
-    if(!data||!data.length) throw new Error();
-    const m=data[0];
-    document.getElementById('mRaw').textContent=m.rawOb||'—';
-    const v=[
-      {v:m.temp!==undefined?m.temp+'°C':'—',l:'Température',w:m.temp>35||m.temp<-5},
-      {v:m.dewpoint!==undefined?m.dewpoint+'°C':'—',l:'Rosée',w:false},
-      {v:m.wdir!==undefined?m.wdir+'°':'—',l:'Dir. vent',w:false},
-      {v:m.wspd!==undefined?m.wspd+' kt':'—',l:'Vent',w:m.wspd>15},
-      {v:m.wgst!==undefined?m.wgst+' kt':'—',l:'Rafales',w:m.wgst>20},
-      {v:m.visib!==undefined?m.visib+' SM':'—',l:'Visibilité',w:m.visib<3},
-      {v:m.altim!==undefined?m.altim+' hPa':'—',l:'QNH',w:false},
-      {v:m.clouds&&m.clouds[0]?m.clouds[0].cover+' '+(m.clouds[0].base||'')+'ft':'CAVOK',l:'Nuages',w:false},
-    ];
-    document.getElementById('mVals').innerHTML=v.map(i=>'<div class="m-val"><div class="v '+(i.w?'w':'g')+'">'+ i.v +'</div><div class="l">'+i.l+'</div></div>').join('');
-    s('mO');
-    // Status pills
-    document.getElementById('statusBar').innerHTML=[
-      '<div class="s-pill"><span class="s-dot '+(m.wspd>15?'warn':'ok')+'"></span>Vent '+(m.wspd||'—')+' kt</div>',
-      '<div class="s-pill"><span class="s-dot '+(m.visib<3?'err':'ok')+'"></span>Visibilité '+(m.visib||'—')+' SM</div>',
-      '<div class="s-pill"><span class="s-dot ok"></span>QNH '+(m.altim||'—')+' hPa</div>',
-      '<div class="s-pill"><span class="s-dot ok"></span>METAR à jour</div>',
-    ].join('');
-  }).catch(()=>{h('mL');s('mE');});
+function updateScore() {
+  const checked = document.querySelectorAll('.cl-list input:checked').length;
+  const pct = checked / 14 * 100;
+  document.getElementById('scoreNum').textContent = checked + '/14';
+  document.getElementById('pFill').style.width = pct + '%';
+  document.getElementById('scoreNum').style.color = pct>=80?'#2e7d32':pct>=50?'#e65100':'var(--main)';
+  document.getElementById('pFill').style.background = pct>=80?'#43a047':pct>=50?'#fb8c00':'var(--main)';
 }
 
-// TAF
-function loadTAF(){
-  s('tL');h('tO');h('tE');
-  fetch('https://corsproxy.io/?'+encodeURIComponent('https://aviationweather.gov/api/data/taf?ids=LFSX&format=json'))
-  .then(r=>r.json()).then(data=>{
-    h('tL');
-    if(!data||!data.length) throw new Error();
-    document.getElementById('tRaw').textContent=data[0].rawTAF||data[0].raw||'Non disponible';
-    s('tO');
-  }).catch(()=>{h('tL');s('tE');});
+function setVerdict(v) {
+  verdict = v;
+  document.getElementById('vOk').className = 'vp'+(v==='ok'?' ok':'');
+  document.getElementById('vWarn').className = 'vp'+(v==='warn'?' warn':'');
+  document.getElementById('vStop').className = 'vp'+(v==='stop'?' stop':'');
 }
 
-// KP
-const KP=[
-  {max:2,title:'Calme',color:'#43a047',bg:'#e8f5e9',row:'r02',desc:'Conditions idéales. Aucune perturbation géomagnétique.'},
-  {max:3,title:'Légèrement actif',color:'#7cb342',bg:'#f1f8e9',row:'r3',desc:'Impact négligeable sur les équipements de navigation.'},
-  {max:4,title:'Actif',color:'#fb8c00',bg:'#fff3e0',row:'r4',desc:'Légères perturbations GPS possibles. Vérifiez la précision.'},
-  {max:6,title:'Tempête G1–G2',color:'#e53935',bg:'#ffebee',row:'r56',desc:'⚠️ GPS dégradé. Renforcez la surveillance en vol.'},
-  {max:9,title:'Tempête G3–G5',color:'#8e24aa',bg:'#f3e5f5',row:'r79',desc:'🚫 Vol déconseillé. GPS potentiellement inutilisable.'},
-];
-function loadKP(){
-  s('kL');h('kO');h('kE');
-  fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json')
-  .then(r=>r.json()).then(data=>{
-    h('kL');
-    if(!data||data.length<2) throw new Error();
-    const kp=parseFloat(data[data.length-1][1]);
-    const lvl=KP.find(l=>kp<=l.max)||KP[KP.length-1];
-    const c=document.getElementById('kpC');
-    c.style.borderColor=lvl.color; c.style.background=lvl.bg;
-    const n=document.getElementById('kpN');
-    n.textContent=kp.toFixed(1); n.style.color=lvl.color;
-    document.getElementById('kpT').textContent=lvl.title;
-    document.getElementById('kpT').style.color=lvl.color;
-    document.getElementById('kpD').textContent=lvl.desc;
-    document.getElementById('kpNeedle').style.left=(kp/9*100)+'%';
-    ['r02','r3','r4','r56','r79'].forEach(id=>{
-      const row=document.getElementById(id);
-      if(row){row.className='';row.style.background='';}
-    });
-    const ar=document.getElementById(lvl.row);
-    if(ar){ar.className='kp-active';ar.style.background=lvl.bg;}
-    s('kO');
-  }).catch(()=>{h('kL');s('kE');});
+// ── CANVAS SIGNATURE ─────────────────────────────────────────
+const canvas = document.getElementById('sigCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = canvas.offsetWidth || 380; canvas.height = 110;
+ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+let drawing = false, signed = false;
+function pos(e) {
+  const r = canvas.getBoundingClientRect();
+  const sx = canvas.width/r.width, sy = canvas.height/r.height;
+  return e.touches ? {x:(e.touches[0].clientX-r.left)*sx,y:(e.touches[0].clientY-r.top)*sy}
+                   : {x:(e.clientX-r.left)*sx,y:(e.clientY-r.top)*sy};
 }
+canvas.addEventListener('mousedown', e=>{drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+canvas.addEventListener('mousemove', e=>{if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();signed=true;document.getElementById('sigStatus').textContent='✓ Signature enregistrée';});
+canvas.addEventListener('mouseup', ()=>drawing=false);
+canvas.addEventListener('mouseleave', ()=>drawing=false);
+canvas.addEventListener('touchstart', e=>{e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);},{passive:false});
+canvas.addEventListener('touchmove', e=>{e.preventDefault();if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();signed=true;document.getElementById('sigStatus').textContent='✓ Signature enregistrée';},{passive:false});
+canvas.addEventListener('touchend', ()=>drawing=false);
+function clearSig(){ctx.clearRect(0,0,canvas.width,canvas.height);signed=false;document.getElementById('sigStatus').textContent='';}
 
-loadMetar(); loadTAF(); loadKP();
-setInterval(()=>{loadMetar();loadKP();},600000);
+// ── SOUMISSION ───────────────────────────────────────────────
+function soumettre() {
+  const prenom = document.getElementById('prenom').value.trim();
+  const nom = document.getElementById('nom').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const err = document.getElementById('errMsg');
+  err.style.display = 'none';
+  if (!prenom||!nom){err.textContent='Merci de saisir votre nom et prénom.';err.style.display='block';return;}
+  if (!email||!email.includes('@')){err.textContent='Merci de saisir une adresse email valide.';err.style.display='block';return;}
+  if (!verdict){err.textContent='Merci de sélectionner un verdict.';err.style.display='block';return;}
+  if (!signed){err.textContent='Merci de signer dans le cadre prévu.';err.style.display='block';return;}
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled=true; btn.textContent='Envoi en cours...';
+  const now = new Date();
+  const checked = document.querySelectorAll('.cl-list input:checked').length;
+  fetch(SCRIPT_URL,{
+    method:'POST',mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      date:now.toLocaleDateString('fr-FR'),
+      heure:now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+      nom, prenom, email,
+      drone:document.getElementById('drone').value||'—',
+      lieu:document.getElementById('lieu').value||'—',
+      score:checked+'/14 — '+(verdict==='ok'?'Autorisé':verdict==='warn'?'Sous conditions':'Reporté'),
+      signature:canvas.toDataURL('image/png')
+    })
+  })
+  .then(()=>{document.getElementById('okMsg').style.display='block';btn.style.display='none';window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});})
+  .catch(()=>{err.textContent='Erreur de connexion. Veuillez réessayer.';err.style.display='block';btn.disabled=false;btn.textContent='✓ Valider et enregistrer →';});
+}
 </script>
 </body>
 </html>
