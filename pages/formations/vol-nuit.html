@@ -3,13 +3,105 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Vol de nuit &amp; captation nocturne — APH Drone</title>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+<title>Vol de nuit & Captation nocturne — APH Drone</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../../assets/css/shared.css"/>
+<style>
+.f-hero{position:relative;min-height:560px;background:linear-gradient(to bottom,rgba(2,8,20,.4) 0%,rgba(2,8,20,.92) 100%),url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80') center/cover no-repeat;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 52px}
+.f-breadcrumb{position:absolute;top:32px;left:0;right:0;font-family:var(--font);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.55);padding:0 48px}
+.f-breadcrumb a{color:rgba(255,255,255,.55);text-decoration:none}
+.f-breadcrumb span{margin:0 6px}
+.f-hero-content{padding:0 48px}
+.f-tag{display:inline-block;font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#8fa3b5;margin-bottom:14px}
+.f-title{font-family:var(--font);font-size:clamp(2rem,5vw,3.8rem);font-weight:900;color:#fff;line-height:1.05;text-transform:uppercase;font-style:italic;margin-bottom:16px;max-width:800px}
+.f-intro{font-size:15px;color:rgba(255,255,255,.75);line-height:1.7;max-width:620px;margin-bottom:36px}
+.f-meta{display:flex;gap:0;flex-wrap:wrap}
+.f-meta-item{display:flex;align-items:flex-start;gap:12px;padding:16px 28px;border-left:3px solid var(--main);margin-right:2px;background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+.f-meta-item svg{flex-shrink:0;color:#8fa3b5;margin-top:2px}
+.f-meta-label{font-family:var(--font);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.5);margin-bottom:4px}
+.f-meta-val{font-family:var(--font);font-size:14px;font-weight:700;color:#fff}
+.f-meta-link{font-family:var(--font);font-size:13px;font-weight:700;color:#8fa3b5;text-decoration:none}
+.f-meta-link:hover{color:#fff;text-decoration:underline}
+.f-layout{display:grid;grid-template-columns:1fr 340px;gap:48px;padding:64px 48px;max-width:1200px;margin:0 auto}
+.f-section{margin-bottom:52px}
+.f-section h2{font-family:var(--font);font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:800;color:var(--black);margin-bottom:8px}
+.f-section-sub{font-family:var(--font);font-size:14px;font-weight:700;color:var(--main);margin-bottom:20px}
+.f-section p{font-size:14px;color:var(--text-l);line-height:1.85;margin-bottom:14px}
+.f-section ul{margin:0 0 14px 20px}
+.f-section ul li{font-size:14px;color:var(--text-l);line-height:1.8;margin-bottom:4px}
+.unique-badge{display:inline-flex;align-items:center;gap:8px;background:#0d1b2a;color:#8fa3b5;font-family:var(--font);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:8px 16px;margin-bottom:24px}
+.unique-badge::before{content:"★";color:var(--main)}
+.prérequis-box{background:#f0f4f8;border:1px solid #dde4ec;border-left:4px solid var(--main);padding:20px 24px;margin-bottom:20px}
+.prérequis-box h3{font-family:var(--font);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--main);margin-bottom:12px}
+.prérequis-box ul{margin:0 0 0 18px}
+.prérequis-box ul li{font-size:13px;color:var(--text-l);line-height:1.8;margin-bottom:4px}
+.prog-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.prog-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:var(--grey);border-left:3px solid var(--main);transition:.2s}
+.prog-item:hover{background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.prog-item.night{background:#0d1b2a;border-color:#7a8fa5}
+.prog-item.night .prog-num{color:#7a8fa5}
+.prog-item.night .prog-text{color:#e0e7ef}
+.prog-item.night .prog-text span{color:#6b7f93}
+.prog-num{font-family:var(--font);font-size:11px;font-weight:800;color:var(--main);flex-shrink:0;margin-top:2px}
+.prog-text{font-family:var(--font);font-size:12px;font-weight:700;color:var(--black);line-height:1.4}
+.prog-text span{display:block;font-weight:400;color:var(--text-l);font-size:11px;margin-top:2px}
+.day-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:5px 12px;margin-bottom:10px}
+.day-badge.day{background:var(--main);color:#fff}
+.day-badge.night{background:#0d1b2a;color:#8fa3b5;border:1px solid #1e3a5f}
+.accordion{border:1px solid var(--grey-m);margin-bottom:4px;overflow:hidden}
+.accordion-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:var(--black);cursor:pointer;font-family:var(--font);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#fff;transition:background .2s}
+.accordion-head:hover{background:#2a2a2a}
+.accordion-head svg{transition:transform .3s;flex-shrink:0}
+.accordion-head.open svg{transform:rotate(180deg)}
+.accordion-body{display:none;padding:24px;background:#fff;font-size:14px;color:var(--text-l);line-height:1.8}
+.accordion-body.open{display:block}
+.accordion-body ul{margin:8px 0 0 18px}
+.accordion-body ul li{margin-bottom:6px}
+.obj-highlight{font-family:var(--font);font-size:15px;font-weight:700;color:var(--main);line-height:1.7;margin-bottom:20px;padding-left:20px;border-left:3px solid var(--main)}
+.sidebar-card{background:#fff;border:1px solid var(--grey-m);border-top:4px solid var(--main);padding:28px 24px;margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,.05);position:sticky;top:120px}
+.sidebar-price{font-family:var(--font);font-size:36px;font-weight:800;color:var(--black);margin-bottom:4px}
+.sidebar-price span{font-size:16px;font-weight:600;color:var(--text-l)}
+.sidebar-price-sub{font-size:12px;color:var(--text-l);margin-bottom:24px}
+.sidebar-items{list-style:none;padding:0;margin:0 0 24px}
+.sidebar-items li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--grey-m);font-size:13px;color:var(--text)}
+.sidebar-items li:last-child{border:none}
+.sidebar-items li svg{color:var(--main);flex-shrink:0}
+.btn-inscription{display:block;width:100%;background:var(--main);color:#fff;border:none;padding:16px;font-family:var(--font);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;transition:.2s;text-align:center;text-decoration:none;margin-bottom:12px}
+.btn-inscription:hover{background:var(--main-d);transform:translateY(-1px);box-shadow:0 4px 16px rgba(90,111,130,.3)}
+.btn-contact{display:block;width:100%;background:none;color:var(--main);border:2px solid var(--main);padding:14px;font-family:var(--font);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;transition:.2s;text-align:center;text-decoration:none}
+.btn-contact:hover{background:var(--main);color:#fff}
+.sidebar-note{font-size:11px;color:var(--text-l);text-align:center;margin-top:14px;line-height:1.5}
+.sidebar-exclusive{background:#0d1b2a;color:#8fa3b5;padding:12px 16px;margin-bottom:20px;font-family:var(--font);font-size:11px;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.08em}
+.f-form-section{background:var(--black);padding:72px 48px}
+.f-form-section h2{font-family:var(--font);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:#fff;margin-bottom:8px}
+.f-form-section p{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:36px}
+.f-form{max-width:760px}
+.f-form-card{background:#fff;border-radius:12px;padding:28px 28px 20px;margin-bottom:16px}
+.f-form-card h3{font-family:var(--font);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-l);margin-bottom:20px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.f-group{display:flex;flex-direction:column}
+.f-group label{font-size:12px;color:var(--text);margin-bottom:5px;font-weight:500}
+.f-group label span{color:var(--main)}
+.f-group input,.f-group select,.f-group textarea{border:1px solid var(--grey-m);border-radius:6px;padding:11px 14px;font-size:13px;font-family:var(--body);outline:none;transition:.2s;background:var(--grey);width:100%;box-sizing:border-box}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--main);background:#fff}
+.f-group textarea{min-height:90px;resize:vertical}
+.f-group select{appearance:none}
+.f-submit{background:var(--main);color:#fff;border:none;border-radius:8px;padding:16px 48px;font-family:var(--font);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;cursor:pointer;transition:.2s;margin-top:8px}
+.f-submit:hover{background:var(--main-d);transform:translateY(-1px)}
+@media(max-width:900px){
+  .f-layout{grid-template-columns:1fr;padding:40px 24px}
+  .f-hero-content,.f-breadcrumb{padding:0 24px}
+  .f-meta{flex-direction:column}
+  .prog-grid{grid-template-columns:1fr}
+  .f-form-section{padding:48px 24px}
+  .f-row{grid-template-columns:1fr}
+  .f-sidebar{order:-1}
+  .sidebar-card{position:static}
+}
+</style>
 </head>
 <body>
 
-<!-- ========== HEADER ========== -->
 <div style="position:fixed;top:0;left:0;right:0;z-index:1000">
   <div class="header-top">
     <div class="container">
@@ -19,12 +111,6 @@
         <a href="../../pages/equipements.html">Équipements</a>
         <a href="../../pages/zone-intervention.html">Zone d'intervention</a>
         <a href="../../pages/contact.html" class="tel">✆ 06 95 39 07 76</a>
-      </div>
-      <div class="header-search">
-        <input type="text" placeholder="Rechercher"/>
-        <button aria-label="Rechercher">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </button>
       </div>
     </div>
   </div>
@@ -41,45 +127,36 @@
               <li><a href="../../pages/apropos.html">À propos</a></li>
               <li><a href="../../pages/equipe.html">L'équipe</a></li>
               <li><a href="../../pages/zone-intervention.html">Zone d'intervention</a></li>
-              <li><a href="../../pages/hebergement.html">Hébergement &amp; Restauration</a></li>
-              <li><a href="../../pages/partenaires.html">Nos partenaires et clients</a></li>
-              <li><a href="../../pages/temoignages.html">Témoignages</a></li>
+              <li><a href="../../pages/partenaires.html">Nos partenaires</a></li>
               <li><a href="../../pages/actualites.html">Actualités</a></li>
-              <li><a href="../../pages/recrutement.html">Recrutement</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-dropdown active">
+            <a href="../../pages/formations.html">Formations <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="dropdown">
+              <li><a href="../../pages/formations/initiation-a1a3.html">Initiation A1/A3</a></li>
+              <li><a href="../../pages/formations/bapd-a2.html">BAPD — Catégorie A2</a></li>
+              <li><a href="../../pages/formations/cats-sts.html">Préparation CATS STS</a></li>
+              <li><a href="../../pages/formations/vol-nuit.html" style="color:var(--main);font-weight:700">Vol de nuit</a></li>
+              <li><a href="../../pages/formations/thermographie.html">Thermographie</a></li>
+              <li><a href="../../pages/formations/agriculture.html">Agriculture de précision</a></li>
+              <li><a href="../../pages/formations/securite-secours.html">Sécurité &amp; Secours</a></li>
             </ul>
           </li>
           <li class="nav-item has-dropdown">
             <a href="../../pages/prestations.html">Prestations <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
             <ul class="dropdown">
-              <li><a href="../../pages/prestations/cartographie.html">Cartographie &amp; Modélisation 3D</a></li>
-              <li><a href="../../pages/prestations/surveillance.html">Surveillance &amp; Sécurité</a></li>
-              <li><a href="../../pages/prestations/environnement.html">Environnement</a></li>
-              <li><a href="../../pages/prestations/agriculture.html">Agriculture de précision</a></li>
-              <li><a href="../../pages/prestations/inspection.html">Inspection technique</a></li>
+              <li><a href="../../pages/prestations/inspection.html">Inspection</a></li>
               <li><a href="../../pages/prestations/thermographie.html">Thermographie</a></li>
-              <li><a href="../../pages/prestations/photo-video.html">Photo &amp; vidéo aérienne</a></li>
-              <li><a href="../../pages/prestations/services-prestataires.html">Services aux prestataires drone</a></li>
-            </ul>
-          </li>
-          <li class="nav-item has-dropdown">
-            <a href="../../pages/formations.html">Formations <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
-            <ul class="dropdown">
-              <li><a href="../../pages/formations/initiation-a1a3.html">Initiation A1/A3</a></li>
-              <li><a href="../../pages/formations/bapd-a2.html">BAPD — Catégorie A2</a></li>
-              <li><a href="../../pages/formations/cats-sts.html">Préparation CATS STS-01/02</a></li>
-              <li><a href="../../pages/formations/vol-nuit.html">Vol de nuit</a></li>
-              <li><a href="../../pages/formations/thermographie.html">Thermographie</a></li>
-              <li><a href="../../pages/formations/agriculture.html">Agriculture &amp; Arboriculture</a></li>
-              <li><a href="../../pages/formations/securite-secours.html">Sécurité, Recherche &amp; Secours</a></li>
+              <li><a href="../../pages/prestations/agriculture.html">Agriculture</a></li>
+              <li><a href="../../pages/prestations/cartographie.html">Cartographie</a></li>
             </ul>
           </li>
           <li class="nav-item has-dropdown">
             <a href="#">Outils en ligne <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
             <ul class="dropdown">
-              <li><a href="../../pages/outils/reglementation.html">Réglementation</a></li>
               <li><a href="../../pages/outils/meteo.html">Préparation MÉTÉO</a></li>
-              <li><a href="../../pages/outils/preparation-vol.html">Préparation de vol</a></li>
-              <li><a href="../../pages/outils/elearning.html">Drone e-learning</a></li>
+              <li><a href="../../pages/outils/reglementation.html">Réglementation</a></li>
               <li><a href="../../pages/outils/qcm.html">QCM</a></li>
             </ul>
           </li>
@@ -89,63 +166,386 @@
           <li class="nav-item"><a href="../../pages/espace-clients.html" style="color:var(--main);font-weight:800">Espace clients</a></li>
         </ul>
       </nav>
-      <button class="burger" id="burger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </div>
 
-<!-- ========== PAGE HERO ========== -->
-<section class="page-hero">
-  <div class="container">
-    <div class="breadcrumb">
-      <a href="../../index.html">Accueil</a>
-      <span>›</span>
-      <a href="../../pages/formations.html">Formations</a>
-        <span>›</span>
-        <span style="color:var(--text)">Vol de nuit &amp; captation nocturne</span>
+<!-- HERO -->
+<section class="f-hero">
+  <div class="f-breadcrumb">
+    <a href="../../index.html">Accueil</a><span>›</span>
+    <a href="../../pages/formations.html">Formations</a><span>›</span>
+    Vol de nuit & Captation nocturne
+  </div>
+  <div class="f-hero-content">
+    <p class="f-tag">Formation exclusive — Opérations nocturnes</p>
+    <h1 class="f-title">Vol de nuit &<br/>Captation nocturne</h1>
+    <p class="f-intro">3 jours et 2 nuits de formation intensive en conditions réelles — réglementation spécifique, techniques nocturnes, captation thermique et photo/vidéo de nuit. Une formation rare en France.</p>
+    <div class="f-meta">
+      <div class="f-meta-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div><div class="f-meta-label">Rentrée</div><a href="#inscription" class="f-meta-link">Voir les dates →</a></div>
+      </div>
+      <div class="f-meta-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div><div class="f-meta-label">Durée</div><div class="f-meta-val">3 jours + 2 nuits</div></div>
+      </div>
+      <div class="f-meta-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        <div><div class="f-meta-label">Effectif</div><div class="f-meta-val">4 stagiaires max</div></div>
+      </div>
+      <div class="f-meta-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        <div><div class="f-meta-label">Admission</div><div class="f-meta-val">BAPD A2 ou CATS</div></div>
+      </div>
     </div>
-    <p class="page-tag">Formation</p>
-    <h1 class="page-title">Vol de nuit &amp; captation nocturne</h1>
-    <p class="page-intro">Maîtrisez les spécificités du vol nocturne — réglementation, sécurité, réglages capteurs, traitements en post-production.</p>
   </div>
 </section>
 
-    <!-- PLACEHOLDER — À REMPLACER PAR LE CONTENU DÉFINITIF -->
-    <section class="section-pad">
-      <div class="container">
-        <div style="background:var(--grey);border-left:4px solid var(--main);padding:32px 40px;max-width:700px">
-          <p style="font-family:var(--font);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--main);margin-bottom:12px">Contenu à venir</p>
-          <p style="font-size:14px;color:var(--text-l);line-height:1.8">Programme, prérequis (A2 ou STS), équipements requis, tarif.</p>
+<!-- CONTENU -->
+<div class="f-layout">
+  <main class="f-main">
+
+    <!-- BADGE EXCLUSIF -->
+    <div class="unique-badge">Formation rare en France — vols nocturnes réels en conditions opérationnelles</div>
+
+    <!-- PRÉREQUIS -->
+    <div class="f-section">
+      <div class="prérequis-box">
+        <h3>⚠️ Prérequis obligatoires</h3>
+        <ul>
+          <li>Être titulaire du <strong>BAPD catégorie A2</strong> minimum</li>
+          <li>Ou être titulaire du <strong>CATS STS-01/STS-02</strong></li>
+          <li>Expérience minimale recommandée : <strong>10 heures de vol documentées</strong></li>
+          <li>Aptitude physique à l'activité nocturne (vision nocturne suffisante)</li>
+          <li>Âge minimum : <strong>16 ans</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PROGRAMME -->
+    <div class="f-section">
+      <h2>Programme — 3 jours & 2 nuits</h2>
+      <p class="f-section-sub">Formation intensive en conditions réelles — alternance jour/nuit</p>
+
+      <!-- JOUR 1 -->
+      <div style="margin-bottom:20px">
+        <div class="day-badge day">☀ Jour 1 — Réglementation & préparation</div>
+        <div class="prog-grid" style="margin-top:0">
+          <div class="prog-item">
+            <span class="prog-num">01</span>
+            <div class="prog-text">Réglementation vol de nuit drone<span>Arrêté du 18 mai 2023 — dérogations, autorisations spécifiques</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">02</span>
+            <div class="prog-text">Balisage lumineux obligatoire<span>Feux de position, anticollision, signalisation terrain</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">03</span>
+            <div class="prog-text">Préparation de mission nocturne<span>Reconnaissance de terrain de jour, plan de vol, risques spécifiques</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">04</span>
+            <div class="prog-text">Météo & luminosité<span>Lune, nuages, vent de nuit, conditions de visibilité nocturne</span></div>
+          </div>
         </div>
       </div>
-    </section>
 
-<!-- CTA BAND -->
-<section class="cta-band">
-  <div class="container">
-    <div>
-      <h2>Un projet drone ?</h2>
-      <p>Devis gratuit sous 48 h — intervention Bourgogne-Franche-Comté</p>
+      <!-- NUIT 1 -->
+      <div style="margin-bottom:20px">
+        <div class="day-badge night">🌙 Nuit 1 — Premiers vols nocturnes</div>
+        <div class="prog-grid" style="margin-top:0">
+          <div class="prog-item night">
+            <span class="prog-num">05</span>
+            <div class="prog-text">Prise en main nocturne<span>Décollage/atterrissage de nuit, orientation sans repères visuels naturels</span></div>
+          </div>
+          <div class="prog-item night">
+            <span class="prog-num">06</span>
+            <div class="prog-text">Gestion des lumières parasites<span>Halos, éblouissements, réglages capteur en faible luminosité</span></div>
+          </div>
+          <div class="prog-item night">
+            <span class="prog-num">07</span>
+            <div class="prog-text">VLOS nocturne<span>Maintien de la ligne de vue, distances de sécurité de nuit</span></div>
+          </div>
+          <div class="prog-item night">
+            <span class="prog-num">08</span>
+            <div class="prog-text">Procédures d'urgence nocturnes<span>Perte visuelle, retour RTH, gestion des pannes de nuit</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOUR 2 -->
+      <div style="margin-bottom:20px">
+        <div class="day-badge day">☀ Jour 2 — Captation & post-production</div>
+        <div class="prog-grid" style="margin-top:0">
+          <div class="prog-item">
+            <span class="prog-num">09</span>
+            <div class="prog-text">Réglages capteurs en conditions nocturnes<span>ISO, obturateur, ouverture — compromis bruit/netteté</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">10</span>
+            <div class="prog-text">Captation thermique de nuit<span>Caméra H20T — détection de personnes, inspection nocturne</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">11</span>
+            <div class="prog-text">Photo & vidéo longue exposition<span>Light painting aérien, filés lumineux, poses longues</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">12</span>
+            <div class="prog-text">Post-production nocturne<span>Débruitage, étalonnage couleur, rendu professionnel de nuit</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NUIT 2 -->
+      <div style="margin-bottom:20px">
+        <div class="day-badge night">🌙 Nuit 2 — Mission opérationnelle</div>
+        <div class="prog-grid" style="margin-top:0">
+          <div class="prog-item night">
+            <span class="prog-num">13</span>
+            <div class="prog-text">Mission de surveillance nocturne<span>Périmètre, inspection de site, compte rendu opérationnel</span></div>
+          </div>
+          <div class="prog-item night">
+            <span class="prog-num">14</span>
+            <div class="prog-text">Captation photo/vidéo professionnelle<span>Session de prise de vue nocturne avec objectifs définis</span></div>
+          </div>
+          <div class="prog-item night">
+            <span class="prog-num">15</span>
+            <div class="prog-text">Coordination terrain de nuit<span>Communication équipe, observation au sol, sécurisation de zone</span></div>
+          </div>
+          <div class="prog-item night">
+            <span class="prog-num">16</span>
+            <div class="prog-text">RETEX & debriefing nocturne<span>Analyse des vols, points d'amélioration, incidents rencontrés</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOUR 3 -->
+      <div>
+        <div class="day-badge day">☀ Jour 3 — Bilan & certification</div>
+        <div class="prog-grid" style="margin-top:0">
+          <div class="prog-item">
+            <span class="prog-num">17</span>
+            <div class="prog-text">Analyse des productions nocturnes<span>Revue des captations, correction technique, sélection</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">18</span>
+            <div class="prog-text">Intégration au MANEX<span>Rédaction de la fiche opérationnelle vol de nuit pour votre MANEX</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">19</span>
+            <div class="prog-text">Évaluation finale<span>Mise en situation opérationnelle — validation des compétences</span></div>
+          </div>
+          <div class="prog-item">
+            <span class="prog-num">20</span>
+            <div class="prog-text">Remise de l'attestation<span>Attestation APH Drone — Formation vol de nuit opérationnel</span></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="cta-actions">
-      <a href="../../pages/contact.html" class="btn-cta">Nous contacter</a>
-      <a href="../../pages/prestations.html" class="btn-cta-out">Voir les prestations</a>
+
+    <!-- ACCORDÉONS -->
+    <div class="f-section">
+
+      <div class="accordion">
+        <div class="accordion-head" onclick="toggleAcc(this)">
+          CONDITIONS D'ADMISSION
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="accordion-body">
+          <p>Cette formation s'adresse aux télépilotes <strong>déjà certifiés</strong>, souhaitant étendre leurs compétences aux opérations nocturnes.</p>
+          <ul>
+            <li><strong>BAPD catégorie A2</strong> — minimum requis</li>
+            <li>Ou <strong>CATS STS-01 / STS-02</strong> — recommandé pour les missions professionnelles nocturnes</li>
+            <li>10 heures de vol documentées recommandées</li>
+            <li>Bonne vision nocturne — aucun trouble de la vision de nuit</li>
+            <li>Âge minimum : 16 ans</li>
+            <li>Tenue adaptée aux conditions nocturnes extérieures</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-head" onclick="toggleAcc(this)">
+          LIEU & HÉBERGEMENT
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="accordion-body">
+          <p><strong>APH Drone SARL</strong><br/>44 rue Georges Moulimard — 70300 Luxeuil-les-Bains</p>
+          <p>Les sessions nocturnes se déroulent sur des terrains sécurisés et autorisés à proximité de Luxeuil-les-Bains, sélectionnés pour leurs conditions optimales de vol nocturne (faible pollution lumineuse, espace dégagé).</p>
+          <p><strong>Hébergement :</strong> Non inclus dans le tarif. Luxeuil-les-Bains dispose de nombreuses options d'hébergement. Nous pouvons vous conseiller sur les meilleures options à proximité.</p>
+          <p><strong>Restauration :</strong> Non incluse. Pause repas organisée collectivement le midi.</p>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-head" onclick="toggleAcc(this)">
+          MATÉRIEL REQUIS
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="accordion-body">
+          <p>Apportez votre propre drone équipé pour le vol de nuit :</p>
+          <ul>
+            <li><strong>Balisage lumineux conforme</strong> — feux de position et anticollision réglementaires</li>
+            <li>Batteries supplémentaires recommandées (autonomie réduite par le froid nocturne)</li>
+            <li>Lampe frontale et équipement de sécurité terrain</li>
+            <li>Tenues chaudes adaptées aux conditions nocturnes</li>
+          </ul>
+          <p>APH Drone dispose d'un DJI Mini 4 Pro et d'un Mavic 3 équipés pour la démonstration. La caméra thermique H20T est disponible pour les sessions de captation thermique.</p>
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div class="accordion-head" onclick="toggleAcc(this)">
+          CALENDRIER & CONDITIONS MÉTÉO
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="accordion-body">
+          <p>Cette formation est <strong>soumise aux conditions météorologiques</strong> — les sessions nocturnes nécessitent une météo favorable (vent < 8 m/s, visibilité > 1 km, absence de précipitations).</p>
+          <ul>
+            <li>Sessions organisées de mars à octobre (conditions optimales)</li>
+            <li>Délai minimum de réservation : <strong>14 jours</strong></li>
+            <li>Report gratuit en cas de conditions météo défavorables</li>
+            <li>Tenue préférentielle : nuits sans lune pour maximiser l'expérience nocturne</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- OBJECTIFS -->
+    <div class="f-section">
+      <h2>Les objectifs de la formation</h2>
+      <p class="f-section-sub">À l'issue de cette formation, le stagiaire sera capable de :</p>
+      <p class="obj-highlight">Conduire des opérations drone de nuit en toute légalité et en toute sécurité, dans un cadre opérationnel réel — surveillance, inspection thermique, captation photo/vidéo nocturne professionnelle.</p>
+      <ul>
+        <li>Maîtriser la réglementation spécifique au vol de nuit en France</li>
+        <li>Préparer et exécuter une mission drone nocturne en conditions réelles</li>
+        <li>Régler son drone et ses capteurs pour la captation nocturne optimale</li>
+        <li>Utiliser la caméra thermique en conditions de faible luminosité</li>
+        <li>Gérer les situations d'urgence spécifiques au vol nocturne</li>
+        <li>Intégrer le vol de nuit dans son MANEX opérationnel</li>
+        <li>Produire des livrables photo/vidéo nocturnes de qualité professionnelle</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="f-sidebar">
+    <div class="sidebar-exclusive">🌙 Formation exclusive — Rare en France</div>
+    <div class="sidebar-card">
+      <div class="sidebar-price">1 290 € <span>HT</span></div>
+      <div class="sidebar-price-sub">par stagiaire — TVA non applicable (art. 293B CGI)</div>
+      <ul class="sidebar-items">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>3 jours + 2 nuits de formation</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Vols nocturnes en conditions réelles</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Captation thermique incluse</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Post-production nocturne</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Support de cours inclus</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Fiche MANEX vol de nuit</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Attestation de formation</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>4 stagiaires maximum</li>
+        <li style="color:var(--text-l)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#b0bec5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Hébergement non inclus</li>
+      </ul>
+      <a href="#inscription" class="btn-inscription">S'inscrire →</a>
+      <a href="../../pages/contact.html" class="btn-contact">Demander un devis</a>
+      <p class="sidebar-note">Prérequis : BAPD A2 minimum ou CATS STS<br/>4 stagiaires max — sessions sur demande</p>
+    </div>
+  </aside>
+
+</div>
+
+<!-- FORMULAIRE -->
+<section class="f-form-section" id="inscription">
+  <div style="max-width:760px;margin:0 auto">
+    <h2>Contact & Inscription</h2>
+    <p>Cette formation est organisée sur demande. Notre équipe vous contacte sous 48h pour valider vos prérequis et définir les dates selon les conditions météorologiques optimales.</p>
+    <div class="f-form">
+      <form action="https://formspree.io/f/xrewbond" method="POST">
+        <input type="hidden" name="formation" value="Vol de nuit & Captation nocturne"/>
+        <div class="f-form-card">
+          <h3>Informations personnelles</h3>
+          <div class="f-row">
+            <div class="f-group"><label>Nom <span>*</span></label><input type="text" name="nom" required placeholder="Votre nom"/></div>
+            <div class="f-group"><label>Prénom <span>*</span></label><input type="text" name="prenom" required placeholder="Votre prénom"/></div>
+          </div>
+          <div class="f-row">
+            <div class="f-group"><label>Email <span>*</span></label><input type="email" name="email" required placeholder="votre@email.fr"/></div>
+            <div class="f-group"><label>Téléphone <span>*</span></label><input type="tel" name="telephone" required placeholder="06 XX XX XX XX"/></div>
+          </div>
+        </div>
+        <div class="f-form-card">
+          <h3>Vos certifications & matériel</h3>
+          <div class="f-row">
+            <div class="f-group">
+              <label>Certification détenue <span>*</span></label>
+              <select name="certification" required>
+                <option value="">Sélectionnez</option>
+                <option>BAPD catégorie A2</option>
+                <option>CATS STS-01</option>
+                <option>CATS STS-01 + STS-02</option>
+                <option>CATT (ancienne réglementation)</option>
+              </select>
+            </div>
+            <div class="f-group">
+              <label>Heures de vol estimées</label>
+              <select name="heures_vol">
+                <option value="">Sélectionnez</option>
+                <option>Moins de 10h</option>
+                <option>10 à 30h</option>
+                <option>30 à 100h</option>
+                <option>Plus de 100h</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-row">
+            <div class="f-group">
+              <label>Drone équipé pour le vol de nuit ?</label>
+              <select name="balisage_nuit">
+                <option value="">Sélectionnez</option>
+                <option>Oui — balisage lumineux conforme</option>
+                <option>Non — à équiper</option>
+                <option>En cours d'équipement</option>
+              </select>
+            </div>
+            <div class="f-group">
+              <label>Période souhaitée</label>
+              <input type="text" name="periode" placeholder="Ex : printemps 2025, sans lune..."/>
+            </div>
+          </div>
+          <div class="f-group" style="margin-bottom:0">
+            <label>Objectif professionnel / contexte</label>
+            <textarea name="message" placeholder="Décrivez votre projet — surveillance, inspection thermique, captation artistique, SDIS..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="f-submit">Envoyer ma demande →</button>
+      </form>
     </div>
   </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
+<!-- FOOTER -->
 <footer id="footer">
   <div class="footer-main">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
           <p class="logo-text" style="color:#fff;margin-bottom:14px">APH Drone</p>
-          <p class="footer-brand-text">Opérateur drone professionnel certifié DGAC.<br/>Haute-Saône — Bourgogne-Franche-Comté.</p>
-          <p class="footer-phone">✆ 06 XX XX XX XX</p>
-          <p style="font-size:12px;color:rgba(255,255,255,.5)">contact@aphdrone.fr</p>
+          <p class="footer-brand-text">Opérateur drone professionnel certifié DGAC — France.</p>
+          <p class="footer-phone">✆ 06 95 39 07 76</p>
+          <p style="font-size:12px;color:rgba(255,255,255,.5)">aphdrone@gmail.com</p>
+        </div>
+        <div class="footer-col">
+          <h4>Formations</h4>
+          <ul>
+            <li><a href="../../pages/formations/initiation-a1a3.html">Initiation A1/A3</a></li>
+            <li><a href="../../pages/formations/bapd-a2.html">BAPD A2</a></li>
+            <li><a href="../../pages/formations/cats-sts.html">CATS STS</a></li>
+            <li><a href="../../pages/formations/vol-nuit.html">Vol de nuit</a></li>
+            <li><a href="../../pages/formations/securite-secours.html">Sécurité &amp; Secours</a></li>
+          </ul>
         </div>
         <div class="footer-col">
           <h4>APH Drone</h4>
@@ -153,35 +553,19 @@
             <li><a href="../../pages/apropos.html">À propos</a></li>
             <li><a href="../../pages/certifications.html">Certifications</a></li>
             <li><a href="../../pages/equipements.html">Équipements</a></li>
-            <li><a href="../../pages/zone-intervention.html">Zone d'intervention</a></li>
-            <li><a href="../../pages/temoignages.html">Témoignages</a></li>
-            <li><a href="../../pages/actualites.html">Actualités</a></li>
+            <li><a href="../../pages/contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Prestations</h4>
+          <h4>Espaces</h4>
           <ul>
-            <li><a href="../../pages/prestations/inspection.html">Inspection</a></li>
-            <li><a href="../../pages/prestations/thermographie.html">Thermographie</a></li>
-            <li><a href="../../pages/prestations/agriculture.html">Agriculture</a></li>
-            <li><a href="../../pages/prestations/cartographie.html">Cartographie</a></li>
-            <li><a href="../../pages/prestations/surveillance.html">Surveillance</a></li>
-            <li><a href="../../pages/prestations/photo-video.html">Photo &amp; vidéo</a></li>
+            <li><a href="../../pages/espace-stagiaires.html">Espace stagiaires</a></li>
+            <li><a href="../../pages/espace-clients.html">Espace clients</a></li>
           </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Formations</h4>
+          <h4 style="margin-top:18px">Légal</h4>
           <ul>
-            <li><a href="../../pages/formations/cats-sts.html">CATS STS</a></li>
-            <li><a href="../../pages/formations/vol-nuit.html">Vol de nuit</a></li>
-            <li><a href="../../pages/formations/securite-secours.html">SDIS / Secours</a></li>
-            <li><a href="../../pages/formations/initiation-a1a3.html">Initiation A1/A3</a></li>
-            <li><a href="../../pages/formations/bapd-a2.html">BAPD A2</a></li>
-          </ul>
-          <h4 style="margin-top:18px">Contact</h4>
-          <ul>
-            <li><a href="../../pages/contact.html">Formulaire de contact</a></li>
-            <li><a href="mailto:contact@aphdrone.fr">contact@aphdrone.fr</a></li>
+            <li><a href="../../pages/mentions-legales.html">Mentions légales</a></li>
+            <li><a href="../../pages/confidentialite.html">Confidentialité</a></li>
           </ul>
         </div>
       </div>
@@ -190,29 +574,19 @@
   <div class="footer-bottom">
     <div class="container">
       <p class="footer-copyright">Copyright © 2024–2026 APH Drone SARL</p>
-      <div class="footer-legal">
-        <a href="../../pages/mentions-legales.html">Mentions légales</a>
-        <a href="../../pages/confidentialite.html">Confidentialité</a>
-        <a href="../../pages/cookies.html">Cookies</a>
-      </div>
-      <div class="footer-social">
-        <a href="#" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
-        <a href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-        <a href="#" aria-label="YouTube"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg></a>
-        <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-      </div>
     </div>
   </div>
 </footer>
 
-<div class="cookie-banner" id="cookieBanner">
-  <p>Nous utilisons des cookies pour améliorer votre expérience. <a href="../../pages/cookies.html">En savoir plus</a></p>
-  <div class="cookie-actions">
-    <button class="btn-cookie-ok" id="cookieOk">Accepter</button>
-    <button class="btn-cookie-no" id="cookieNo">Refuser</button>
-  </div>
-</div>
-
 <script src="../../assets/js/main.js"></script>
+<script>
+function toggleAcc(head) {
+  const body = head.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.accordion-head').forEach(h => h.classList.remove('open'));
+  if (!isOpen) { body.classList.add('open'); head.classList.add('open'); }
+}
+</script>
 </body>
 </html>
