@@ -6,6 +6,7 @@
 <title>Check-list Météo Pré-vol — APH Drone</title>
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="../../assets/css/shared.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 body{background:var(--grey)}
 .cl-wrap{max-width:900px;margin:0 auto;padding:40px 24px 80px}
@@ -265,7 +266,7 @@ canvas{border:1px solid var(--grey-m);border-radius:6px;cursor:crosshair;display
 
 <script src="../../assets/js/main.js"></script>
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwvlk4NVFaQ9Ifyi_QD-7UFJ5zsyGS4uo9Y7D3su8xuKCGneri-zn_9fGOkeiSSz1R1/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxG1dSpcuJPfERur_5z2qPFb-bBSWZTS2WGDvHYlI8olo36Gm4dadcz6vkHWzvQezcI/exec";
 
 // ── STAGIAIRES ───────────────────────────────────────────────
 const STAGIAIRES = {
@@ -432,23 +433,165 @@ function soumettre() {
   if (!verdict){err.textContent='Merci de sélectionner un verdict.';err.style.display='block';return;}
   if (!signed){err.textContent='Merci de signer dans le cadre prévu.';err.style.display='block';return;}
   const btn = document.getElementById('btnSubmit');
-  btn.disabled=true; btn.textContent='Envoi en cours...';
+  btn.disabled=true; btn.textContent='Génération du PDF...';
   const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-FR');
+  const heureStr = now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const droneVal = document.getElementById('drone').value||'—';
+  const lieuVal = document.getElementById('lieu').value||'—';
   const checked = document.querySelectorAll('.cl-list input:checked').length;
-  const itemsLabels = ['Vent inférieur au seuil opérationnel','Visibilité suffisante (VLOS)','Plafond nuageux acceptable','Absence de précipitations','Température dans les limites constructeur',"Absence d'orage prévu sur la zone",'Indice KP ≤ 4','Vents en altitude cohérents','NOTAMs consultés','Fenêtre de vol compatible','TAF consulté','Plan de vol déposé si requis','TEMSI France consultée','WINTEM consultée'];
+  const verdictText = verdict==='ok'?'✅ Vol autorisé':verdict==='warn'?'⚠️ Sous conditions':'🚫 Vol reporté';
+  const scoreText = checked+'/14 — '+verdictText;
+
+  const itemsLabels = ['Vent inférieur au seuil opérationnel','Visibilité suffisante (VLOS)','Plafond nuageux acceptable','Absence de précipitations','Température dans les limites constructeur',"Absence d\'orage prévu sur la zone",'Indice KP ≤ 4','Vents en altitude cohérents','NOTAMs consultés','Fenêtre de vol compatible','TAF consulté','Plan de vol déposé si requis','TEMSI France consultée','WINTEM consultée'];
   const items = itemsLabels.map((label,i) => ({label, checked: !!document.getElementById('c'+(i+1)) && document.getElementById('c'+(i+1)).checked}));
+
+  // Générer le PDF avec jsPDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'p', unit:'mm', format:'a4' });
+  const W = 210; const ML = 15; const MR = 195; const MAIN = [122,143,165];
+
+  // En-tête bleu
+  doc.setFillColor(...MAIN);
+  doc.rect(0,0,W,28,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(16);
+  doc.text('APH Drone SARL — Check-list Météo Pré-vol',ML,12);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.text('44 rue Georges Moulimard — 70300 Luxeuil-les-Bains — aphdrone@gmail.com',ML,20);
+
+  // Infos mission
+  let y = 36;
+  doc.setFillColor(245,247,250);
+  doc.rect(ML,y-4,W-30,20,'F');
+  doc.setTextColor(107,114,128);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(8);
+  doc.text('TÉLÉPILOTE',ML+2,y+1);
+  doc.text('DATE',80,y+1);
+  doc.text('DRONE',140,y+1);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(11);
+  doc.setTextColor(26,26,26);
+  doc.text(prenom+' '+nom,ML+2,y+8);
+  doc.text(dateStr+' à '+heureStr,80,y+8);
+  doc.text(droneVal,140,y+8);
+  doc.setFontSize(8);
+  doc.setFont('helvetica','bold');
+  doc.setTextColor(107,114,128);
+  doc.text('LIEU DE VOL',ML+2,y+14);
+  doc.text('SCORE',80,y+14);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.setTextColor(26,26,26);
+  doc.text(lieuVal,ML+2,y+20);
+  doc.text(scoreText,80,y+20);
+  y += 28;
+
+  // Sections check-list
+  const sections = [
+    { titre:'☁ CONDITIONS GÉNÉRALES', items:[0,1,2,3,4] },
+    { titre:'☀ ACTIVITÉ ATMOSPHÉRIQUE & SOLAIRE', items:[5,6,7] },
+    { titre:'⚖ RÉGLEMENTATION & DOCUMENTATION', items:[8,9,10,11] },
+    { titre:'🗺 CARTES AÉRONAUTIQUES AÉROWEB', items:[12,13] }
+  ];
+
+  sections.forEach(sec => {
+    doc.setFillColor(...MAIN);
+    doc.rect(ML,y,W-30,7,'F');
+    doc.setTextColor(255,255,255);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(9);
+    doc.text(sec.titre,ML+3,y+5);
+    y += 10;
+    sec.items.forEach((idx,i) => {
+      const item = items[idx];
+      if (item) {
+        doc.setFillColor(i%2===0?248:255,i%2===0?250:255,i%2===0?252:255);
+        doc.rect(ML,y,W-30,7,'F');
+        doc.setTextColor(item.checked?46:107,item.checked?125:114,item.checked?50:128);
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(10);
+        doc.text(item.checked?'✓':'○',ML+3,y+5);
+        doc.setTextColor(26,26,26);
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(9);
+        doc.text(item.label,ML+10,y+5);
+        y += 7;
+      }
+    });
+    y += 2;
+  });
+
+  // Verdict
+  y += 4;
+  const vColor = verdict==='ok'?[232,245,233]:verdict==='warn'?[255,243,224]:[255,235,238];
+  const vBorder = verdict==='ok'?[67,160,71]:verdict==='warn'?[251,140,0]:[229,57,53];
+  doc.setFillColor(...vColor);
+  doc.rect(ML,y,W-30,10,'F');
+  doc.setFillColor(...vBorder);
+  doc.rect(ML,y,2,10,'F');
+  doc.setTextColor(...vBorder);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(12);
+  doc.text(verdictText,ML+6,y+7);
+  y += 16;
+
+  // Signatures
+  doc.setDrawColor(232,237,242);
+  doc.setLineWidth(0.5);
+  doc.line(ML,y,MR,y);
+  y += 6;
+  doc.setTextColor(107,114,128);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(8);
+  doc.text('SIGNATURE DU TÉLÉPILOTE',ML,y);
+  doc.text('VISA RESPONSABLE OPÉRATION',110,y);
+  y += 4;
+  doc.setTextColor(26,26,26);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.text(prenom+' '+nom,ML,y+4);
+  doc.text('Arnaud MOREAU — APH Drone SARL',110,y+4);
+  doc.setFontSize(8);
+  doc.setTextColor(107,114,128);
+  doc.text('Signé le '+dateStr,110,y+10);
+
+  // Signature image télépilote
+  try {
+    const sigImg = canvas.toDataURL('image/png');
+    doc.addImage(sigImg,'PNG',ML,y+12,50,18);
+  } catch(e) {}
+
+  // Pied de page
+  doc.setFillColor(...MAIN);
+  doc.rect(0,280,W,17,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(7);
+  doc.text('APH Drone SARL — aphdrone@gmail.com — 06 95 39 07 76 | Document généré automatiquement le '+dateStr,ML,287);
+  doc.text('Document confidentiel — Réservé aux stagiaires APH Drone',ML,292);
+
+  // Convertir en base64
+  const pdfBase64 = doc.output('datauristring').split(',')[1];
+
+  btn.textContent='Envoi en cours...';
+
   fetch(SCRIPT_URL,{
     method:'POST',mode:'no-cors',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      date:now.toLocaleDateString('fr-FR'),
-      heure:now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+      date:dateStr,
+      heure:heureStr,
       nom, prenom, email,
-      drone:document.getElementById('drone').value||'—',
-      lieu:document.getElementById('lieu').value||'—',
-      score:checked+'/14 — '+(verdict==='ok'?'Autorisé':verdict==='warn'?'Sous conditions':'Reporté'),
-      items: items,
-      signature:canvas.toDataURL('image/png')
+      drone:droneVal,
+      lieu:lieuVal,
+      score:scoreText,
+      items:items,
+      signature:canvas.toDataURL('image/png'),
+      pdf:pdfBase64
     })
   })
   .then(()=>{document.getElementById('okMsg').style.display='block';btn.style.display='none';window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});})
