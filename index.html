@@ -307,10 +307,10 @@ padding:80px 10%;
       </li>
       <li><a href="pages/contact.html">Contact</a></li>
       <li>
-        <button onclick="document.getElementById('loginModal').style.display='flex'" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:8px 16px;color:white;font-family:Inter,sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:.2s;">
+        <a href="pages/connexion.html" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:8px 16px;color:white;font-family:Inter,sans-serif;font-size:13px;font-weight:500;text-decoration:none;transition:.2s;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Se connecter
-        </button>
+        </a>
       </li>
       <li>
         <div class="search-box">
@@ -590,118 +590,13 @@ document.querySelectorAll('nav .has-dropdown').forEach(function(item){
   item.addEventListener('mouseleave', function(){ dd.style.display='none'; });
 });
 </script>
-<!-- MODALE CONNEXION PREMIUM -->
-<div id="loginModal" style="display:none;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;background:rgba(7,16,33,.75);backdrop-filter:blur(20px);">
-  <div style="
-    background:linear-gradient(160deg,rgba(15,35,70,.95) 0%,rgba(11,25,55,.98) 100%);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:24px;
-    padding:52px 44px 40px;
-    width:100%;max-width:460px;
-    margin:20px;
-    position:relative;
-    box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.05) inset;
-  ">
-    <!-- Fermer -->
-    <button onclick="document.getElementById('loginModal').style.display='none'" style="
-      position:absolute;top:18px;right:18px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.1);
-      color:rgba(255,255,255,.6);
-      width:34px;height:34px;border-radius:50%;
-      cursor:pointer;font-size:15px;
-      display:flex;align-items:center;justify-content:center;
-      transition:.2s;
-    " onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='rgba(255,255,255,.06)'">✕</button>
-
-    <!-- Icône -->
-    <div style="text-align:center;margin-bottom:28px;">
-      <div style="
-        width:64px;height:64px;
-        background:linear-gradient(135deg,#1F5FAF,#4A90E2);
-        border-radius:50%;
-        display:flex;align-items:center;justify-content:center;
-        margin:0 auto 20px;
-        box-shadow:0 8px 32px rgba(74,144,226,.35);
-      ">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </div>
-      <h2 style="font-family:Inter,sans-serif;font-size:2rem;font-weight:700;color:white;margin-bottom:8px;letter-spacing:-.02em;">Se connecter</h2>
-      <p style="font-size:14px;color:rgba(255,255,255,.45);letter-spacing:.01em;">Accédez à votre espace personnel APH Drone</p>
-    </div>
-
-    <!-- Séparateur -->
-    <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);margin-bottom:28px;"></div>
-
-    <!-- Espace stagiaires -->
-    <a href="pages/espace-stagiaires.html" style="
-      display:flex;align-items:center;gap:16px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;padding:18px 20px;
-      text-decoration:none;
-      margin-bottom:12px;
-      transition:.25s;
-      position:relative;overflow:hidden;
-    " onmouseover="this.style.background='rgba(74,144,226,.12)';this.style.borderColor='rgba(74,144,226,.4)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.08)'">
-      <div style="
-        width:44px;height:44px;
-        background:linear-gradient(135deg,#1F5FAF,#4A90E2);
-        border-radius:12px;
-        display:flex;align-items:center;justify-content:center;
-        flex-shrink:0;
-        box-shadow:0 4px 16px rgba(31,95,175,.4);
-      ">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      </div>
-      <div style="flex:1;">
-        <div style="font-family:Inter,sans-serif;font-size:15px;font-weight:700;color:white;margin-bottom:3px;">Espace stagiaires</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.45);">Formations, documents et outils pédagogiques</div>
-      </div>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </a>
-
-    <!-- Espace clients -->
-    <a href="pages/espace-clients.html" style="
-      display:flex;align-items:center;gap:16px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;padding:18px 20px;
-      text-decoration:none;
-      margin-bottom:28px;
-      transition:.25s;
-    " onmouseover="this.style.background='rgba(74,144,226,.12)';this.style.borderColor='rgba(74,144,226,.4)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.08)'">
-      <div style="
-        width:44px;height:44px;
-        background:linear-gradient(135deg,#1F5FAF,#4A90E2);
-        border-radius:12px;
-        display:flex;align-items:center;justify-content:center;
-        flex-shrink:0;
-        box-shadow:0 4px 16px rgba(31,95,175,.4);
-      ">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-      </div>
-      <div style="flex:1;">
-        <div style="font-family:Inter,sans-serif;font-size:15px;font-weight:700;color:white;margin-bottom:3px;">Espace clients</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.45);">Missions, rapports thermiques et devis</div>
-      </div>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </a>
-
-    <!-- Contact -->
-    <p style="text-align:center;font-size:12px;color:rgba(255,255,255,.3);">
-      Pas encore de code d'accès ?
-      <a href="pages/contact.html" style="color:#4A90E2;text-decoration:none;font-weight:600;">Contactez-nous</a>
-    </p>
-  </div>
-</div>
 
 <script>
-document.getElementById('loginModal').addEventListener('click', function(e){
-  if(e.target === this) this.style.display = 'none';
+document.getElementById('loginModal').addEventListener('click',function(e){
+  if(e.target===this)this.style.display='none';
 });
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape') document.getElementById('loginModal').style.display = 'none';
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')document.getElementById('loginModal').style.display='none';
 });
 </script>
 </body>
