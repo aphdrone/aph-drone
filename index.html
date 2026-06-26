@@ -199,6 +199,36 @@ flex-direction:column;
 }
 .card-img:hover{transform:translateY(-10px);}
 
+/* ── Section header avec boutons ── */
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;margin-bottom:32px;
+}
+.section-header .section-title{margin-bottom:0;}
+.section-btns{display:flex;gap:12px;}
+.btn-section{
+  display:inline-flex;align-items:center;
+  padding:10px 22px;border-radius:8px;
+  font-size:13px;font-weight:600;
+  text-decoration:none;transition:.25s;
+  letter-spacing:.02em;
+}
+.btn-section--primary{
+  background:var(--secondary);color:white;
+}
+.btn-section--primary:hover{
+  background:var(--accent);transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(74,144,226,.3);
+}
+.btn-section--outline{
+  background:transparent;color:var(--secondary);
+  border:1.5px solid var(--secondary);
+}
+.btn-section--outline:hover{
+  background:var(--secondary);color:white;
+  transform:translateY(-2px);
+}
+
 /* Carrousel horizontal */
 .carousel-track{
   display:flex;
@@ -749,7 +779,13 @@ Demander un devis
 
 <!-- ═══ CARROUSEL PRESTATIONS ═══ -->
 <section class="section">
-<h2 class="section-title">Nos Prestations</h2>
+<div class="section-header">
+  <h2 class="section-title">Nos Prestations</h2>
+  <div class="section-btns">
+    <a href="pages/prestations.html" class="btn-section btn-section--primary">Découvrir</a>
+    <a href="pages/espace-clients.html" class="btn-section btn-section--outline">Espace Professionnel</a>
+  </div>
+</div>
 <div class="carousel-track">
 
   <div class="card-img">
@@ -843,7 +879,13 @@ Demander un devis
 
 <!-- ═══ CARROUSEL FORMATIONS ═══ -->
 <section class="section">
-<h2 class="section-title">Nos Formations</h2>
+<div class="section-header">
+  <h2 class="section-title">Nos Formations</h2>
+  <div class="section-btns">
+    <a href="pages/formations.html" class="btn-section btn-section--primary">Découvrir</a>
+    <a href="pages/espace-stagiaires.html" class="btn-section btn-section--outline">Espace Stagiaire</a>
+  </div>
+</div>
 <div class="carousel-track">
 
   <div class="card-img">
