@@ -116,10 +116,10 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
   position:fixed;top:0;width:100%;z-index:9999;
   padding:16px 60px;
   display:flex;justify-content:space-between;align-items:center;
-  background:rgba(11,31,58,.15);backdrop-filter:blur(12px);
+  background:rgba(11,31,58,.97);backdrop-filter:blur(12px);
   transition:.3s;font-family:'Inter',sans-serif;
 }
-#site-header.scrolled{background:rgba(11,31,58,.97);}
+
 #site-header .logo img{height:64px;width:64px;border-radius:50%;object-fit:cover;display:block;}
 #site-header nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;align-items:center;}
 #site-header nav a{color:white;text-decoration:none;font-weight:500;font-size:14px;}
@@ -709,6 +709,7 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
 </footer>
 
 <script>
+
 document.querySelectorAll('#site-header .has-dropdown').forEach(function(item){
   var dd=item.querySelector('.dropdown');
   item.addEventListener('mouseenter',function(){dd.style.display='block';});
