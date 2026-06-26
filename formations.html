@@ -26,10 +26,10 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 .page-hero p{font-size:1.05rem;opacity:.8;max-width:600px;margin:0 auto;line-height:1.7;}
 
 .section{padding:80px 10%;}
-.formations-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;}
+.formations-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;position:relative;}
 
-.formation-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 8px 32px rgba(0,0,0,.12);}
-.formation-card .card-image{width:100%;height:100%;background:#d8e4f0;display:flex;align-items:center;justify-content:center;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.formation-card{position:relative;border-radius:16px;overflow:visible;aspect-ratio:4/3;box-shadow:0 8px 32px rgba(0,0,0,.12);}
+.formation-card .card-image{width:100%;height:100%;background:#d8e4f0;display:flex;align-items:center;justify-content:center;transition:transform .5s cubic-bezier(.4,0,.2,1);border-radius:16px;overflow:hidden;}
 .formation-card:hover .card-image{transform:scale(1.05);}
 .formation-card .card-image img{width:100%;height:100%;object-fit:cover;}
 .img-placeholder{font-size:11px;color:#7a8fa5;letter-spacing:.08em;text-transform:uppercase;}
@@ -37,9 +37,27 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 .card-title-bar{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(11,31,58,.88));padding:32px 20px 18px;transition:opacity .3s;}
 .card-title-bar h3{color:white;font-size:1rem;font-weight:600;}
 
-.card-overlay{position:absolute;inset:0;background:rgba(11,31,58,.93);display:flex;flex-direction:column;padding:20px;opacity:0;transform:translateY(10px);transition:opacity .35s ease,transform .35s ease;overflow-y:auto;}
-.formation-card:hover .card-overlay{opacity:1;transform:translateY(0);}
-.formation-card:hover .card-title-bar{opacity:0;}
+.card-overlay{
+  position:absolute;
+  bottom:calc(100% + 12px);
+  left:50%;transform:translateX(-50%) translateY(8px);
+  width:380px;
+  background:var(--primary);
+  border-radius:14px;
+  padding:24px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s ease,transform .3s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  border:1px solid rgba(74,144,226,.25);
+  z-index:100;
+}
+.card-overlay::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:8px solid transparent;border-top-color:var(--primary);
+}
+.formation-card:hover .card-overlay{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all;}
+.formation-card:hover .card-title-bar{opacity:1;}
 
 .card-overlay h3{color:white;font-size:.95rem;font-weight:700;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--accent);flex-shrink:0;}
 
@@ -48,10 +66,11 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 .card-info-label{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:80px;flex-shrink:0;padding-top:1px;}
 .card-info-value{color:rgba(255,255,255,.8);line-height:1.4;flex:1;}
 
-.btn-inscrire{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:white;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:background .2s;align-self:flex-start;flex-shrink:0;margin-top:auto;}
-.btn-inscrire:hover{background:var(--secondary);}
+.btn-inscrire-wrap{display:flex;gap:8px;margin-top:12px;flex-shrink:0;}
+.btn-inscrire{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:white;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:background .2s;flex:1;justify-content:center;}
+.btn-inscrire:hover{background:var(--secondary);} .btn-decouvrir{display:inline-flex;align-items:center;gap:6px;background:transparent;color:white;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1.5px solid rgba(255,255,255,.4);cursor:pointer;transition:.2s;flex:1;justify-content:center;text-decoration:none;} .btn-decouvrir:hover{background:rgba(255,255,255,.15);color:white;}
 
-.card-form{display:none;flex-direction:column;gap:8px;position:absolute;inset:0;background:rgba(11,31,58,.97);padding:20px;overflow-y:auto;}
+.card-form{display:none;flex-direction:column;gap:8px;position:absolute;inset:0;background:var(--primary);padding:20px;overflow-y:auto;border-radius:14px;}
 .card-form.open{display:flex;}
 .card-form h4{color:white;font-size:.9rem;font-weight:700;margin-bottom:4px;flex-shrink:0;padding-right:24px;}
 .card-form .form-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,.5);font-size:18px;cursor:pointer;transition:.2s;line-height:1;}
@@ -154,10 +173,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Aucun — ouvert à tous</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation de formation + préparation à l'examen DGAC en ligne</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/initiation-a1a3.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -183,10 +208,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 obligatoire</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation BAPD + compétences vol A2 en situation réelle</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/bapd-a2.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -212,10 +243,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 (brevet de télépilote non obligatoire)</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation de formation + préparation complète à l'examen DGAC</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/cats-sts.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -241,10 +278,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 ou BAPD A2 selon niveau</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation de formation + autonomie sur missions nocturnes</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/vol-nuit.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -270,10 +313,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 — ouvert aux professionnels de la sécurité</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation de formation + protocoles opérationnels personnalisés</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/securite-secours.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -299,10 +348,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 + Certiphyto recommandé</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation + maîtrise opérationnelle drone agricole</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/agriculture.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -328,10 +383,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 ou expérience drone</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation + capacité à produire des rapports thermographiques</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/thermographie.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -357,10 +418,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 — bases SIG appréciées</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation + maîtrise chaîne complète vol → livrable</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/cartographie.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -386,10 +453,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Attestation A1/A3 — profil naturaliste ou forestier apprécié</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Attestation + protocoles opérationnels faune/flore</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/sylviculture.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -415,10 +488,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Prérequis</span><span class="card-info-value">Aucun — entretien préalable obligatoire</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Ensemble des certifications + accompagnement création d'activité</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-          S'inscrire
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            S'inscrire
+          </button>
+          <a href="pages/formations/changer-carriere.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>

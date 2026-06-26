@@ -33,7 +33,7 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 
 /* ── Grille ── */
 .section{padding:80px 10%;}
-.prestations-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;}
+.prestations-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;position:relative;}
 
 /* ── Carte ── */
 .prestation-card{
@@ -94,7 +94,7 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
   transition:background .2s;align-self:flex-start;flex-shrink:0;
   margin-top:auto;
 }
-.btn-inscrire:hover{background:var(--secondary);}
+.btn-inscrire:hover{background:var(--secondary);} .btn-decouvrir{display:inline-flex;align-items:center;gap:6px;background:transparent;color:white;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1.5px solid rgba(255,255,255,.4);cursor:pointer;transition:.2s;flex:1;justify-content:center;text-decoration:none;} .btn-decouvrir:hover{background:rgba(255,255,255,.15);color:white;}
 
 /* Formulaire dans la carte */
 .card-form{
@@ -226,10 +226,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Surveillance de sites, détection périmétrique, assistance aux forces de l'ordre et services de secours.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Rapport vidéo, images géolocalisées, compte-rendu d'intervention</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/surveillance.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -252,10 +258,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Pulvérisation agricole, cartographie parcellaire et imagerie multispectrale pour l'analyse des cultures.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Cartes NDVI, rapport agronomique, données brutes multispectrale</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/agriculture.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -278,10 +290,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Inventaire faunistique, suivi de biodiversité, gestion sylvicole et détection de foyers d'incendie.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Cartographie, inventaire espèces, rapport environnemental</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/environnement.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -304,10 +322,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Levés topographiques haute précision, orthophotos, nuages de points et modèles 3D pour BTP et aménagement.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Orthophoto, MNT, nuage de points, modèle 3D, rapport</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/cartographie.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -330,10 +354,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Inspection thermique de bâtiments, toitures, panneaux solaires, réseaux de chaleur et équipements industriels.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Rapport thermographique, images IR annotées, préconisations</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/thermographie.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -356,10 +386,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Contrôle visuel d'ouvrages d'art, ponts, pylônes, éoliennes et structures difficilement accessibles.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Rapport d'inspection illustré, vidéo HD, grille de notation</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/inspection.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -382,10 +418,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Accompagnement réglementaire DGAC/EASA pour opérations en catégorie Spécifique : dossiers SORA v2.5, PDRA, ConOps et MANEX.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Dossier complet prêt à soumettre à la DGAC</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/sora-pdra.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -408,10 +450,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Audit de flotte drone, optimisation des procédures, conseil en intégration drone pour entreprises et collectivités.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Rapport d'audit, recommandations, plan d'action priorisé</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/conseil-audit.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -434,10 +482,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Mise à disposition de télépilotes certifiés DGAC pour vos projets ponctuels ou récurrents, en France et à l'international.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Livrable selon mission : images, données, rapport</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/mission-telepilote.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
@@ -460,10 +514,16 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
           <div class="card-info-row"><span class="card-info-label">Description</span><span class="card-info-value">Prises de vues aériennes pour l'immobilier, l'événementiel, la communication institutionnelle et productions audiovisuelles.</span></div>
           <div class="card-info-row"><span class="card-info-label">Résultat</span><span class="card-info-value">Photos HD retouchées, vidéo montée, fichiers bruts</span></div>
         </div>
-        <button class="btn-inscrire" onclick="openForm(this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Demander un devis
-        </button>
+        <div class="btn-inscrire-wrap">
+          <button class="btn-inscrire" onclick="openForm(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Demander un devis
+          </button>
+          <a href="pages/prestations/photo-video.html" class="btn-decouvrir">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Découvrir
+          </a>
+        </div>
       </div>
       <div class="card-form">
         <button class="form-close" onclick="closeForm(this)">&#x2715;</button>
