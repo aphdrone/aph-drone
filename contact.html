@@ -93,6 +93,27 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 .faq-item p{font-size:13px;color:#666;line-height:1.7;margin-top:12px;display:none;}
 .faq-item.open p{display:block;}
 
+/* Footer */
+footer{background:#071A33;color:white;padding:60px 10% 0;}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-col{}
+.footer-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.9);margin-bottom:16px;display:block;}
+.footer-links{list-style:none;padding:0;margin:0;}
+.footer-links li{margin-bottom:9px;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;display:flex;align-items:baseline;gap:7px;transition:color .2s;}
+.footer-links a:hover{color:#4A90E2;}
+.footer-links a span{color:#4A90E2;font-size:11px;flex-shrink:0;transition:transform .2s;}
+.footer-links a:hover span{transform:translateX(3px);}
+.footer-desc{font-size:13px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:18px;}
+.footer-socials{display:flex;gap:14px;margin-top:8px;}
+.footer-socials a{color:rgba(255,255,255,.5);transition:.2s;}
+.footer-socials a:hover{color:#4A90E2;}
+.footer-legal{display:flex;align-items:center;flex-wrap:wrap;gap:0;padding:16px 0;}
+.footer-legal a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;padding:0 18px;border-right:1px solid rgba(255,255,255,.12);transition:color .2s;}
+.footer-legal a:first-child{padding-left:0;}
+.footer-legal a:hover{color:rgba(255,255,255,.7);}
+.footer-legal-copy{font-size:12px;color:rgba(255,255,255,.25);margin-left:auto;}
+
 /* Back top */
 #back-top{position:fixed;bottom:32px;right:32px;width:44px;height:44px;border-radius:50%;background:var(--secondary);color:white;display:flex;align-items:center;justify-content:center;z-index:9000;opacity:0;transform:translateY(20px);transition:opacity .3s,transform .3s,background .2s;pointer-events:none;text-decoration:none;}
 #back-top.visible{opacity:1;transform:translateY(0);pointer-events:all;}
