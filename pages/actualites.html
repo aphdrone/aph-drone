@@ -108,11 +108,16 @@ body{background:#fff;color:#222;overflow-x:hidden;}
 #firebase-mosaic .actu-card--md .actu-img{height:200px;}
 #firebase-mosaic .actu-card--sm{grid-column:span 1;}
 #firebase-mosaic .actu-card--sm .actu-img{height:160px;}
-/* Carte featured sur 2 colonnes */
+/* Cartes sur 2 colonnes */
 .actu-mosaic .actu-card--span2{grid-column:span 2;}
 .actu-mosaic .actu-card--span2 .actu-img{height:280px;}
-.actu-mosaic .actu-card--md .actu-img{height:200px;}
+/* Cartes moyennes sur 2 colonnes aussi */
+.actu-mosaic .actu-card--md{grid-column:span 2;}
+.actu-mosaic .actu-card--md .actu-img{height:220px;}
+/* Petites cartes sur 1 colonne */
+.actu-mosaic .actu-card--sm{grid-column:span 1;}
 .actu-mosaic .actu-card--sm .actu-img{height:160px;}
+.actu-card:not(.actu-card--span2) .actu-img{height:unset;}
 
 .actu-card{
   background:#fff;
@@ -596,7 +601,7 @@ footer{background:var(--primary);color:white;padding:60px 10% 0;}
     </div>
   </article>
 
-  <article class="actu-card actu-card--md reveal" data-cat="Formation"
+  <article class="actu-card actu-card--sm reveal" data-cat="Formation"
     data-tpl="tpl-cats-sts" data-tag="Formation" data-tagcol="actu-tag--bleu"
     data-date="Juin 2026"
     data-title="Nouvelle session CATS STS ouverte à l'inscription"
