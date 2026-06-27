@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualités — APH Drone</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--primary:#0B1F3A;
+--secondary:#1F5FAF;
+--accent:#4A90E2;
+--light:#F5F7FA;
+--white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:#fff;color:#222;overflow-x:hidden;}
+
+/* ── HEADER opaque fixe (règle pages secondaires) ── */
+#site-header{
+  position:fixed;top:0;width:100%;z-index:9999;
+  padding:16px 60px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(11,31,58,.97);
+  transition:.3s;font-family:'Inter',sans-serif;
+}
+#site-header .logo img{height:64px;width:64px;border-radius:50%;object-fit:cover;display:block;}
+#site-header nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;align-items:center;}
+#site-header nav a{color:white;text-decoration:none;font-weight:500;font-size:14px;}
+#site-header .has-dropdown{position:relative;}
+#site-header .dropdown{
+  display:none;position:absolute;top:100%;left:0;
+  background:#fff;min-width:220px;
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+  border-top:3px solid #4A90E2;
+  z-index:99999;padding:6px 0;
+}
+#site-header .dropdown li{list-style:none;}
+#site-header .dropdown li a{
+  display:block;padding:10px 18px;font-size:13px;
+  font-weight:500;color:#0B1F3A;
+  border-bottom:1px solid #f0f0f0;transition:.15s;
+  white-space:nowrap;text-decoration:none;
+}
+#site-header .dropdown li:last-child a{border:none;}
+#site-header .dropdown li a:hover{background:#f5f7fa;color:#4A90E2;padding-left:24px;}
+
+/* ── HERO sobre ── */
+.page-hero{
+  padding:140px 10% 70px;
+  background:linear-gradient(135deg, var(--primary) 0%, #1a3a6b 100%);
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+.page-hero::after{
+  content:'';
+  position:absolute;
+  right:-80px;bottom:-80px;
+  width:400px;height:400px;
+  border-radius:50%;
+  background:rgba(74,144,226,.08);
+}
+.breadcrumb{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:rgba(255,255,255,.5);
+  margin-bottom:20px;letter-spacing:.04em;
+}
+.breadcrumb a{color:rgba(255,255,255,.5);text-decoration:none;transition:.2s;}
+.breadcrumb a:hover{color:white;}
+.breadcrumb span{color:rgba(255,255,255,.3);}
+.page-hero h1{font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:16px;}
+.page-hero p{font-size:1.1rem;color:rgba(255,255,255,.7);max-width:560px;line-height:1.7;}
+
+/* ── FILTRES ── */
+.filtres-wrap{
+  padding:40px 10% 0;
+  display:flex;align-items:center;gap:12px;
+  flex-wrap:wrap;
+}
+.filtre-btn{
+  padding:8px 18px;border-radius:30px;
+  font-size:12px;font-weight:600;letter-spacing:.04em;
+  cursor:pointer;border:1.5px solid #dde3ec;
+  background:white;color:#555;
+  transition:.2s;
+}
+.filtre-btn:hover{border-color:var(--accent);color:var(--accent);}
+.filtre-btn.active{background:var(--secondary);color:white;border-color:var(--secondary);}
+.filtre-btn[data-cat="Formation"].active{background:var(--secondary);}
+.filtre-btn[data-cat="Mission"].active{background:#16a34a;}
+.filtre-btn[data-cat="Réglementation"].active{background:#dc2626;}
+.filtre-btn[data-cat="Événement"].active{background:#7c3aed;}
+.filtre-btn[data-cat="Agriculture"].active{background:#ea580c;}
+.filtre-btn[data-cat="Sécurité civile"].active{background:#0B1F3A;}
+
+/* ── GRILLE ACTUALITÉS ── */
+.actu-page{padding:40px 10% 100px;}
+
+.actu-mosaic{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+/* Carte featured sur 2 colonnes */
+.actu-mosaic .actu-card--span2{grid-column:span 2;}
+
+.actu-card{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,.07);
+  transition:.35s;
+  display:flex;flex-direction:column;
+  opacity:1;
+}
+.actu-card.hidden{display:none;}
+.actu-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.12);}
+
+.actu-img{
+  position:relative;
+  width:100%;
+  background:#e8edf4;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;
+}
+.actu-img-placeholder{font-size:11px;color:#7a8fa5;letter-spacing:.06em;text-transform:uppercase;}
+.actu-card--span2 .actu-img{height:280px;}
+.actu-card:not(.actu-card--span2) .actu-img{height:200px;}
+.actu-img img{width:100%;height:100%;object-fit:cover;}
+
+.actu-tag{
+  position:absolute;top:14px;left:14px;
+  color:white;font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;
+}
+.actu-tag--bleu{background:var(--secondary);}
+.actu-tag--vert{background:#16a34a;}
+.actu-tag--rouge{background:#dc2626;}
+.actu-tag--orange{background:#ea580c;}
+.actu-tag--violet{background:#7c3aed;}
+.actu-tag--marine{background:#0B1F3A;}
+
+.actu-body{padding:24px 26px 28px;flex:1;display:flex;flex-direction:column;}
+.actu-date{font-size:11px;color:#7a8fa5;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;display:block;}
+.actu-title{font-weight:700;color:var(--primary);line-height:1.4;margin-bottom:12px;}
+.actu-card--span2 .actu-title{font-size:1.25rem;}
+.actu-card:not(.actu-card--span2) .actu-title{font-size:.98rem;}
+.actu-excerpt{font-size:.85rem;color:#555;line-height:1.7;flex:1;margin-bottom:18px;}
+.actu-lire{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.82rem;font-weight:600;color:var(--secondary);
+  text-decoration:none;transition:.2s;
+}
+.actu-lire:hover{color:var(--accent);gap:10px;}
+
+/* ── SÉPARATEUR de mois ── */
+.actu-mois{
+  grid-column:1/-1;
+  display:flex;align-items:center;gap:16px;
+  padding:8px 0;
+}
+.actu-mois span{
+  font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);
+  white-space:nowrap;
+}
+.actu-mois::after{
+  content:'';flex:1;
+  height:1px;background:#e8edf4;
+}
+
+/* ── BOUTON TÉLÉPHONE ── */
+#back-top{
+  position:fixed;bottom:30px;right:30px;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--secondary);color:white;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;box-shadow:0 8px 24px rgba(31,95,175,.4);
+  transition:.3s;z-index:999;
+  opacity:0;pointer-events:none;
+}
+#back-top.visible{opacity:1;pointer-events:all;}
+#back-top:hover{background:var(--accent);}
+#back-top svg{width:20px;height:20px;}
+
+/* ── Animations reveal ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ── FOOTER ── */
+footer{background:var(--primary);color:white;padding:60px 10% 0;}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:50px;border-bottom:1px solid rgba(255,255,255,.08);}
+.footer-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:18px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:13px;transition:.2s;display:flex;align-items:center;gap:6px;}
+.footer-links a span{color:var(--accent);font-size:15px;}
+.footer-links a:hover{color:white;padding-left:4px;}
+.footer-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:18px;}
+.footer-socials{display:flex;gap:12px;margin-top:6px;}
+.footer-socials a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);transition:.2s;text-decoration:none;}
+.footer-socials a:hover{background:var(--accent);color:white;}
+.footer-legal{display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:20px 0;font-size:11px;}
+.footer-legal a{color:rgba(255,255,255,.4);text-decoration:none;transition:.2s;}
+.footer-legal a:hover{color:white;}
+.footer-legal-copy{margin-left:auto;color:rgba(255,255,255,.25);}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div id="site-header">
+  <div class="logo">
+    <a href="../index.html"><img src="../assets/logo.jpg" alt="APH Drone"></a>
+  </div>
+  <nav>
+    <ul>
+      <li class="has-dropdown"><a href="../index.html">Accueil</a>
+        <ul class="dropdown">
+          <li><a href="apropos.html">À propos</a></li>
+          <li><a href="hebergement.html">Hébergement &amp; Restauration</a></li>
+          <li><a href="partenaires.html">Nos partenaires et clients</a></li>
+          <li><a href="temoignages.html">Témoignages</a></li>
+          <li><a href="actualites.html">Actualités</a></li>
+          <li><a href="recrutement.html">Recrutement</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown"><a href="../prestations.html">Prestations</a>
+        <ul class="dropdown">
+          <li><a href="prestations/surveillance.html">Surveillance &amp; Sécurité</a></li>
+          <li><a href="prestations/agriculture.html">Agriculture de précision</a></li>
+          <li><a href="prestations/environnement.html">Environnement &amp; Forêt</a></li>
+          <li><a href="prestations/cartographie.html">Cartographie &amp; Modélisation 3D</a></li>
+          <li><a href="prestations/thermographie.html">Thermographie</a></li>
+          <li><a href="prestations/inspection.html">Inspection technique</a></li>
+          <li><a href="prestations/sora-pdra.html">Expertise SORA &amp; PDRA</a></li>
+          <li><a href="prestations/conseil-audit.html">Conseil &amp; Audit</a></li>
+          <li><a href="prestations/mission-telepilote.html">Mission Télépilote</a></li>
+          <li><a href="prestations/photo-video.html">Photo &amp; Vidéo</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown"><a href="../formations.html">Formations</a>
+        <ul class="dropdown">
+          <li><a href="formations/initiation-a1a3.html">Initiation A1/A3</a></li>
+          <li><a href="formations/bapd-a2.html">BAPD — Catégorie A2</a></li>
+          <li><a href="formations/cats-sts.html">Préparation CATS STS</a></li>
+          <li><a href="formations/vol-nuit.html">Vol de nuit</a></li>
+          <li><a href="formations/sylviculture.html">Sylviculture, faune &amp; biodiversité</a></li>
+          <li><a href="formations/securite-secours.html">Surveillance, Sécurité &amp; Secours</a></li>
+          <li><a href="formations/agriculture.html">Agriculture de précision</a></li>
+          <li><a href="formations/thermographie.html">Thermographie</a></li>
+          <li><a href="formations/cartographie.html">Cartographie &amp; Modélisation 3D</a></li>
+          <li><a href="formations/maitrise-pilotage.html">Maîtrise opérationnelle</a></li>
+          <li><a href="formations/changer-carriere.html">Changer de carrière</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown"><a href="#">Outils</a>
+        <ul class="dropdown">
+          <li><a href="outils/reglementation.html">Réglementation</a></li>
+          <li><a href="outils/preparation-vol.html">Préparation de vol</a></li>
+          <li><a href="outils/meteo.html">MÉTÉO</a></li>
+          <li><a href="outils/qcm.html">QCM</a></li>
+        </ul>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <a href="connexion.html" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:8px 16px;color:white;font-size:13px;font-weight:500;text-decoration:none;transition:.2s;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Se connecter
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<div class="page-hero">
+  <div class="breadcrumb">
+    <a href="../index.html">Accueil</a>
+    <span>›</span>
+    <span style="color:rgba(255,255,255,.8);">Actualités</span>
+  </div>
+  <h1>Actualités</h1>
+  <p>Missions réalisées, nouvelles formations, évolutions réglementaires et vie d'APH Drone — toute l'actualité du terrain.</p>
+</div>
+
+<!-- ═══ FILTRES ═══ -->
+<div class="filtres-wrap">
+  <button class="filtre-btn active" data-cat="Tous">Toutes</button>
+  <button class="filtre-btn" data-cat="Formation">Formation</button>
+  <button class="filtre-btn" data-cat="Mission">Mission</button>
+  <button class="filtre-btn" data-cat="Réglementation">Réglementation</button>
+  <button class="filtre-btn" data-cat="Événement">Événement</button>
+  <button class="filtre-btn" data-cat="Agriculture">Agriculture</button>
+  <button class="filtre-btn" data-cat="Sécurité civile">Sécurité civile</button>
+</div>
+
+<!-- ═══ GRILLE ACTUALITÉS ═══ -->
+<div class="actu-page">
+<div class="actu-mosaic" id="actu-mosaic">
+
+  <!-- ── JUIN 2026 ── -->
+  <div class="actu-mois"><span>Juin 2026</span></div>
+
+  <article class="actu-card actu-card--span2 reveal" data-cat="Formation">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--bleu">Formation</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Juin 2026</time>
+      <h3 class="actu-title">Nouvelle session CATS STS ouverte à l'inscription</h3>
+      <p class="actu-excerpt">La prochaine session de préparation à l'examen CATS — scénarios STS-01 et STS-02 — est programmée en distanciel synchrone sur 5 jours. Public mixte SDIS et civils. Places limitées à 3 stagiaires pour garantir un suivi individualisé.</p>
+      <a href="formations/cats-sts.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <article class="actu-card reveal" data-cat="Événement">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--violet">Événement</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Juin 2026</time>
+      <h3 class="actu-title">Portes ouvertes SDIS 70 — APH Drone présent</h3>
+      <p class="actu-excerpt">Démonstration de drone opérationnel lors des portes ouvertes du centre de secours de Luxeuil. Sensibilisation du public aux usages civils et de sécurité civile.</p>
+      <a href="actualites.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <!-- ── MAI 2026 ── -->
+  <div class="actu-mois"><span>Mai 2026</span></div>
+
+  <article class="actu-card reveal" data-cat="Mission">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--vert">Mission</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Mai 2026</time>
+      <h3 class="actu-title">Thermographie sur site industriel en Haute-Saône</h3>
+      <p class="actu-excerpt">Diagnostic complet de toiture et installations électriques pour un client industriel local. Rapport de restitution livré sous 48h.</p>
+      <a href="prestations/thermographie.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <article class="actu-card actu-card--span2 reveal" data-cat="Formation">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--bleu">Formation</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Mai 2026</time>
+      <h3 class="actu-title">Lancement du programme Vol de nuit — une formation rare en France</h3>
+      <p class="actu-excerpt">APH Drone propose désormais une formation complète au vol de nuit réglementé, sur 3 jours incluant 2 nuits de pratique terrain. Unique en Bourgogne-Franche-Comté, ce programme répond aux besoins des professionnels de la sécurité, de l'inspection et de la photographie nocturne.</p>
+      <a href="formations/vol-nuit.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <!-- ── AVRIL 2026 ── -->
+  <div class="actu-mois"><span>Avril 2026</span></div>
+
+  <article class="actu-card reveal" data-cat="Réglementation">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--rouge">Réglementation</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Avril 2026</time>
+      <h3 class="actu-title">Évolutions EASA 2026 : ce qui change pour les télépilotes</h3>
+      <p class="actu-excerpt">Point complet sur les nouvelles exigences applicables aux opérateurs en catégorie Spécifique et Open A2 à compter du second semestre 2026.</p>
+      <a href="actualites.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <article class="actu-card reveal" data-cat="Mission">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--vert">Mission</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Avril 2026</time>
+      <h3 class="actu-title">Cartographie de carrière en Franche-Comté — modélisation 3D complète</h3>
+      <p class="actu-excerpt">Mission de cartographie photogrammétrique sur une carrière de 12 ha. Restitution d'un MNT et d'un nuage de points haute densité pour calcul de volumes.</p>
+      <a href="prestations/cartographie.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <article class="actu-card reveal" data-cat="Agriculture">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--orange">Agriculture</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Avril 2026</time>
+      <h3 class="actu-title">Démarrage de la saison multispectrale — premières analyses de cultures</h3>
+      <p class="actu-excerpt">Lancement des premières missions d'imagerie multispectrale de la saison sur céréales en Haute-Saône, avec restitution d'indices NDVI et NDRE.</p>
+      <a href="prestations/agriculture.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <!-- ── MARS 2026 ── -->
+  <div class="actu-mois"><span>Mars 2026</span></div>
+
+  <article class="actu-card actu-card--span2 reveal" data-cat="Événement">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--violet">Événement</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Mars 2026</time>
+      <h3 class="actu-title">APH Drone au salon Drone Expo Grand Est — retour sur notre participation</h3>
+      <p class="actu-excerpt">Rencontres professionnelles, démonstrations de vol et présentation de nos offres de formation : une édition riche en échanges. Nombreux contacts établis avec des acteurs de l'agriculture, de la sécurité civile et de la construction.</p>
+      <a href="actualites.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <article class="actu-card reveal" data-cat="Sécurité civile">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--marine">Sécurité civile</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Mars 2026</time>
+      <h3 class="actu-title">Exercice SDIS 70 — recherche de personne disparue en forêt</h3>
+      <p class="actu-excerpt">Participation à un exercice grandeur nature de recherche de personne disparue en milieu forestier, avec mise en oeuvre du drone thermique.</p>
+      <a href="formations/securite-secours.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <!-- ── JANVIER 2026 ── -->
+  <div class="actu-mois"><span>Janvier 2026</span></div>
+
+  <article class="actu-card reveal" data-cat="Sécurité civile">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--marine">Sécurité civile</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Janvier 2026</time>
+      <h3 class="actu-title">Formation FMPA SDIS 70 — bilan de la session hivernale</h3>
+      <p class="actu-excerpt">Retour sur la session de formation opérationnelle conduite avec les sapeurs-pompiers de Haute-Saône en conditions hivernales difficiles.</p>
+      <a href="formations/securite-secours.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <article class="actu-card reveal" data-cat="Agriculture">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--orange">Agriculture</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Janvier 2026</time>
+      <h3 class="actu-title">Première mission multispectrale sur vigne — Jura</h3>
+      <p class="actu-excerpt">Analyse de parcelles viticoles en Jura avec restitution d'indicateurs de vigueur végétative pour gestion agronomique différenciée.</p>
+      <a href="prestations/agriculture.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+  <article class="actu-card reveal" data-cat="Réglementation">
+    <div class="actu-img">
+      <span class="actu-img-placeholder">Photo</span>
+      <span class="actu-tag actu-tag--rouge">Réglementation</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Janvier 2026</time>
+      <h3 class="actu-title">SORA v2.5 — nouveautés pour les opérateurs en catégorie Spécifique</h3>
+      <p class="actu-excerpt">Analyse des changements introduits par la version 2.5 du SORA (Specific Operations Risk Assessment) et impact sur les dossiers DGAC en cours.</p>
+      <a href="prestations/sora-pdra.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+  </article>
+
+</div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4 class="footer-title">Nos Prestations</h4>
+      <ul class="footer-links">
+        <li><a href="prestations/surveillance.html"><span>›</span> Surveillance &amp; Sécurité</a></li>
+        <li><a href="prestations/agriculture.html"><span>›</span> Agriculture de précision</a></li>
+        <li><a href="prestations/environnement.html"><span>›</span> Environnement &amp; Forêt</a></li>
+        <li><a href="prestations/cartographie.html"><span>›</span> Cartographie &amp; Modélisation 3D</a></li>
+        <li><a href="prestations/thermographie.html"><span>›</span> Thermographie</a></li>
+        <li><a href="prestations/inspection.html"><span>›</span> Inspection technique</a></li>
+        <li><a href="prestations/sora-pdra.html"><span>›</span> Expertise SORA &amp; PDRA</a></li>
+        <li><a href="prestations/conseil-audit.html"><span>›</span> Conseil &amp; Audit</a></li>
+        <li><a href="prestations/mission-telepilote.html"><span>›</span> Mission Télépilote</a></li>
+        <li><a href="prestations/photo-video.html"><span>›</span> Photo &amp; Vidéo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-title">Nos Formations</h4>
+      <ul class="footer-links">
+        <li><a href="formations/initiation-a1a3.html"><span>›</span> Initiation A1/A3</a></li>
+        <li><a href="formations/bapd-a2.html"><span>›</span> BAPD — Catégorie A2</a></li>
+        <li><a href="formations/cats-sts.html"><span>›</span> Préparation CATS STS</a></li>
+        <li><a href="formations/vol-nuit.html"><span>›</span> Vol de nuit</a></li>
+        <li><a href="formations/sylviculture.html"><span>›</span> Sylviculture, faune &amp; biodiversité</a></li>
+        <li><a href="formations/securite-secours.html"><span>›</span> Surveillance, Sécurité &amp; Secours</a></li>
+        <li><a href="formations/agriculture.html"><span>›</span> Agriculture de précision</a></li>
+        <li><a href="formations/thermographie.html"><span>›</span> Thermographie</a></li>
+        <li><a href="formations/cartographie.html"><span>›</span> Cartographie &amp; Modélisation 3D</a></li>
+        <li><a href="formations/maitrise-pilotage.html"><span>›</span> Maîtrise opérationnelle</a></li>
+        <li><a href="formations/changer-carriere.html"><span>›</span> Changer de carrière</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-title">APH Drone</h4>
+      <ul class="footer-links">
+        <li><a href="apropos.html"><span>›</span> À propos</a></li>
+        <li><a href="hebergement.html"><span>›</span> Hébergement &amp; Restauration</a></li>
+        <li><a href="partenaires.html"><span>›</span> Partenaires &amp; clients</a></li>
+        <li><a href="temoignages.html"><span>›</span> Témoignages</a></li>
+        <li><a href="actualites.html"><span>›</span> Actualités</a></li>
+        <li><a href="recrutement.html"><span>›</span> Nous rejoindre</a></li>
+        <li><a href="contact.html"><span>›</span> Contact</a></li>
+      </ul>
+      <h4 class="footer-title" style="margin-top:28px;">Outils en ligne</h4>
+      <ul class="footer-links">
+        <li><a href="outils/meteo.html"><span>›</span> Météo drone</a></li>
+        <li><a href="outils/preparation-vol.html"><span>›</span> Préparation de vol</a></li>
+        <li><a href="outils/qcm.html"><span>›</span> QCM entraînement</a></li>
+        <li><a href="espace-stagiaires.html"><span>›</span> Espace stagiaires</a></li>
+        <li><a href="espace-clients.html"><span>›</span> Espace clients</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-title">Nous contacter</h4>
+      <p class="footer-desc">Opérateur drone professionnel certifié DGAC.<br/>Luxeuil-les-Bains — Haute-Saône.</p>
+      <ul class="footer-links" style="margin-bottom:20px;">
+        <li><a href="tel:0695390776"><span>›</span> 06 95 39 07 76</a></li>
+        <li><a href="mailto:aphdrone@gmail.com"><span>›</span> aphdrone@gmail.com</a></li>
+      </ul>
+      <h4 class="footer-title">Suivez-nous</h4>
+      <div class="footer-socials">
+        <a href="#" title="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <a href="cookies.html">Paramétrer les cookies</a>
+    <a href="plan-du-site.html">Plan du site</a>
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Confidentialité</a>
+    <a href="cgu.html">CGU</a>
+    <a href="cgv.html">CGV</a>
+    <a href="contact.html">Contact</a>
+    <span class="footer-legal-copy">© 2024–2026 APH Drone SASU</span>
+  </div>
+</footer>
+
+<!-- Bouton téléphone -->
+<a id="back-top" href="tel:0695390776">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>
+</a>
+
+<script>
+// Dropdowns header
+document.querySelectorAll('#site-header .has-dropdown').forEach(function(item){
+  var dd = item.querySelector('.dropdown');
+  item.addEventListener('mouseenter', function(){ dd.style.display='block'; });
+  item.addEventListener('mouseleave', function(){ dd.style.display='none'; });
+});
+
+// Bouton téléphone toujours visible
+document.getElementById('back-top').classList.add('visible');
+
+// Reveal au scroll
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.1});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+// Filtres par catégorie
+(function(){
+  var btns = document.querySelectorAll('.filtre-btn');
+  var cards = document.querySelectorAll('#actu-mosaic .actu-card');
+  var separateurs = document.querySelectorAll('.actu-mois');
+
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      btns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var cat = btn.dataset.cat;
+
+      cards.forEach(function(card){
+        if(cat === 'Tous' || card.dataset.cat === cat){
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Masquer les séparateurs de mois si aucune carte visible après eux
+      separateurs.forEach(function(sep){
+        var next = sep.nextElementSibling;
+        var hasVisible = false;
+        while(next && !next.classList.contains('actu-mois')){
+          if(!next.classList.contains('hidden') && next.classList.contains('actu-card')){
+            hasVisible = true;
+          }
+          next = next.nextElementSibling;
+        }
+        sep.style.display = hasVisible ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
