@@ -396,7 +396,7 @@ footer{background:var(--primary);color:white;padding:60px 10% 0;}
     <span class="actu-label">Nouveautés</span>
     <h2 class="section-title" style="margin-bottom:0;">À la une</h2>
   </div>
-  <div class="actu-mosaic" id="firebase-mosaic"></div>
+  <div id="firebase-mosaic"></div>
 </div>
 
 <!-- Séparateur si actus Firebase présentes -->
@@ -968,7 +968,7 @@ document.getElementById('back-top').classList.add('visible');
 // Filtres par catégorie
 (function(){
   var btns = document.querySelectorAll('.filtre-btn');
-  var cards = document.querySelectorAll('#actu-mosaic .actu-card');
+  var cards = document.querySelectorAll('#actu-mosaic .actu-card, #firebase-mosaic .actu-card');
   var separateurs = document.querySelectorAll('.actu-mois');
 
   btns.forEach(function(btn){
@@ -1085,6 +1085,15 @@ try {
     mosaic.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
     // Mettre à jour les filtres pour inclure les cartes Firebase
+    // Réinitialiser les filtres pour inclure les cartes Firebase
+    var activeBtn = document.querySelector('.filtre-btn.active');
+    if(activeBtn && activeBtn.dataset.cat !== 'Tous'){
+      var cat = activeBtn.dataset.cat;
+      mosaic.querySelectorAll('.actu-card').forEach(function(c){
+        c.classList.toggle('hidden', c.dataset.cat !== cat);
+      });
+    }
+
     window._firebaseLoaded = true;
   }
 } catch(e) {
