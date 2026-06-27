@@ -392,7 +392,23 @@ footer{background:var(--primary);color:white;padding:60px 10% 0;}
   <!-- ── JUIN 2026 ── -->
   <div class="actu-mois"><span>Juin 2026</span></div>
 
-  <article class="actu-card actu-card--span2 reveal" data-cat="Formation"
+  <article class="actu-card actu-card--span2 reveal" data-cat="Réglementation"
+    data-tag="Réglementation" data-tagcol="actu-tag--rouge" data-date="Juin 2026"
+    data-img="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=900&q=80"
+    data-title="Pulvérisation par drone enfin autorisée en France — ce que ça change pour les opérateurs"
+    data-content="&lt;p&gt;La loi n°2025-365 du 23 avril 2025 et ses décrets d'application publiés en mai-juin 2026 ouvrent officiellement la voie à la pulvérisation phytopharmaceutique par drone en France. Une évolution majeure pour le secteur agricole et pour les opérateurs UAS comme APH Drone.&lt;/p&gt;&lt;h4&gt;Ce qui est désormais autorisé&lt;/h4&gt;&lt;p&gt;Les produits de biocontrôle, à faible risque et autorisés en agriculture biologique peuvent être appliqués par drone sur trois types de parcelles sans dérogation exceptionnelle : les parcelles en pente supérieure ou égale à 20 %, les bananeraies, et les vignes mères de porte-greffes conduites au sol.&lt;/p&gt;&lt;h4&gt;La procédure d'autorisation&lt;/h4&gt;&lt;p&gt;L'opérateur dépose un dossier de programme d'application auprès du préfet de région via le formulaire dédié sur demarche.numerique.gouv.fr. L'autorisation, valable 5 ans maximum, est publiée en préfecture et affichée en mairie pendant toute la durée du programme.&lt;/p&gt;&lt;h4&gt;Les contraintes techniques à respecter&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;Contrôle périodique obligatoire du pulvérisateur drone&lt;/li&gt;&lt;li&gt;Certiphyto obligatoire pour les opérateurs&lt;/li&gt;&lt;li&gt;Hauteur et vitesse de vol limitées par arrêté&lt;/li&gt;&lt;li&gt;Distance minimale de 20 mètres des riverains et personnes présentes&lt;/li&gt;&lt;li&gt;Dispositifs anti-dérive homologués obligatoires&lt;/li&gt;&lt;li&gt;Autorisation DGAC d'exploitation drone (catégorie Spécifique pour le T100)&lt;/li&gt;&lt;/ul&gt;&lt;h4&gt;Ce que ça change pour APH Drone&lt;/h4&gt;&lt;p&gt;APH Drone dispose déjà du Certiphyto et opère le DJI AGRAS T100 en catégorie Spécifique (SORA v2.5). Nous sommes en mesure de déposer un dossier de programme d'application auprès de la Préfecture de Bourgogne-Franche-Comté dès maintenant. Contactez-nous pour étudier votre projet de pulvérisation par drone.&lt;/p&gt;"
+    data-cta="&lt;a href='../pages/prestations/agriculture.html'&gt;Découvrir nos prestations agriculture &lt;svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'&gt;&lt;path d='M5 12h14M12 5l7 7-7 7'/&gt;&lt;/svg&gt;&lt;/a&gt;">
+    <div class="actu-img" style="height:220px;background:#e8edf4;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=700&q=80" alt="Drone pulvérisateur agricole" style="width:100%;height:100%;object-fit:cover;">
+      <span class="actu-tag actu-tag--rouge" style="position:absolute;top:14px;left:14px;">Réglementation</span>
+    </div>
+    <div class="actu-body">
+      <time class="actu-date">Juin 2026</time>
+      <h3 class="actu-title">Pulvérisation par drone enfin autorisée en France — ce que ça change pour les opérateurs</h3>
+      <p class="actu-excerpt">La loi du 23 avril 2025 et ses décrets d'application (mai-juin 2026) ouvrent la voie à la pulvérisation phytopharmaceutique par drone sur parcelles en pente, bananeraies et vignes mères.</p>
+      <button class="actu-lire" onclick="openArticle(this.closest('.actu-card'))">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+    </div>
+  </article>
     data-tag="Formation" data-tagcol="actu-tag--bleu" data-date="Juin 2026"
     data-title="Nouvelle session CATS STS ouverte à l'inscription"
     data-content="&lt;p&gt;La prochaine session de préparation à l'examen CATS — scénarios STS-01 et STS-02 — est programmée en distanciel synchrone sur 5 jours. Public mixte SDIS et civils. Places limitées à 3 stagiaires pour garantir un suivi individualisé.&lt;/p&gt;&lt;h4&gt;Programme&lt;/h4&gt;&lt;ul&gt;&lt;li&gt;Jour 1 — Réglementation européenne UAS (EASA, DGAC)&lt;/li&gt;&lt;li&gt;Jour 2 — Gestion de l'espace aérien et autorisations&lt;/li&gt;&lt;li&gt;Jour 3 — Météorologie appliquée et GO/NO-GO&lt;/li&gt;&lt;li&gt;Jour 4 — Facteurs humains et CRM&lt;/li&gt;&lt;li&gt;Jour 5 — Révisions et examen blanc complet (40 QCM, seuil 75%)&lt;/li&gt;&lt;/ul&gt;&lt;h4&gt;Modalités&lt;/h4&gt;&lt;p&gt;Formation distancielle synchrone via Zoom. Supports de cours fournis. Examen final dans un centre DGAC Océane agréé. Tarif sur devis selon profil (SDIS / particulier / entreprise).&lt;/p&gt;"
@@ -736,6 +752,7 @@ function openArticle(card){
   var title = card.dataset.title || '';
   var content = card.dataset.content || '';
   var cta = card.dataset.cta || '';
+  var img = card.dataset.img || '';
   var color = tagColors[tagcol] || '#1F5FAF';
 
   document.getElementById('ap-meta').innerHTML =
@@ -744,6 +761,13 @@ function openArticle(card){
   document.getElementById('ap-title').textContent = title;
   document.getElementById('ap-content').innerHTML = content;
   document.getElementById('ap-cta').innerHTML = cta;
+
+  var imgEl = document.getElementById('ap-img');
+  if(img){
+    imgEl.innerHTML = '<img src="'+img+'" alt="'+title+'">';
+  } else {
+    imgEl.innerHTML = '<span class="ap-img-placeholder">Photo</span>';
+  }
 
   document.getElementById('article-overlay').classList.add('open');
   document.getElementById('article-panel').classList.add('open');
