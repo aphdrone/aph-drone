@@ -524,8 +524,21 @@ padding:60px 10% 0;
 .zone-map svg{width:100%;max-width:300px;display:block;margin:auto;}
 
 /* ── Témoignages ── */
-.temoignages-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;}
-.temoignage{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;}
+.temoignages-track{
+  display:flex;
+  gap:24px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  padding-bottom:8px;
+}
+.temoignages-track::-webkit-scrollbar{display:none;}
+.temoignage{
+  flex:0 0 340px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;
+  padding:28px;
+}
 .temoignage-stars{color:#f59e0b;font-size:1.1rem;margin-bottom:14px;letter-spacing:2px;}
 .temoignage p{color:rgba(255,255,255,.8);font-size:.9rem;line-height:1.7;font-style:italic;margin-bottom:16px;}
 .temoignage-author{font-size:.8rem;color:rgba(255,255,255,.45);font-weight:500;}
@@ -784,20 +797,12 @@ Découvrir nos formations
 <section class="section stats">
   <div class="stats-grid">
     <div class="stat-item reveal">
-      <div class="stat-number" data-target="1">0</div>
-      <p>Interlocuteur dédié</p>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-number" data-target="25">0</div>
+      <div class="stat-number" data-target="25ans">25+ années</div>
       <p>Culture Aéronautique</p>
     </div>
     <div class="stat-item reveal">
       <div class="stat-number" data-target="48h">0</div>
       <p>Réponse garantie</p>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-number" data-target="100">0</div>
-      <p>Sécurité mission</p>
     </div>
     <div class="stat-item reveal">
       <div class="stat-number" data-target="7j/7">0</div>
@@ -1018,31 +1023,31 @@ Découvrir nos formations
 <!-- ═══ TÉMOIGNAGES ═══ -->
 <section class="section" style="background:var(--primary);">
   <h2 class="section-title" style="color:white;">Ils nous font confiance</h2>
-  <div class="temoignages-grid">
-    <div class="temoignage reveal">
+  <div class="temoignages-track" id="carousel-temoignages">
+    <div class="temoignage">
       <div class="temoignage-stars">★★★★★</div>
       <p>"Formation BAPD très complète, pédagogie excellente et mise en situation réelle. Je recommande vivement APH Drone pour toute formation professionnelle."</p>
       <div class="temoignage-author">— Marc D., Agriculteur — Haute-Saône</div>
     </div>
-    <div class="temoignage reveal">
+    <div class="temoignage">
       <div class="temoignage-stars">★★★★★</div>
       <p>"Intervention thermographique sur notre toiture industrielle : rapport détaillé, délais respectés, équipe réactive. Un partenaire de confiance."</p>
       <div class="temoignage-author">— Sophie L., Responsable technique — PME BFC</div>
     </div>
-    <div class="temoignage reveal">
+    <div class="temoignage">
       <div class="temoignage-stars">★★★★★</div>
       <p>"Cartographie de nos parcelles viticoles avec une précision impressionnante. Les données multispectrale ont transformé notre gestion agronomique."</p>
       <div class="temoignage-author">— Pierre M., Viticulteur — Jura</div>
     </div>
-    <div class="temoignage reveal">
+    <div class="temoignage">
       <div class="temoignage-stars">★★★★★</div>
-      <p>"Intervention thermographique sur notre toiture industrielle : rapport détaillé, délais respectés, équipe réactive. Un partenaire de confiance."</p>
-      <div class="temoignage-author">— Sophie L., Responsable technique — PME BFC</div>
+      <p>"Mission de surveillance sur notre site logistique réalisée avec professionnalisme. Les images restituées étaient d'une qualité remarquable."</p>
+      <div class="temoignage-author">— Jean-Luc R., Directeur de site — Vesoul</div>
     </div>
-    <div class="temoignage reveal">
+    <div class="temoignage">
       <div class="temoignage-stars">★★★★★</div>
-      <p>"Intervention thermographique sur notre toiture industrielle : rapport détaillé, délais respectés, équipe réactive. Un partenaire de confiance."</p>
-      <div class="temoignage-author">— Sophie L., Responsable technique — PME BFC</div>
+      <p>"Formation vol de nuit unique en France. Arnaud transmet avec passion et rigueur. Une expérience marquante, très attendue dans notre secteur."</p>
+      <div class="temoignage-author">— Karim B., Télépilote professionnel — Grand Est</div>
     </div>
   </div>
 </section>
@@ -1326,15 +1331,24 @@ Découvrir nos formations
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(!e.isIntersecting) return;
-      var el = e.target, target = +el.dataset.target, duration = 1800, start = null;
-      var label = el.parentElement.querySelector('p').textContent;
+      var el = e.target;
+      var raw = el.dataset.target;
+      var target = parseFloat(raw);
+      // Si la valeur n'est pas un nombre (ex: "48h", "7j/7", "360°"), afficher directement
+      if(isNaN(target)){
+        el.textContent = raw;
+        io.unobserve(el);
+        return;
+      }
+      var duration = 1800, start = null;
       function step(ts){
         if(!start) start = ts;
         var progress = Math.min((ts-start)/duration,1);
         var ease = 1-Math.pow(1-progress,3);
         var val = Math.round(ease*target);
-        el.textContent = val + (label.includes('%') ? '%' : '+');
+        el.textContent = val;
         if(progress < 1) requestAnimationFrame(step);
+        else el.textContent = raw; // affiche la valeur finale exacte du data-target
       }
       requestAnimationFrame(step);
       io.unobserve(el);
@@ -1353,7 +1367,8 @@ Découvrir nos formations
   var SPEED = 1.2;   // px par frame
   var CARD_W = 310;  // 280px + 30px gap
 
-  function setupCarousel(track){
+  function setupCarousel(track, customSpeed){
+    var spd = customSpeed || SPEED;
     // 1. Cloner les cartes pour boucle infinie
     var origCards = Array.from(track.children);
     origCards.forEach(function(card){
@@ -1370,7 +1385,7 @@ Découvrir nos formations
 
     function autoScroll(){
       if(!paused){
-        track.scrollLeft += SPEED;
+        track.scrollLeft += spd;
         if(track.scrollLeft >= halfWidth){
           track.scrollLeft -= halfWidth;
         }
@@ -1406,6 +1421,9 @@ Découvrir nos formations
   // Lancer après chargement complet
   window.addEventListener('load', function(){
     document.querySelectorAll('.carousel-track').forEach(setupCarousel);
+    // Témoignages : même système, vitesse plus lente
+    var temoTrack = document.getElementById('carousel-temoignages');
+    if(temoTrack) setupCarousel(temoTrack, 0.4);
   });
 })();
 
