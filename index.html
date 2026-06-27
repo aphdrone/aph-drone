@@ -1347,25 +1347,38 @@ Découvrir nos formations
 (function(){
   document.getElementById('back-top').classList.add('visible');
 })();
+
+// ── Carrousels : auto-scroll continu + flèches ──
 (function(){
-  var SPEED = 0.5; // pixels par frame
-  var CARD_W = 310; // 280px carte + 30px gap
+  var SPEED = 0.6;   // px par frame
+  var CARD_W = 310;  // 280px + 30px gap
 
   function setupCarousel(track){
+    // 1. Cloner les cartes pour boucle infinie
+    var origCards = Array.from(track.children);
+    origCards.forEach(function(card){
+      var clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden','true');
+      track.appendChild(clone);
+    });
+    var halfWidth = track.scrollWidth / 2;
+
+    // 2. Désactiver scroll-snap (incompatible avec scrollLeft+=)
+    track.style.scrollSnapType = 'none';
+
     var paused = false;
-    var raf;
 
     function autoScroll(){
       if(!paused){
         track.scrollLeft += SPEED;
-        // reboucle en fin de liste
-        if(track.scrollLeft >= track.scrollWidth - track.clientWidth - 2){
-          track.scrollLeft = 0;
+        if(track.scrollLeft >= halfWidth){
+          track.scrollLeft -= halfWidth;
         }
       }
-      raf = requestAnimationFrame(autoScroll);
+      requestAnimationFrame(autoScroll);
     }
 
+    // Pause au survol
     track.addEventListener('mouseenter', function(){ paused = true; });
     track.addEventListener('mouseleave', function(){ paused = false; });
     track.addEventListener('touchstart', function(){ paused = true; }, {passive:true});
@@ -1373,20 +1386,27 @@ Découvrir nos formations
       setTimeout(function(){ paused = false; }, 2000);
     }, {passive:true});
 
-    raf = requestAnimationFrame(autoScroll);
-    track._pauseScroll = function(){ paused = true; setTimeout(function(){ paused = false; }, 2500); };
+    // Méthode pause temporaire pour les flèches
+    track._pause = function(){
+      paused = true;
+      setTimeout(function(){ paused = false; }, 2500);
+    };
+
+    requestAnimationFrame(autoScroll);
   }
 
   // Flèches
   window.scrollCarousel = function(btn, dir){
     var wrapper = btn.closest('.carousel-wrapper');
     var track = wrapper.querySelector('.carousel-track');
-    track._pauseScroll && track._pauseScroll();
+    track._pause && track._pause();
     track.scrollBy({ left: dir * CARD_W, behavior: 'smooth' });
   };
 
-  // Init après chargement
-  document.querySelectorAll('.carousel-track').forEach(setupCarousel);
+  // Lancer après chargement complet
+  window.addEventListener('load', function(){
+    document.querySelectorAll('.carousel-track').forEach(setupCarousel);
+  });
 })();
 
 </script>
