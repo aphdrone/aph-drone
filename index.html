@@ -1167,7 +1167,7 @@ Découvrir nos formations
 
     <!-- ACTU 1 — grande avec photo -->
     <article class="actu-card actu-card--lg reveal">
-      <div class="actu-img" style="background:#1a2a1a;overflow:hidden;position:relative;">
+      <div class="actu-img" style="background:#1a2a1a;">
         <img src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&q=80" alt="Pulvérisation drone" style="width:100%;height:100%;object-fit:cover;">
         <span class="actu-tag actu-tag--rouge">Réglementation</span>
       </div>
@@ -1488,7 +1488,66 @@ Découvrir nos formations
   nums.forEach(function(n){ io.observe(n); });
 })();
 
-// Bouton téléphone — toujours visible
+// ── Carrousel Actualités Firebase ──
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, orderBy, query, limit }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAV5NQWfp8n9RkTrHSwqssBJ4R9lNAuYK8",
+  authDomain: "aph-drone.firebaseapp.com",
+  projectId: "aph-drone",
+  storageBucket: "aph-drone.firebasestorage.app",
+  messagingSenderId: "316810168380",
+  appId: "1:316810168380:web:66cb916cec4fdc00b9db39"
+};
+const tagClasses = {
+  'Réglementation':'actu-tag--rouge','Formation':'actu-tag--bleu','Mission':'actu-tag--vert',
+  'Événement':'actu-tag--violet','Agriculture':'actu-tag--orange','Sécurité civile':'actu-tag--marine'
+};
+
+try {
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const q = query(collection(db, 'actualites'), orderBy('ordre','desc'), limit(3));
+  const snap = await getDocs(q);
+
+  if(!snap.empty){
+    const track = document.querySelector('.actu-track');
+    const sizes = ['lg','md','sm'];
+    let i = 0;
+
+    // Insérer les cartes Firebase EN PREMIER dans le carrousel
+    const firstChild = track.firstChild;
+    snap.forEach(docSnap => {
+      const d = docSnap.data();
+      const taille = sizes[i % sizes.length];
+      const tagClass = tagClasses[d.cat] || 'actu-tag--bleu';
+      const imgHtml = d.photoUrl
+        ? `<img src="${d.photoUrl}" alt="${d.titre}" style="width:100%;height:100%;object-fit:cover;">`
+        : `<span class="actu-img-placeholder">Photo</span>`;
+
+      const art = document.createElement('article');
+      art.className = `actu-card actu-card--${taille}`;
+      art.innerHTML = `
+        <div class="actu-img">${imgHtml}<span class="actu-tag ${tagClass}">${d.cat}</span></div>
+        <div class="actu-body">
+          <time class="actu-date">${d.date}</time>
+          <h3 class="actu-title">${d.titre}</h3>
+          ${d.extrait ? `<p class="actu-excerpt">${d.extrait}</p>` : ''}
+          <a href="pages/actualites.html" class="actu-lire">Lire la suite <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      `;
+      track.insertBefore(art, firstChild);
+      i++;
+    });
+  }
+} catch(e) {
+  console.warn('Firebase:', e.message);
+}
+</script>
+
 (function(){
   document.getElementById('back-top').classList.add('visible');
 })();
