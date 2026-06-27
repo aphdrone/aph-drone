@@ -755,6 +755,28 @@ footer{background:var(--primary);color:white;padding:60px 10% 0;}
 
 </div>
 </div>
+
+<!-- ═══ PANEL ARTICLE ═══ -->
+<div id="article-overlay" onclick="closePanel()"></div>
+<div id="article-panel">
+  <div class="ap-header">
+    <div class="ap-meta" id="ap-meta"></div>
+    <button class="ap-close" onclick="closePanel()" aria-label="Fermer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="ap-img" id="ap-img"><span class="ap-img-placeholder">Photo</span></div>
+  <div class="ap-body">
+    <h2 class="ap-title" id="ap-title"></h2>
+    <div class="ap-content" id="ap-content"></div>
+    <div class="ap-cta" id="ap-cta"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4 class="footer-title">Nos Prestations</h4>
       <ul class="footer-links">
         <li><a href="prestations/surveillance.html"><span>›</span> Surveillance &amp; Sécurité</a></li>
         <li><a href="prestations/agriculture.html"><span>›</span> Agriculture de précision</a></li>
