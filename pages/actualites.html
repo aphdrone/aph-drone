@@ -97,27 +97,29 @@ body{background:#fff;color:#222;overflow-x:hidden;}
 /* ── GRILLE ACTUALITÉS ── */
 .actu-page{padding:40px 10% 100px;}
 
-#firebase-mosaic{
+/* Grille mosaïque 6 colonnes */
+#firebase-mosaic,
+.actu-mosaic{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:28px;
+  grid-template-columns:repeat(6,1fr);
+  gap:24px;
+  margin-bottom:28px;
 }
-#firebase-mosaic .actu-card--lg{grid-column:span 2;}
-#firebase-mosaic .actu-card--lg .actu-img{height:260px;}
-#firebase-mosaic .actu-card--md{grid-column:span 1;}
-#firebase-mosaic .actu-card--md .actu-img{height:200px;}
-#firebase-mosaic .actu-card--sm{grid-column:span 1;}
-#firebase-mosaic .actu-card--sm .actu-img{height:160px;}
-/* Cartes sur 2 colonnes */
-.actu-mosaic .actu-card--span2{grid-column:span 2;}
+/* Grande : span 4 */
+#firebase-mosaic .actu-card--lg,
+.actu-mosaic .actu-card--span2{grid-column:span 4;}
+#firebase-mosaic .actu-card--lg .actu-img,
 .actu-mosaic .actu-card--span2 .actu-img{height:280px;}
-/* Cartes moyennes sur 2 colonnes aussi */
-.actu-mosaic .actu-card--md{grid-column:span 2;}
+/* Moyenne : span 3 */
+#firebase-mosaic .actu-card--md,
+.actu-mosaic .actu-card--md{grid-column:span 3;}
+#firebase-mosaic .actu-card--md .actu-img,
 .actu-mosaic .actu-card--md .actu-img{height:220px;}
-/* Petites cartes sur 1 colonne */
-.actu-mosaic .actu-card--sm{grid-column:span 1;}
+/* Petite : span 2 */
+#firebase-mosaic .actu-card--sm,
+.actu-mosaic .actu-card--sm{grid-column:span 2;}
+#firebase-mosaic .actu-card--sm .actu-img,
 .actu-mosaic .actu-card--sm .actu-img{height:160px;}
-.actu-card:not(.actu-card--span2) .actu-img{height:unset;}
 
 .actu-card{
   background:#fff;
