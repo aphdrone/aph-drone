@@ -369,6 +369,19 @@ font-weight:700;
 }
 .actu-lire:hover{color:var(--accent);gap:10px;}
 
+/* ── Hero À propos ── */
+.hero-apropos-wrap{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0B1F3A 0%,#1a3a6b 100%);
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:140px 10% 80px;
+  gap:80px;position:relative;overflow:hidden;
+}
+.hero-apropos-text{position:relative;z-index:1;}
+.hero-apropos-visual{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:28px;}
+.hero-apropos-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;}
+
 /* ── Curseur personnalisé ── */
 *{cursor:none;}
 #cursor{
@@ -721,20 +734,15 @@ padding:60px 10% 0;
   /* Menu mobile overlay */
   #mobile-menu.open{display:flex !important;visibility:visible;}
 
-  /* Responsive contenu apropos */
-  section[style*="grid-template-columns:1fr 1fr"]{
-    display:block !important;
-    padding:100px 6% 50px !important;
-  }
-  section[style*="grid-template-columns:repeat(3,1fr)"]{
-    display:block !important;
-    padding:60px 6% !important;
-  }
-  section[style*="grid-template-columns:repeat(4,1fr)"]{
-    display:grid !important;
-    grid-template-columns:1fr 1fr !important;
-    padding:60px 6% !important;
-  }
+/* Responsive contenu apropos */
+  .hero-apropos-wrap{display:block !important;padding:100px 6% 50px !important;}
+  .hero-apropos-visual{margin-top:32px;width:100%;}
+  .hero-apropos-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+  .certifs-grid-apropos{display:block !important;}
+  .certifs-grid-apropos > div{margin-bottom:16px;}
+  .valeurs-grid-apropos{grid-template-columns:1fr 1fr !important;}
+  .cta-apropos-wrap{display:block !important;padding:60px 6% !important;}
+  .cta-apropos-wrap > div:last-child{margin-top:32px;}
   .footer-grid{grid-template-columns:1fr 1fr !important;}
   .footer-legal{flex-direction:column;gap:8px;}
   .footer-legal-copy{margin-left:0 !important;}
@@ -1003,7 +1011,61 @@ checkMobile();
 </script>
 
 <!-- ═══ HERO À PROPOS ═══ -->
-<section style="min-height:100vh;background:linear-gradient(135deg,#0B1F3A 0%,#1a3a6b 100%);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:140px 10% 80px;gap:80px;position:relative;overflow:hidden;">
+<section class="hero-apropos-wrap">
+  <div class="hero-apropos-text">
+    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:24px;">
+      <a href="../index.html" style="color:rgba(255,255,255,.5);text-decoration:none;">Accueil</a>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,.8);">À propos</span>
+    </div>
+    <span style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4A90E2;margin-bottom:16px;display:block;">Fondateur &amp; Gérant</span>
+    <h1 style="font-size:3rem;font-weight:800;color:white;line-height:1.1;margin-bottom:24px;">Arnaud<br><span style="color:#4A90E2;">MOREAU</span></h1>
+    <p style="font-size:1rem;color:rgba(255,255,255,.65);line-height:1.85;margin-bottom:36px;max-width:480px;">Télépilote professionnel certifié DGAC, formateur, pilote d'avion et sapeur-pompier volontaire, mobilisant une expertise aéronautique et opérationnelle complète au service de la formation et des missions drone en France, avec une implantation forte en Bourgogne–Franche-Comté.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;">
+      <a href="contact.html" style="display:inline-flex;align-items:center;gap:8px;background:#1F5FAF;color:white;padding:13px 26px;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Me contacter
+      </a>
+      <a href="tel:0695390776" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:white;border:1.5px solid rgba(255,255,255,.25);padding:13px 26px;border-radius:8px;font-size:.88rem;font-weight:600;text-decoration:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>
+        06 95 39 07 76
+      </a>
+    </div>
+  </div>
+  <div class="hero-apropos-visual">
+    <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px;text-align:center;width:100%;">
+      <div style="width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#1F5FAF,#4A90E2);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:800;color:white;">A</div>
+      <div style="font-size:1.3rem;font-weight:700;color:white;margin-bottom:4px;">Arnaud MOREAU</div>
+      <div style="font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:20px;">Fondateur — APH Drone SASU<br>Luxeuil-les-Bains, Haute-Saône</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+        <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(74,144,226,.2);color:#4A90E2;border:1px solid rgba(74,144,226,.3);">DGAC Open A2</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(74,144,226,.2);color:#4A90E2;border:1px solid rgba(74,144,226,.3);">STS-01</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(74,144,226,.2);color:#4A90E2;border:1px solid rgba(74,144,226,.3);">Certiphyto</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(74,144,226,.2);color:#4A90E2;border:1px solid rgba(74,144,226,.3);">SPV SDIS 70</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(74,144,226,.2);color:#4A90E2;border:1px solid rgba(74,144,226,.3);">Pilote DA40</span>
+        <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(74,144,226,.2);color:#4A90E2;border:1px solid rgba(74,144,226,.3);">Thermographie</span>
+      </div>
+    </div>
+    <div class="hero-apropos-stats">
+      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:800;color:#4A90E2;">25+</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">Ans d'exp.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:800;color:#4A90E2;">7j/7</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">Disponibilité</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:800;color:#4A90E2;">48h</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">Réponse</div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;">
+        <div style="font-size:1.8rem;font-weight:800;color:#4A90E2;">360°</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">Couverture BFC</div>
+      </div>
+    </div>
+  </div>
+</section>
   <div style="position:relative;z-index:1;">
     <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:24px;">
       <a href="../index.html" style="color:rgba(255,255,255,.5);text-decoration:none;">Accueil</a>
