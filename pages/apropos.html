@@ -242,6 +242,16 @@ footer{background:var(--primary);color:white;padding:60px 10% 0;}
 .footer-legal a{color:rgba(255,255,255,.4);text-decoration:none;transition:.2s;}
 .footer-legal a:hover{color:white;}
 .footer-legal-copy{margin-left:auto;color:rgba(255,255,255,.25);}
+#burger-btn{display:none;}
+#mobile-menu{display:none !important;visibility:hidden;position:fixed;top:0;left:0;right:0;bottom:0;background:#0B1F3A;z-index:99998;overflow-y:auto;padding:80px 28px 40px;flex-direction:column;gap:8px;font-family:'Inter',sans-serif;}
+@media(max-width:768px){
+  #mobile-menu.open{display:flex !important;visibility:visible !important;}
+  #burger-btn{display:flex !important;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0;}
+  #burger-btn span{display:block;width:24px;height:2px;background:white;border-radius:2px;}
+  #site-header nav{display:none !important;}
+  *{cursor:auto !important;}
+  a,button{cursor:pointer !important;}
+}
 </style>
 <link rel="stylesheet" href="../assets/mobile.css">
 </head>
