@@ -682,7 +682,7 @@ padding:60px 10% 0;
 #burger-btn{display:none;}
 /* Menu mobile JAMAIS visible sur desktop */
 #mobile-menu{
-  display:none !important;
+  display:none;
   visibility:hidden;
   position:fixed;top:0;left:0;right:0;bottom:0;
   background:var(--primary);z-index:99998;
@@ -719,7 +719,7 @@ padding:60px 10% 0;
   #burger-btn span{display:block;width:24px;height:2px;background:white;border-radius:2px;transition:.3s;}
 
   /* Menu mobile overlay */
-  #mobile-menu.open{display:flex !important;visibility:visible !important;}
+  #mobile-menu.open{display:flex !important;visibility:visible;}
   #mobile-menu-close{
     position:absolute;top:20px;right:20px;
     background:rgba(255,255,255,.1);border:none;color:white;
@@ -980,6 +980,8 @@ document.addEventListener('DOMContentLoaded', function(){
   checkMobile();
 });
 window.addEventListener('resize', checkMobile);
+// Exécution immédiate aussi
+checkMobile();
 </script>
 
 <!-- ═══ HERO À PROPOS ═══ -->
