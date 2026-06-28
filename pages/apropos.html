@@ -644,6 +644,25 @@ padding:60px 10% 0;
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(74,144,226,.12);}
 .form-group textarea{resize:vertical;}
 .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8fa5' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+
+/* Desktop grid classes */
+.certifs-grid-inner{grid-template-columns:repeat(3,1fr);}
+.certifs-grid-inner > div:first-child{grid-column:span 2;}
+.valeurs-grid-inner{grid-template-columns:repeat(4,1fr);}
+.cta-section-wrap{grid-template-columns:1fr 1fr;}
+@media(max-width:768px){
+  .certifs-grid-inner{grid-template-columns:1fr 1fr !important;}
+  .certifs-grid-inner > div:first-child{grid-column:span 2 !important;}
+  .valeurs-grid-inner{grid-template-columns:1fr 1fr !important;}
+  .cta-section-wrap{grid-template-columns:1fr !important;padding:60px 6% !important;}
+  .hero-apropos-stats{grid-template-columns:1fr 1fr !important;max-width:100% !important;width:100% !important;}
+}
+@media(max-width:480px){
+  .certifs-grid-inner{grid-template-columns:1fr !important;}
+  .certifs-grid-inner > div:first-child{grid-column:span 1 !important;}
+  .valeurs-grid-inner{grid-template-columns:1fr !important;}
+}
+
 </style>
 </head>
 
@@ -1100,7 +1119,7 @@ checkMobile();
         <span style="padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;background:rgba(74,144,226,.2);color:#4A90E2;border:1px solid rgba(74,144,226,.3);">Thermographie</span>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:340px;">
+    <div class="hero-apropos-stats">
       <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px;text-align:center;">
         <div style="font-size:1.8rem;font-weight:800;color:#4A90E2;">25+</div>
         <div style="font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;">Ans d'exp.</div>
@@ -1125,7 +1144,7 @@ checkMobile();
 <section style="padding:80px 10%;background:#F5F7FA;">
   <span style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4A90E2;margin-bottom:12px;display:block;">Certifications &amp; habilitations</span>
   <h2 class="section-title">Des compétences certifiées par les autorités compétentes</h2>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+  <div class="certifs-grid-inner" style="display:grid;gap:20px;">
     <div style="grid-column:span 2;background:#0B1F3A;border-radius:16px;padding:28px;display:flex;gap:16px;">
       <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -1177,7 +1196,7 @@ checkMobile();
 <section class="section" style="background:white;">
   <span style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4A90E2;margin-bottom:12px;display:block;">Notre ADN</span>
   <h2 class="section-title">Les valeurs d'APH Drone</h2>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+  <div class="valeurs-grid-inner" style="display:grid;gap:24px;">
     <div class="card" style="text-align:center;">
       <div style="width:56px;height:56px;border-radius:16px;background:#F5F7FA;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1F5FAF" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1210,7 +1229,7 @@ checkMobile();
 </section>
 
 <!-- ═══ CTA ═══ -->
-<section style="padding:80px 10%;background:linear-gradient(135deg,#0B1F3A,#1a3a6b);display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+<section class="cta-section-wrap" style="padding:80px 10%;background:linear-gradient(135deg,#0B1F3A,#1a3a6b);display:grid;gap:60px;align-items:center;">
   <div>
     <h2 style="font-size:2rem;font-weight:700;color:white;margin-bottom:16px;line-height:1.2;">Un projet ? Une question ?<br>Parlons-en.</h2>
     <p style="font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:32px;">Que ce soit pour une mission de terrain, une formation ou un partenariat, je réponds à toutes vos demandes sous 48h.</p>
