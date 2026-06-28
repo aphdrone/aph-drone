@@ -1,0 +1,161 @@
+/* ══════════════════════════════════════════
+   APH DRONE — mobile.css
+   Responsive mobile commun à toutes les pages
+   À inclure dans chaque page :
+   <link rel="stylesheet" href="../assets/mobile.css">
+   (ou href="assets/mobile.css" depuis la racine)
+   ══════════════════════════════════════════ */
+
+/* ── Curseur custom désactivé sur mobile ── */
+@media (max-width:768px){
+  #cursor,#cursor-dot,#cursor-ring{display:none !important;}
+  *{cursor:auto !important;}
+  a,button,[onclick]{cursor:pointer !important;}
+}
+
+/* ── Menu mobile ── */
+#burger-btn{display:none;}
+#mobile-menu{
+  display:none !important;
+  visibility:hidden;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  background:#0B1F3A;z-index:99998;
+  overflow-y:auto;padding:80px 28px 40px;
+  flex-direction:column;gap:8px;
+  font-family:'Inter',sans-serif;
+}
+
+/* ════════════════════════════════
+   MOBILE — max 768px
+   ════════════════════════════════ */
+@media (max-width:768px){
+
+  /* ── Header ── */
+  #site-header{
+    padding:12px 20px !important;
+  }
+  #site-header .logo img{height:48px !important;width:48px !important;}
+  #site-header nav{display:none !important;}
+  #burger-btn{
+    display:flex !important;
+    flex-direction:column;gap:5px;
+    background:none;border:none;cursor:pointer !important;padding:4px;
+    flex-shrink:0;
+  }
+  #burger-btn span{
+    display:block;width:24px;height:2px;
+    background:white;border-radius:2px;transition:.3s;
+  }
+
+  /* ── Menu mobile ouvert ── */
+  #mobile-menu.open{
+    display:flex !important;
+    visibility:visible !important;
+  }
+  #mobile-menu-close{
+    position:absolute;top:20px;right:20px;
+    background:rgba(255,255,255,.1);border:none;color:white;
+    width:40px;height:40px;border-radius:50%;cursor:pointer !important;
+    font-size:20px;display:flex;align-items:center;justify-content:center;
+  }
+  .mobile-menu-section{
+    font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:#4A90E2;padding:16px 0 6px;
+  }
+  .mobile-menu-item{
+    color:white;text-decoration:none;font-size:1rem;font-weight:600;
+    padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);display:block;
+  }
+  .mobile-menu-sub{padding-left:16px;display:flex;flex-direction:column;}
+  .mobile-menu-sub a{
+    color:rgba(255,255,255,.65);text-decoration:none;font-size:.88rem;
+    padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);display:block;
+  }
+
+  /* ── Hero ── */
+  .hero{padding:100px 6% 60px !important;}
+  .page-hero{padding:110px 6% 60px !important;}
+  .hero-content h1,.page-hero h1{font-size:2rem !important;}
+  .hero-content p,.page-hero p{font-size:.92rem !important;}
+  .hero-actions,.cta-actions{flex-direction:column;gap:10px;}
+
+  /* ── Sections ── */
+  .section{padding:50px 6% !important;}
+  .section-title{font-size:1.5rem !important;}
+  .section-header{flex-direction:column;align-items:flex-start;gap:16px;}
+
+  /* ── Grilles ── */
+  .stats-grid{grid-template-columns:repeat(2,1fr) !important;gap:14px !important;}
+  .footer-grid{grid-template-columns:1fr 1fr !important;gap:28px !important;}
+  .partners-grid{grid-template-columns:1fr !important;}
+  .partner-card--featured{grid-column:span 1 !important;}
+  .cat-grid{grid-template-columns:1fr !important;}
+  .temoignages-grid{grid-template-columns:1fr !important;}
+  .intro{grid-template-columns:1fr !important;gap:40px !important;}
+  .certifs-grid{grid-template-columns:1fr 1fr !important;}
+  .certif-card:first-child{grid-column:span 2 !important;}
+  .valeurs-grid{grid-template-columns:1fr 1fr !important;}
+  .cta-section{grid-template-columns:1fr !important;gap:40px !important;}
+  .parcours-grid{grid-template-columns:1fr !important;gap:40px !important;}
+  .pourquoi-grid{grid-template-columns:1fr !important;}
+  .annuaire-grid{grid-template-columns:1fr !important;}
+  .actu-mosaic{grid-template-columns:1fr !important;}
+  .actu-mosaic .actu-card--span2{grid-column:span 1 !important;}
+  #firebase-mosaic{grid-template-columns:1fr !important;}
+  #firebase-mosaic .actu-card--lg{grid-column:span 1 !important;}
+
+  /* ── Carrousels ── */
+  .carousel-btn--prev{left:-8px !important;}
+  .carousel-btn--next{right:-8px !important;}
+  .actu-card--lg{width:280px !important;}
+  .actu-card--md{width:240px !important;}
+  .actu-card--sm{width:200px !important;}
+
+  /* ── Contact ── */
+  .contact-wrap{grid-template-columns:1fr !important;gap:32px !important;}
+  .spontanee-inner{grid-template-columns:1fr !important;gap:32px !important;padding:28px !important;}
+  .fc-row{grid-template-columns:1fr !important;}
+
+  /* ── Footer ── */
+  .footer-legal{flex-direction:column;align-items:flex-start;gap:8px !important;}
+  .footer-legal-copy{margin-left:0 !important;}
+
+  /* ── Admin dashboard ── */
+  .dash-sidebar{display:none;}
+  .dash-main{margin-left:0 !important;}
+  .panel-grid{grid-template-columns:1fr !important;height:auto !important;}
+  .panel-col{max-height:none !important;}
+  .quick-stats{grid-template-columns:1fr 1fr !important;}
+  .module-cards{grid-template-columns:1fr !important;}
+  .welcome-grid{grid-template-columns:1fr !important;}
+
+  /* ── Espace stagiaire ── */
+  .es-hero{padding:28px 20px !important;}
+  .es-hero-name{font-size:1.5rem !important;}
+  .es-hero-stats{gap:20px !important;}
+  .es-body{padding:20px !important;}
+  .formations-grid{grid-template-columns:1fr !important;}
+  .docs-grid{grid-template-columns:1fr 1fr !important;}
+
+  /* ── Hébergement ── */
+  .fiche-actions{flex-direction:column;gap:8px;}
+
+  /* ── Bouton téléphone ── */
+  #back-top{bottom:16px !important;right:16px !important;width:46px !important;height:46px !important;}
+}
+
+/* ════════════════════════════════
+   TRÈS PETIT — max 480px
+   ════════════════════════════════ */
+@media (max-width:480px){
+  .hero-content h1,.page-hero h1{font-size:1.7rem !important;}
+  .section-title{font-size:1.3rem !important;}
+  .footer-grid{grid-template-columns:1fr !important;}
+  .certifs-grid{grid-template-columns:1fr !important;}
+  .certif-card:first-child{grid-column:span 1 !important;}
+  .valeurs-grid{grid-template-columns:1fr !important;}
+  .stats-grid{grid-template-columns:1fr 1fr !important;}
+  .docs-grid{grid-template-columns:1fr !important;}
+  .quick-stats{grid-template-columns:1fr 1fr !important;}
+  .es-hero-stats{flex-wrap:wrap;gap:16px !important;}
+}
