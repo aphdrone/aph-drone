@@ -1017,6 +1017,42 @@ footer{background:var(--primary);color:white;padding:60px 10% 0;}
 @media(max-width:768px){#mobile-menu.open{display:flex !important;visibility:visible !important;}}
 
 </style>
+
+<style>
+/* ── Responsive mobile grille actualités ── */
+@media (max-width: 768px) {
+  #firebase-mosaic,
+  .actu-mosaic {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+  #firebase-mosaic .actu-card--lg,
+  #firebase-mosaic .actu-card--md,
+  #firebase-mosaic .actu-card--sm,
+  .actu-mosaic .actu-card--span2,
+  .actu-mosaic .actu-card--md,
+  .actu-mosaic .actu-card--sm {
+    grid-column: span 1 !important;
+  }
+  #firebase-mosaic .actu-card--lg .actu-img,
+  #firebase-mosaic .actu-card--md .actu-img,
+  #firebase-mosaic .actu-card--sm .actu-img,
+  .actu-mosaic .actu-card--span2 .actu-img,
+  .actu-mosaic .actu-card--md .actu-img,
+  .actu-mosaic .actu-card--sm .actu-img {
+    height: 200px !important;
+  }
+  .actu-card--sm .actu-excerpt { display: block !important; }
+  .filtres-wrap { padding: 24px 6% 0; gap: 8px; }
+  .filtre-btn { font-size: 11px; padding: 6px 14px; }
+  .page-hero { padding: 100px 6% 50px; }
+  .page-hero h1 { font-size: 2rem; }
+  .actu-page { padding: 24px 6% 60px; }
+}
+@media (max-width: 480px) {
+  .page-hero h1 { font-size: 1.6rem; }
+}
+</style>
 </head>
 <body>
 <style>
@@ -2234,5 +2270,161 @@ window.toggleMobileMenu = function(){
 <!-- Curseur personnalisé -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
+<script>
+// ── Dropdowns header ──
+(function(){
+  var h = document.getElementById('site-header');
+  window.addEventListener('scroll', function(){ h.classList.toggle('scrolled', window.scrollY > 50); });
+  document.querySelectorAll('#site-header .has-dropdown').forEach(function(item){
+    var dd = item.querySelector('.dropdown');
+    item.addEventListener('mouseenter', function(){ dd.style.display='block'; });
+    item.addEventListener('mouseleave', function(){ dd.style.display='none'; });
+  });
+})();
+
+// ── Curseur ──
+(function(){
+  var c = document.getElementById('cursor');
+  var r = document.getElementById('cursor-ring');
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX; my=e.clientY;
+    c.style.left=mx+'px'; c.style.top=my+'px';
+  });
+  function animRing(){
+    rx += (mx-rx)*.12; ry += (my-ry)*.12;
+    r.style.left=rx+'px'; r.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a,button,[type=submit]').forEach(function(el){
+    el.addEventListener('mouseenter',function(){
+      c.style.width='20px';c.style.height='20px';c.style.background='white';
+      r.style.width='52px';r.style.height='52px';r.style.opacity='.3';
+    });
+    el.addEventListener('mouseleave',function(){
+      c.style.width='10px';c.style.height='10px';c.style.background='var(--accent)';
+      r.style.width='36px';r.style.height='36px';r.style.opacity='1';
+    });
+  });
+})();
+
+// ── Reveal au scroll ──
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.15});
+  els.forEach(function(el){ io.observe(el); });
+})();
+
+// ── Compteurs stats animés ──
+(function(){
+  var nums = document.querySelectorAll('.stat-number[data-target]');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target;
+      var raw = el.dataset.target;
+      var target = parseFloat(raw);
+      // Si la valeur n'est pas un nombre (ex: "48h", "7j/7", "360°"), afficher directement
+      if(isNaN(target)){
+        el.textContent = raw;
+        io.unobserve(el);
+        return;
+      }
+      var duration = 1800, start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var progress = Math.min((ts-start)/duration,1);
+        var ease = 1-Math.pow(1-progress,3);
+        var val = Math.round(ease*target);
+        el.textContent = val;
+        if(progress < 1) requestAnimationFrame(step);
+        else el.textContent = raw; // affiche la valeur finale exacte du data-target
+      }
+      requestAnimationFrame(step);
+      io.unobserve(el);
+    });
+  },{threshold:0.5});
+  nums.forEach(function(n){ io.observe(n); });
+})();
+
+// Bouton téléphone — toujours visible
+(function(){
+  document.getElementById('back-top').classList.add('visible');
+})();
+
+// ── Carrousels : auto-scroll continu + flèches ──
+(function(){
+  var SPEED = 1.2;   // px par frame
+  var CARD_W = 310;  // 280px + 30px gap
+
+  function setupCarousel(track, customSpeed){
+    var spd = customSpeed || SPEED;
+    // 1. Cloner les cartes pour boucle infinie
+    var origCards = Array.from(track.children);
+    origCards.forEach(function(card){
+      var clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden','true');
+      track.appendChild(clone);
+    });
+    var halfWidth = track.scrollWidth / 2;
+
+    // 2. Désactiver scroll-snap (incompatible avec scrollLeft+=)
+    track.style.scrollSnapType = 'none';
+
+    var paused = false;
+
+    function autoScroll(){
+      if(!paused){
+        track.scrollLeft += spd;
+        if(track.scrollLeft >= halfWidth){
+          track.scrollLeft -= halfWidth;
+        }
+      }
+      requestAnimationFrame(autoScroll);
+    }
+
+    // Pause au survol
+    track.addEventListener('mouseenter', function(){ paused = true; });
+    track.addEventListener('mouseleave', function(){ paused = false; });
+    track.addEventListener('touchstart', function(){ paused = true; }, {passive:true});
+    track.addEventListener('touchend', function(){
+      setTimeout(function(){ paused = false; }, 2000);
+    }, {passive:true});
+
+    // Méthode pause temporaire pour les flèches
+    track._pause = function(){
+      paused = true;
+      setTimeout(function(){ paused = false; }, 2500);
+    };
+
+    requestAnimationFrame(autoScroll);
+  }
+
+  // Flèches
+  window.scrollCarousel = function(btn, dir){
+    var wrapper = btn.closest('.carousel-wrapper');
+    var track = wrapper.querySelector('.carousel-track, .actu-track, .temoignages-track');
+    track._pause && track._pause();
+    track.scrollBy({ left: dir * CARD_W, behavior: 'smooth' });
+  };
+
+  // Lancer après chargement complet
+  window.addEventListener('load', function(){
+    document.querySelectorAll('.carousel-track').forEach(setupCarousel);
+    // Témoignages : vitesse lente
+    var temoTrack = document.getElementById('carousel-temoignages');
+    if(temoTrack) setupCarousel(temoTrack, 0.4);
+    // Actualités : vitesse lente
+    var actuTrack = document.querySelector('.actu-track');
+    if(actuTrack) setupCarousel(actuTrack, 0.5);
+  });
+})();
+
+</script>
 </body>
 </html>
