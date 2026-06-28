@@ -369,6 +369,19 @@ font-weight:700;
 }
 .actu-lire:hover{color:var(--accent);gap:10px;}
 
+/* ── Hero À propos ── */
+.hero-apropos-wrap{
+  min-height:100vh;
+  background:linear-gradient(135deg,#0B1F3A 0%,#1a3a6b 100%);
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:140px 10% 80px;
+  gap:80px;position:relative;overflow:hidden;
+}
+.hero-apropos-text{position:relative;z-index:1;}
+.hero-apropos-visual{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:28px;}
+.hero-apropos-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;}
+
 /* ── Curseur personnalisé ── */
 *{cursor:none;}
 #cursor{
@@ -631,6 +644,43 @@ padding:60px 10% 0;
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(74,144,226,.12);}
 .form-group textarea{resize:vertical;}
 .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8fa5' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+
+/* ── Page Hébergement ── */
+.page-hero-heb{padding:140px 10% 80px;background:linear-gradient(135deg,#0B1F3A 0%,#1a3a6b 100%);color:white;position:relative;overflow:hidden;}
+.breadcrumb-heb{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:20px;}
+.breadcrumb-heb a{color:rgba(255,255,255,.5);text-decoration:none;}
+.filtres-heb{padding:40px 10% 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.filtre-btn{padding:8px 18px;border-radius:30px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid #dde3ec;background:white;color:#555;transition:.2s;}
+.filtre-btn:hover{border-color:#4A90E2;color:#4A90E2;}
+.filtre-btn.active{background:#1F5FAF;color:white;border-color:#1F5FAF;}
+.annuaire-wrap{padding:40px 10% 80px;}
+.annuaire-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.sep-label{display:flex;align-items:center;gap:16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4A90E2;padding:20px 0 12px;}
+.sep-label::after{content:'';flex:1;height:1px;background:#e8edf4;}
+.fiche{background:white;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.07);transition:.3s;display:flex;flex-direction:column;}
+.fiche.hidden{display:none;}
+.fiche:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.12);}
+.fiche-img{width:100%;height:180px;position:relative;overflow:hidden;flex-shrink:0;}
+.fiche-img img{width:100%;height:100%;object-fit:cover;}
+.fiche-cat{position:absolute;top:14px;left:14px;color:white;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:20px;}
+.cat-hotel{background:#0B1F3A;}.cat-resto{background:#b45309;}.cat-chambre{background:#15803d;}.cat-meuble{background:#6d28d9;}
+.fiche-body{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column;}
+.fiche-nom{font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:6px;}
+.fiche-desc{font-size:.82rem;color:#555;line-height:1.65;flex:1;margin-bottom:14px;}
+.fiche-info{display:flex;align-items:flex-start;gap:8px;font-size:.76rem;color:#7a8fa5;margin-bottom:5px;}
+.fiche-info svg{width:12px;height:12px;flex-shrink:0;margin-top:2px;color:#4A90E2;}
+.fiche-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.btn-fiche{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:7px;font-size:.78rem;font-weight:600;text-decoration:none;transition:.2s;}
+.btn-fiche-primary{background:#1F5FAF;color:white;}.btn-fiche-primary:hover{background:#4A90E2;}
+.btn-fiche-outline{background:white;color:#1F5FAF;border:1.5px solid #1F5FAF;}.btn-fiche-outline:hover{background:#1F5FAF;color:white;}
+@media(max-width:768px){
+  .page-hero-heb{padding:100px 6% 60px !important;}
+  .filtres-heb{padding:24px 6% 0 !important;}
+  .annuaire-wrap{padding:24px 6% 60px !important;}
+  .annuaire-grid{grid-template-columns:1fr !important;}
+  .fiche-actions{flex-direction:column;}
+}
+
 </style>
 </head>
 
@@ -682,7 +732,7 @@ padding:60px 10% 0;
 #burger-btn{display:none;}
 /* Menu mobile JAMAIS visible sur desktop */
 #mobile-menu{
-  display:none !important;
+  display:none;
   visibility:hidden;
   position:fixed;top:0;left:0;right:0;bottom:0;
   background:var(--primary);z-index:99998;
@@ -719,7 +769,20 @@ padding:60px 10% 0;
   #burger-btn span{display:block;width:24px;height:2px;background:white;border-radius:2px;transition:.3s;}
 
   /* Menu mobile overlay */
-  #mobile-menu.open{display:flex !important;visibility:visible !important;}
+  #mobile-menu.open{display:flex !important;visibility:visible;}
+
+/* Responsive contenu apropos */
+  .hero-apropos-wrap{display:block !important;padding:100px 6% 50px !important;}
+  .hero-apropos-visual{margin-top:32px;width:100%;}
+  .hero-apropos-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+  .certifs-grid-apropos{display:block !important;}
+  .certifs-grid-apropos > div{margin-bottom:16px;}
+  .valeurs-grid-apropos{grid-template-columns:1fr 1fr !important;}
+  .cta-apropos-wrap{display:block !important;padding:60px 6% !important;}
+  .cta-apropos-wrap > div:last-child{margin-top:32px;}
+  .footer-grid{grid-template-columns:1fr 1fr !important;}
+  .footer-legal{flex-direction:column;gap:8px;}
+  .footer-legal-copy{margin-left:0 !important;}
   #mobile-menu-close{
     position:absolute;top:20px;right:20px;
     background:rgba(255,255,255,.1);border:none;color:white;
@@ -808,6 +871,43 @@ padding:60px 10% 0;
   .hero-content h1{font-size:1.8rem !important;}
   .section-title{font-size:1.4rem;}
 }
+
+/* ── Page Hébergement ── */
+.page-hero-heb{padding:140px 10% 80px;background:linear-gradient(135deg,#0B1F3A 0%,#1a3a6b 100%);color:white;position:relative;overflow:hidden;}
+.breadcrumb-heb{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:20px;}
+.breadcrumb-heb a{color:rgba(255,255,255,.5);text-decoration:none;}
+.filtres-heb{padding:40px 10% 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.filtre-btn{padding:8px 18px;border-radius:30px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid #dde3ec;background:white;color:#555;transition:.2s;}
+.filtre-btn:hover{border-color:#4A90E2;color:#4A90E2;}
+.filtre-btn.active{background:#1F5FAF;color:white;border-color:#1F5FAF;}
+.annuaire-wrap{padding:40px 10% 80px;}
+.annuaire-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.sep-label{display:flex;align-items:center;gap:16px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4A90E2;padding:20px 0 12px;}
+.sep-label::after{content:'';flex:1;height:1px;background:#e8edf4;}
+.fiche{background:white;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.07);transition:.3s;display:flex;flex-direction:column;}
+.fiche.hidden{display:none;}
+.fiche:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.12);}
+.fiche-img{width:100%;height:180px;position:relative;overflow:hidden;flex-shrink:0;}
+.fiche-img img{width:100%;height:100%;object-fit:cover;}
+.fiche-cat{position:absolute;top:14px;left:14px;color:white;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:20px;}
+.cat-hotel{background:#0B1F3A;}.cat-resto{background:#b45309;}.cat-chambre{background:#15803d;}.cat-meuble{background:#6d28d9;}
+.fiche-body{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column;}
+.fiche-nom{font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:6px;}
+.fiche-desc{font-size:.82rem;color:#555;line-height:1.65;flex:1;margin-bottom:14px;}
+.fiche-info{display:flex;align-items:flex-start;gap:8px;font-size:.76rem;color:#7a8fa5;margin-bottom:5px;}
+.fiche-info svg{width:12px;height:12px;flex-shrink:0;margin-top:2px;color:#4A90E2;}
+.fiche-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.btn-fiche{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:7px;font-size:.78rem;font-weight:600;text-decoration:none;transition:.2s;}
+.btn-fiche-primary{background:#1F5FAF;color:white;}.btn-fiche-primary:hover{background:#4A90E2;}
+.btn-fiche-outline{background:white;color:#1F5FAF;border:1.5px solid #1F5FAF;}.btn-fiche-outline:hover{background:#1F5FAF;color:white;}
+@media(max-width:768px){
+  .page-hero-heb{padding:100px 6% 60px !important;}
+  .filtres-heb{padding:24px 6% 0 !important;}
+  .annuaire-wrap{padding:24px 6% 60px !important;}
+  .annuaire-grid{grid-template-columns:1fr !important;}
+  .fiche-actions{flex-direction:column;}
+}
+
 </style>
 
 <div id="site-header">
@@ -980,11 +1080,13 @@ document.addEventListener('DOMContentLoaded', function(){
   checkMobile();
 });
 window.addEventListener('resize', checkMobile);
+// Exécution immédiate aussi
+checkMobile();
 </script>
 
-<!-- Hero -->
-<div class="page-hero-wrap">
-  <div class="breadcrumb-bar">
+<!-- ═══ HÉBERGEMENT & RESTAURATION ═══ -->
+<div class="page-hero-heb">
+  <div class="breadcrumb-heb">
     <a href="../index.html">Accueil</a><span>›</span>
     <span style="color:rgba(255,255,255,.8);">Hébergement &amp; Restauration</span>
   </div>
@@ -992,8 +1094,7 @@ window.addEventListener('resize', checkMobile);
   <p style="font-size:1.1rem;color:rgba(255,255,255,.7);max-width:600px;line-height:1.7;">Toutes les adresses utiles autour de Luxeuil-les-Bains pour vos séjours de formation — hôtels, restaurants, chambres d'hôtes et meublés.</p>
 </div>
 
-<!-- Filtres -->
-<div class="filtres-wrap">
+<div class="filtres-heb">
   <button class="filtre-btn active" data-cat="Tous">Tous</button>
   <button class="filtre-btn" data-cat="Hôtel">Hôtels</button>
   <button class="filtre-btn" data-cat="Restaurant">Restaurants</button>
@@ -1001,140 +1102,112 @@ window.addEventListener('resize', checkMobile);
   <button class="filtre-btn" data-cat="Meublé">Meublés &amp; Gîtes</button>
 </div>
 
-<!-- Fiches -->
-<div class="annuaire">
-
-  <div class="section-sep"><div class="section-sep-label">Hôtels</div></div>
+<div class="annuaire-wrap">
+  <div class="sep-label">Hôtels</div>
   <div class="annuaire-grid">
     <div class="fiche" data-cat="Hôtel">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Hôtel CERISE Les Sources"><span class="fiche-cat fiche-cat--hotel">Hôtel ★★★</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80" alt="Hôtel CERISE"><span class="fiche-cat cat-hotel">Hôtel ★★★</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">Hôtel CERISE — Les Sources</div>
-        <div class="fiche-desc">41 studios avec kitchenette, face au parc thermal. Salle de séminaire disponible. À 100 m des thermes.</div>
-        <div class="fiche-infos">
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>2 Avenue Jean Moulin, 70300 Luxeuil-les-Bains</div>
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 70 04</div>
-        </div>
-        <div class="fiche-actions">
-          <a href="tel:0384937004" class="fiche-btn fiche-btn--primary">Appeler</a>
-          <a href="https://www.cerise-hotels-residences.com" target="_blank" class="fiche-btn fiche-btn--outline">Site web</a>
-        </div>
+        <div class="fiche-desc">41 studios avec kitchenette, face au parc thermal. Salle de séminaire. À 100 m des thermes.</div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>2 Avenue Jean Moulin, 70300 Luxeuil-les-Bains</div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 70 04</div>
+        <div class="fiche-actions"><a href="tel:0384937004" class="btn-fiche btn-fiche-primary">Appeler</a><a href="https://www.cerise-hotels-residences.com" target="_blank" class="btn-fiche btn-fiche-outline">Site web</a></div>
       </div>
     </div>
     <div class="fiche" data-cat="Hôtel">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="Le Clos Rebillotte"><span class="fiche-cat fiche-cat--hotel">Hôtel ★★★</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80" alt="Le Clos Rebillotte"><span class="fiche-cat cat-hotel">Hôtel ★★★</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">Le Clos Rebillotte</div>
         <div class="fiche-desc">Hôtel 3 étoiles dans une ancienne maison de maître. 21 chambres, climatisation, parking gratuit.</div>
-        <div class="fiche-infos">
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>16 rue des Thermes, 70300 Luxeuil-les-Bains</div>
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 90 90</div>
-        </div>
-        <div class="fiche-actions">
-          <a href="tel:0384939090" class="fiche-btn fiche-btn--primary">Appeler</a>
-        </div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>16 rue des Thermes, 70300 Luxeuil-les-Bains</div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 90 90</div>
+        <div class="fiche-actions"><a href="tel:0384939090" class="btn-fiche btn-fiche-primary">Appeler</a></div>
       </div>
     </div>
     <div class="fiche" data-cat="Hôtel">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600&q=80" alt="Logis Beau Site"><span class="fiche-cat fiche-cat--hotel">Hôtel ★★★</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600&q=80" alt="Logis Beau Site"><span class="fiche-cat cat-hotel">Hôtel ★★★</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">Logis Beau Site</div>
-        <div class="fiche-desc">Hôtel restaurant avec sauna. Vue sur la zone thermale, grand jardin fleuri. Restaurant terroir noté Gault&amp;Millau.</div>
-        <div class="fiche-infos">
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>18 rue Georges Moulimard, 70300 Luxeuil-les-Bains</div>
-        </div>
-        <div class="fiche-actions"><a href="contact.html" class="fiche-btn fiche-btn--primary">Nous contacter</a></div>
+        <div class="fiche-desc">Hôtel restaurant avec sauna. Vue sur la zone thermale. Restaurant terroir noté Gault&amp;Millau.</div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>18 rue Georges Moulimard, 70300 Luxeuil-les-Bains</div>
+        <div class="fiche-actions"><a href="contact.html" class="btn-fiche btn-fiche-primary">Nous contacter</a></div>
       </div>
     </div>
   </div>
 
-  <div class="section-sep" style="margin-top:40px;"><div class="section-sep-label">Restaurants</div></div>
+  <div class="sep-label" style="margin-top:32px;">Restaurants</div>
   <div class="annuaire-grid">
     <div class="fiche" data-cat="Restaurant">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Le Comptoir JOA"><span class="fiche-cat fiche-cat--resto">Restaurant</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Le Comptoir JOA"><span class="fiche-cat cat-resto">Restaurant</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">Le Comptoir JOA</div>
         <div class="fiche-desc">Restaurant du casino, cuisine française soignée. Terrasse, groupes bienvenus, parking.</div>
-        <div class="fiche-infos">
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>16 avenue des Thermes, 70300 Luxeuil-les-Bains</div>
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 90 90</div>
-        </div>
-        <div class="fiche-actions"><a href="tel:0384939090" class="fiche-btn fiche-btn--primary">Réserver</a></div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>16 avenue des Thermes, 70300 Luxeuil-les-Bains</div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 90 90</div>
+        <div class="fiche-actions"><a href="tel:0384939090" class="btn-fiche btn-fiche-primary">Réserver</a></div>
       </div>
     </div>
     <div class="fiche" data-cat="Restaurant">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Restaurant Le Lac"><span class="fiche-cat fiche-cat--resto">Restaurant</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Restaurant Le Lac"><span class="fiche-cat cat-resto">Restaurant</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">Restaurant Le Lac</div>
         <div class="fiche-desc">Cadre verdoyant au lac des 7 chevaux. Cuisine traditionnelle, pizzas, ambiance familiale.</div>
-        <div class="fiche-infos">
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Rue des 7 Chevaux, 70300 Luxeuil-les-Bains</div>
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 40 27 93</div>
-        </div>
-        <div class="fiche-actions"><a href="tel:0384402793" class="fiche-btn fiche-btn--primary">Réserver</a></div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Rue des 7 Chevaux, 70300 Luxeuil-les-Bains</div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 40 27 93</div>
+        <div class="fiche-actions"><a href="tel:0384402793" class="btn-fiche btn-fiche-primary">Réserver</a></div>
       </div>
     </div>
     <div class="fiche" data-cat="Restaurant">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="La Pomme d'Or"><span class="fiche-cat fiche-cat--resto">Brasserie</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="La Pomme d'Or"><span class="fiche-cat cat-resto">Brasserie</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">La Pomme d'Or</div>
         <div class="fiche-desc">Brasserie réputée au cœur de Luxeuil. Cuisine française, cadre chaleureux. Ouvert jusqu'à minuit.</div>
-        <div class="fiche-infos">
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>8 allée André Maroselli, 70300 Luxeuil-les-Bains</div>
-          <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 43 59</div>
-        </div>
-        <div class="fiche-actions"><a href="tel:0384934359" class="fiche-btn fiche-btn--primary">Réserver</a></div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>8 allée André Maroselli, 70300 Luxeuil-les-Bains</div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>03 84 93 43 59</div>
+        <div class="fiche-actions"><a href="tel:0384934359" class="btn-fiche btn-fiche-primary">Réserver</a></div>
       </div>
     </div>
   </div>
 
-  <div class="section-sep" style="margin-top:40px;"><div class="section-sep-label">Chambres d'hôtes</div></div>
+  <div class="sep-label" style="margin-top:32px;">Chambres d'hôtes</div>
   <div class="annuaire-grid">
     <div class="fiche" data-cat="Chambre d'hôtes">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80" alt="Chambre d'hôtes"><span class="fiche-cat fiche-cat--chambre">Chambre d'hôtes</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=600&q=80" alt="Chambre d'hôtes"><span class="fiche-cat cat-chambre">Chambre d'hôtes</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">À compléter</div>
         <div class="fiche-desc">Nous référençons actuellement les chambres d'hôtes de qualité autour de Luxeuil-les-Bains.</div>
-        <div class="fiche-infos"><div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Luxeuil-les-Bains et environs (70)</div></div>
-        <div class="fiche-actions"><a href="contact.html" class="fiche-btn fiche-btn--primary">Nous contacter</a></div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Luxeuil-les-Bains et environs (70)</div>
+        <div class="fiche-actions"><a href="contact.html" class="btn-fiche btn-fiche-primary">Nous contacter</a></div>
       </div>
     </div>
   </div>
 
-  <div class="section-sep" style="margin-top:40px;"><div class="section-sep-label">Meublés &amp; Gîtes</div></div>
+  <div class="sep-label" style="margin-top:32px;">Meublés &amp; Gîtes</div>
   <div class="annuaire-grid">
     <div class="fiche" data-cat="Meublé">
-      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80" alt="Résidence Les Thermes"><span class="fiche-cat fiche-cat--meuble">Meublé</span></div>
+      <div class="fiche-img"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80" alt="Résidence Les Thermes"><span class="fiche-cat cat-meuble">Meublé</span></div>
       <div class="fiche-body">
         <div class="fiche-nom">Résidence Les Thermes — Métropole</div>
         <div class="fiche-desc">64 studios et appartements meublés équipés, face au Centre Thermal. Idéal pour séjours longue durée.</div>
-        <div class="fiche-infos"><div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>4 rue des Thermes, 70300 Luxeuil-les-Bains</div></div>
-        <div class="fiche-actions"><a href="contact.html" class="fiche-btn fiche-btn--primary">Nous contacter</a></div>
+        <div class="fiche-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>4 rue des Thermes, 70300 Luxeuil-les-Bains</div>
+        <div class="fiche-actions"><a href="contact.html" class="btn-fiche btn-fiche-primary">Nous contacter</a></div>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
-// Filtres hébergement
 (function(){
   var btns = document.querySelectorAll('.filtre-btn');
   var fiches = document.querySelectorAll('.fiche');
-  var seps = document.querySelectorAll('.section-sep');
   btns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      btns.forEach(function(b){ b.classList.remove('active'); });
+    btn.addEventListener('click',function(){
+      btns.forEach(function(b){b.classList.remove('active');});
       btn.classList.add('active');
       var cat = btn.dataset.cat;
       fiches.forEach(function(f){
-        f.classList.toggle('hidden', cat !== 'Tous' && f.dataset.cat !== cat);
-      });
-      seps.forEach(function(sep){
-        var grid = sep.nextElementSibling;
-        if(!grid) return;
-        var hasVisible = Array.from(grid.querySelectorAll('.fiche')).some(function(f){ return !f.classList.contains('hidden'); });
-        sep.style.display = hasVisible ? '' : 'none';
+        f.classList.toggle('hidden', cat!=='Tous' && f.dataset.cat!==cat);
       });
     });
   });
