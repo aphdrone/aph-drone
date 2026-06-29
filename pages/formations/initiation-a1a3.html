@@ -100,22 +100,7 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 .module-card p{font-size:13px;color:#555;line-height:1.65;}
 .module-card .module-tag{display:inline-block;background:rgba(74,144,226,.08);color:var(--accent);font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;margin-top:12px;text-transform:uppercase;letter-spacing:.06em;}
 
-/* ── JOURNÉE TIMELINE ── */
-.journee{background:var(--light);padding:70px 10%;}
-.journee h2{font-size:1.6rem;font-weight:700;color:var(--primary);margin-bottom:6px;}
-.journee .sub{font-size:.95rem;color:#666;margin-bottom:40px;}
-.timeline{display:flex;flex-direction:column;gap:0;max-width:700px;}
-.tl-item{display:flex;gap:24px;padding-bottom:32px;position:relative;}
-.tl-item:last-child{padding-bottom:0;}
-.tl-item::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:linear-gradient(var(--accent),rgba(74,144,226,.05));}
-.tl-item:last-child::before{display:none;}
-.tl-time-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;}
-.tl-dot{width:40px;height:40px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;}
-.tl-time{font-size:10px;font-weight:600;color:var(--accent);white-space:nowrap;}
-.tl-content{padding-top:6px;}
-.tl-content h3{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:6px;}
-.tl-content p{font-size:13px;color:#555;line-height:1.65;}
-.tl-highlight{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #e0e9f5;border-radius:8px;padding:8px 14px;margin-top:12px;font-size:12px;color:var(--secondary);font-weight:600;}
+
 
 /* ── CE QUE VOUS REPARTEZ AVEC ── */
 .livrables{padding:70px 10%;}
@@ -446,34 +431,6 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
             <h3>Repartir avec votre attestation</h3>
       <p>Un QCM de 20 questions pour valider vos acquis, puis remise de l'attestation APH Drone — le document qui vous permet de vous enregistrer comme télépilote sur AlphaTango.</p>
       <span class="module-tag">Évaluation</span>
-    </div>
-  </div>
-</div>
-
-<!-- ── JOURNÉE ── -->
-<div class="journee">
-  <h2>La journée, heure par heure</h2>
-  <p class="sub">Une progression pensée pour que vous ne vous ennuyiez jamais — et que vous ressortiez avec des vraies compétences.</p>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-time-wrap"><div class="tl-dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="tl-time">9h00</div></div>
-      <div class="tl-content"><h3>Accueil &amp; tour de table</h3><p>Café, présentation de chacun, recueil de vos attentes et de votre niveau. Le ton est donné : on est là pour apprendre, pas pour passer un examen. Distribution des supports.</p></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-time-wrap"><div class="tl-dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="tl-time">9h30</div></div>
-      <div class="tl-content"><h3>Théorie en situation réelle</h3><p>Réglementation, espaces aériens, météo, sécurité — illustrés par des cas concrets tirés du terrain. On répond à toutes vos questions, sans langue de bois.<div class="tl-highlight"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Jusqu'à 12h00</div></p></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-time-wrap"><div class="tl-dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div class="tl-time">12h00</div></div>
-      <div class="tl-content"><h3>Pause déjeuner</h3><p>Pause libre. Des restaurants et boulangeries sont accessibles à Luxeuil-les-Bains à 5 minutes.</p></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-time-wrap"><div class="tl-dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div><div class="tl-time">13h30</div></div>
-      <div class="tl-content"><h3>On sort piloter</h3><p>C'est le moment que tout le monde attend. Chaque stagiaire prend les commandes sur notre terrain sécurisé, progressivement, à son rythme. Le formateur est à vos côtés à chaque vol.<div class="tl-highlight"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Jusqu'à 16h30</div></p></div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-time-wrap"><div class="tl-dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div class="tl-time">16h30</div></div>
-      <div class="tl-content"><h3>QCM &amp; remise des attestations</h3><p>Le QCM n'est pas un piège — il valide ce que vous savez déjà. Correction collective, retour individuel du formateur, puis remise de votre attestation en main propre.</p></div>
     </div>
   </div>
 </div>
