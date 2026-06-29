@@ -146,8 +146,8 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
 .mobile-accordion{cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
 .acc-arrow{display:inline-block;transition:transform .25s;font-style:normal;font-size:14px;color:var(--accent);}
 .mobile-accordion.open .acc-arrow{transform:rotate(90deg);}
-.mobile-acc-content{display:none;overflow:hidden;}
-.mobile-acc-content.open{display:flex;flex-direction:column;}
+.mobile-acc-content{display:none !important;overflow:hidden;flex-direction:column;}
+.mobile-acc-content.open{display:flex !important;flex-direction:column;}
 
 /* ── Responsive mobile ── */
 @media(max-width:768px){
