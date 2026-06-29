@@ -36,19 +36,12 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 .mobile-menu-sub a{color:rgba(255,255,255,.65);text-decoration:none;font-size:.88rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);display:block;}
 .mobile-menu-section{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:16px 0 6px;}
 /* Accordéon mobile */
-.mobile-accordion{cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
-.acc-arrow{display:inline-block;transition:transform .25s;font-style:normal;font-size:14px;color:var(--accent);}
-.mobile-accordion.open .acc-arrow{transform:rotate(90deg);}
-.mobile-acc-content{display:none;overflow:hidden;}
-.mobile-acc-content.open{display:flex;flex-direction:column;}
+
 
 /* ── Page hero ── */
 .page-hero{background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:60px 10%;text-align:center;}
 .page-hero h1{font-size:2.8rem;font-weight:700;margin-bottom:14px;}
 .page-hero p{font-size:1rem;opacity:.8;max-width:560px;margin:0 auto;line-height:1.7;}
-.breadcrumb{background:var(--light);padding:12px 10%;font-size:13px;color:#888;}
-.breadcrumb a{color:var(--accent);text-decoration:none;}
-.breadcrumb span{margin:0 8px;color:#ccc;}
 
 /* ── Contact ── */
 .contact-section{padding:80px 10%;}
@@ -239,10 +232,8 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
     <a href="actualites.html">Actualités</a>
     <a href="recrutement.html">Recrutement</a>
   </div>
-  <div class="mobile-menu-section mobile-accordion" onclick="toggleAccordion(this)">
-    Prestations <span class="acc-arrow">›</span>
-  </div>
-  <div class="mobile-menu-sub mobile-acc-content">
+  <div class="mobile-menu-section">Prestations</div>
+  <div class="mobile-menu-sub">
     <a href="prestations/surveillance.html">Surveillance &amp; Sécurité</a>
     <a href="prestations/agriculture.html">Agriculture de précision</a>
     <a href="prestations/environnement.html">Environnement &amp; Forêt</a>
@@ -254,10 +245,8 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
     <a href="prestations/mission-telepilote.html">Mission Télépilote Professionnel</a>
     <a href="prestations/photo-video.html">Photo &amp; Vidéo</a>
   </div>
-  <div class="mobile-menu-section mobile-accordion" onclick="toggleAccordion(this)">
-    Formations <span class="acc-arrow">›</span>
-  </div>
-  <div class="mobile-menu-sub mobile-acc-content">
+  <div class="mobile-menu-section">Formations</div>
+  <div class="mobile-menu-sub">
     <a href="formations/initiation-a1a3.html">Initiation A1/A3</a>
     <a href="formations/bapd-a2.html">BAPD — Catégorie A2</a>
     <a href="formations/cats-sts.html">Préparation CATS STS</a>
@@ -274,10 +263,8 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
     <a href="formations/sora-pdra.html">Gestion des opérations en catégorie spécifique</a>
     <a href="formations/changer-carriere.html">Changer de carrière — métiers du drone</a>
   </div>
-  <div class="mobile-menu-section mobile-accordion" onclick="toggleAccordion(this)">
-    Outils <span class="acc-arrow">›</span>
-  </div>
-  <div class="mobile-menu-sub mobile-acc-content">
+  <div class="mobile-menu-section">Outils</div>
+  <div class="mobile-menu-sub">
     <a href="outils/reglementation.html">Réglementation</a>
     <a href="outils/preparation-vol.html">Préparation de vol</a>
     <a href="outils/meteo.html">MÉTÉO</a>
@@ -289,11 +276,12 @@ footer{background:#071A33;color:white;padding:60px 10% 0;}
 </div>
 
 <!-- ── Contenu page ── -->
-<div class="breadcrumb">
-  <a href="../index.html">Accueil</a><span>›</span>Contact
-</div>
-
 <div class="page-hero">
+  <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:20px;">
+    <a href="../index.html" style="color:rgba(255,255,255,.5);text-decoration:none;">Accueil</a>
+    <span style="color:rgba(255,255,255,.3);">›</span>
+    <span style="color:rgba(255,255,255,.8);">Contact</span>
+  </div>
   <h1>Contactez-nous</h1>
   <p>Une question, un projet, une demande de devis ? Nous vous répondons sous 48h. Échangeons sur vos besoins.</p>
 </div>
