@@ -177,7 +177,7 @@ window.doLogin = async function(){
 onAuthStateChanged(auth, async user => {
   if(!user) return;
   try {
-    if(user.email === ADMIN_EMAIL){ window.location.href = '../admin/'; return; }
+    if(user.email === ADMIN_EMAIL){ window.location.href = '../administrateur/'; return; }
     const stagSnap = await getDocs(query(collection(db,'stagiaires'), where('email','==',user.email)));
     if(!stagSnap.empty){ window.location.href = 'espace-stagiaires.html'; return; }
     const clientSnap = await getDocs(query(collection(db,'clients'), where('email','==',user.email)));
