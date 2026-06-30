@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APH Drone — Préparation de vol</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+:root{
+  --primary:#0B1F3A;
+  --secondary:#1F5FAF;
+  --accent:#4A90E2;
+  --light:#F5F7FA;
+  --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
+
+/* ── Dashboard bar (tout premier bloc) ── */
+.dash-bar{background:#fff;border-bottom:1px solid #e8edf4;padding:0 10%;}
+.dash-inner{display:flex;align-items:center;justify-content:center;padding:36px 0;}
+
+/* ── Hero instrument ── */
+.prep-hero{background:linear-gradient(135deg,var(--primary) 0%,#1a3a6b 100%);color:white;padding:56px 10% 0;position:relative;border-bottom:1px solid rgba(255,255,255,.12);}
+.prep-breadcrumb{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:18px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;}
+.prep-breadcrumb a{color:rgba(255,255,255,.4);text-decoration:none;}
+.prep-hero-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;padding-bottom:36px;flex-wrap:wrap;}
+.prep-title-block h1{font-size:2.1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;}
+.prep-title-block h1 em{font-style:normal;color:var(--accent);}
+.prep-title-block p{font-size:.92rem;color:rgba(255,255,255,.5);max-width:480px;line-height:1.6;}
+/* ── Bandeau accès ── */
+.access-legend{display:flex;gap:24px;padding:16px 0 24px;font-size:11px;color:rgba(255,255,255,.45);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;}
+.access-legend span{display:flex;align-items:center;gap:6px;}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+.dot-free{background:var(--accent);}
+.dot-locked{background:rgba(255,255,255,.35);}
+
+/* ── Grille modules ── */
+.modules-zone{background:var(--light);padding:48px 10% 80px;}
+.modules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.mod-card{background:white;border-radius:14px;border:1px solid #e3e9f1;overflow:hidden;transition:.25s;display:flex;flex-direction:column;}
+.mod-card:hover{box-shadow:0 16px 40px rgba(11,31,58,.1);transform:translateY(-2px);}
+.mod-card.span-2{grid-column:span 2;}
+.mod-head{padding:20px 22px 0;display:flex;justify-content:flex-end;align-items:flex-start;}
+.mod-badge{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 9px;border-radius:20px;font-family:var(--mono);}
+.mod-badge.free{background:rgba(74,144,226,.1);color:var(--secondary);}
+.mod-badge.locked{background:#eef1f6;color:#667085;}
+.mod-body{padding:14px 22px 22px;flex:1;display:flex;flex-direction:column;}
+.mod-body h3{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:6px;}
+.mod-body p{font-size:.83rem;color:#667085;line-height:1.6;margin-bottom:16px;flex:1;}
+.mod-action{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px;border-radius:8px;font-size:.82rem;font-weight:600;text-decoration:none;transition:.2s;border:none;cursor:pointer;width:100%;}
+.mod-action.primary{background:var(--secondary);color:white;}
+.mod-action.primary:hover{background:var(--accent);}
+.mod-action.outline{background:transparent;color:var(--secondary);border:1.5px solid #dde3ec;}
+.mod-action.outline:hover{border-color:var(--secondary);}
+
+/* ── Section label ── */
+.zone-label{display:flex;align-items:center;gap:14px;margin:0 0 20px;}
+.zone-label-text{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9aa8b8;font-family:var(--mono);white-space:nowrap;}
+.zone-label-line{flex:1;height:1px;background:#dde3ec;}
+.zone-block{margin-bottom:44px;}
+
+/* ── METAR widget ── */
+.metar-box{background:var(--primary);border-radius:10px;padding:16px 18px;font-family:var(--mono);font-size:12px;color:#bcd4ee;margin-bottom:14px;border:1px solid rgba(255,255,255,.12);}
+.metar-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.metar-row:last-child{border:none;}
+.metar-label{color:#5e7ea3;}
+.metar-icao-form{display:flex;gap:8px;margin-bottom:14px;}
+.metar-icao-form input{flex:1;padding:9px 12px;border:1.5px solid #dde3ec;border-radius:7px;font-family:var(--mono);font-size:13px;text-transform:uppercase;outline:none;}
+.metar-icao-form input:focus{border-color:var(--accent);}
+.metar-icao-form button{padding:9px 16px;background:var(--primary);color:white;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;}
+
+/* ── Jauge Kp ── */
+.kp-gauge-wrap{display:flex;justify-content:center;padding:4px 0 0;}
+
+/* ── Checklist preview (locked) ── */
+.locked-preview{position:relative;background:var(--light);border-radius:10px;padding:18px;}
+.locked-preview::after{content:'';position:absolute;inset:0;backdrop-filter:blur(2.5px);background:rgba(245,247,250,.5);border-radius:10px;}
+.locked-item{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:12px;color:#667085;}
+.locked-item .chk{width:15px;height:15px;border:1.5px solid #c5d0de;border-radius:4px;flex-shrink:0;}
+.locked-cta{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px;}
+.locked-cta svg{color:var(--secondary);}
+.locked-cta p{font-size:12px;font-weight:600;color:var(--primary);}
+.locked-cta a{font-size:11px;color:var(--secondary);text-decoration:none;font-weight:600;}
+
+/* ── Documents list ── */
+.doc-list{display:flex;flex-direction:column;}
+.doc-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #eef1f6;}
+.doc-row:last-child{border:none;}
+.doc-icon{width:34px;height:34px;border-radius:8px;background:rgba(74,144,226,.08);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0;}
+.doc-info{flex:1;}
+.doc-info h4{font-size:.85rem;font-weight:600;color:var(--primary);margin-bottom:2px;}
+.doc-info span{font-size:.74rem;color:#94a3b8;}
+.doc-dl{color:var(--secondary);flex-shrink:0;}
+.doc-dl svg{width:18px;height:18px;}
+
+/* ── Fiche mission form ── */
+.fiche-card{background:white;border-radius:16px;border:1px solid #e3e9f1;padding:32px;}
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.fiche-grid.full{grid-template-columns:1fr;}
+.f-group{margin-bottom:16px;}
+.f-group label{display:block;font-size:10px;font-weight:700;color:#667085;letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.f-group input,.f-group select,.f-group textarea{width:100%;padding:10px 13px;border:1.5px solid #dde3ec;border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;color:var(--primary);outline:none;transition:.2s;}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(74,144,226,.1);}
+.fiche-pdf-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;transition:.2s;}
+.fiche-pdf-btn:hover{background:var(--secondary);}
+.fiche-note{font-size:11px;color:#94a3b8;text-align:center;margin-top:10px;}
+
+/* ── Responsive ── */
+@media(max-width:1024px){
+  .modules-grid{grid-template-columns:repeat(2,1fr);}
+  .mod-card.span-2{grid-column:span 2;}
+}
+@media(max-width:768px){
+  .dash-bar{padding:0 6%;}
+  .dash-inner{padding:24px 0;}
+  .dash-inner svg{width:220px;height:220px;}
+  .prep-hero{padding:40px 6% 0;}
+  .prep-hero-top{flex-direction:column;align-items:flex-start;gap:20px;}
+  .prep-title-block h1{font-size:1.5rem;}
+  .access-legend{flex-wrap:wrap;gap:14px;}
+  .modules-zone{padding:32px 6% 60px;}
+  .modules-grid{grid-template-columns:1fr;}
+  .mod-card.span-2{grid-column:span 1;}
+  .fiche-grid{grid-template-columns:1fr;}
+  .fiche-card{padding:22px;}
+}
+</style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<!-- ═══ HERO ═══ -->
+<div class="prep-hero">
+  <div class="prep-breadcrumb">
+    <a href="/index.html">Accueil</a>
+    <span>›</span>
+    <span style="color:rgba(255,255,255,.7);">Outils</span>
+    <span>›</span>
+    <span style="color:rgba(255,255,255,.7);">Préparation de vol</span>
+  </div>
+  <div class="prep-hero-top">
+    <div class="prep-title-block">
+      <h1>Préparation de <em>vol</em></h1>
+      <p>Météo, espace aérien, réglementation et documents de mission — tout ce qu'il faut avant de décoller, au même endroit.</p>
+    </div>
+  </div>
+  <div class="access-legend">
+    <span><span class="dot dot-free"></span> Accès libre</span>
+    <span><span class="dot dot-locked"></span> Connexion requise</span>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD BAR ═══ -->
+<div class="dash-bar">
+  <div class="dash-inner">
+    <svg viewBox="0 0 320 320" width="280" height="280">
+
+      <!-- Lunette extérieure (bezel) -->
+      <circle cx="160" cy="160" r="156" fill="none" stroke="var(--primary)" stroke-width="3"/>
+      <circle cx="160" cy="160" r="150" fill="none" stroke="#c5d0de" stroke-width="1"/>
+
+      <!-- Arc jour/nuit -->
+      <g id="daynight-arc"></g>
+
+      <!-- Cadran -->
+      <circle cx="160" cy="160" r="142" fill="#fefefe" stroke="#e8edf4" stroke-width="1"/>
+
+      <!-- Chemin de fer (minuterie) -->
+      <circle cx="160" cy="160" r="138" fill="none" stroke="#dde3ec" stroke-width="0.75"/>
+      <circle cx="160" cy="160" r="128" fill="none" stroke="#dde3ec" stroke-width="0.5"/>
+      <g id="clock-ticks"></g>
+
+      <!-- Index horaires (chiffres arabes façon pilote) -->
+      <g id="hour-numerals" font-family="'JetBrains Mono',monospace" font-weight="700" fill="var(--primary)" text-anchor="middle"></g>
+
+      <!-- Gravure nom -->
+      <text x="160" y="100" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="700" fill="#9aa8b8" letter-spacing="2.5">APH DRONE</text>
+      <text x="160" y="220" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7" font-weight="600" fill="#b0bccb" letter-spacing="1.5">LUXEUIL-LES-BAINS</text>
+
+      <!-- Fenêtre date (3h) -->
+      <rect x="232" y="150" width="36" height="20" rx="2" fill="#fff" stroke="var(--primary)" stroke-width="1.2"/>
+      <text id="date-window" x="250" y="165" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="700" fill="var(--primary)">—</text>
+
+      <!-- Sous-cadran UTC 24h (6h) -->
+      <circle cx="160" cy="218" r="46" fill="#fafbfc" stroke="#dde3ec" stroke-width="1"/>
+      <circle cx="160" cy="218" r="46" fill="none" stroke="#e8edf4" stroke-width="0.5"/>
+      <g id="utc-ticks"></g>
+      <g id="utc-numerals" font-family="'JetBrains Mono',monospace" font-weight="600" fill="#7a8aa0" text-anchor="middle"></g>
+      <text x="160" y="195" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="6.5" font-weight="700" fill="#9aa8b8" letter-spacing="1.5">UTC</text>
+      <line id="utc-hand" x1="160" y1="218" x2="160" y2="188" stroke="var(--secondary)" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="160" cy="218" r="2.5" fill="var(--secondary)"/>
+
+      <!-- Sous-cadran lever/coucher (9h) -->
+      <circle cx="98" cy="160" r="34" fill="#fafbfc" stroke="#dde3ec" stroke-width="1"/>
+      <line x1="98" y1="142" x2="98" y2="178" stroke="#e8edf4" stroke-width="0.5"/>
+      <text x="98" y="148" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="6" font-weight="700" fill="#9aa8b8" letter-spacing=".5">LEVER</text>
+      <text id="sunrise-text" x="98" y="160" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="var(--primary)">—:—</text>
+      <text x="98" y="170" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="6" font-weight="700" fill="#9aa8b8" letter-spacing=".5">COUCHER</text>
+      <text id="sunset-text" x="98" y="182" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10" font-weight="700" fill="var(--primary)">—:—</text>
+
+      <!-- Date complète gravée (sous le centre, discret) -->
+      <text id="dash-date-engraved" x="160" y="245" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="7" font-weight="600" fill="#b0bccb" letter-spacing="1">—</text>
+
+      <!-- Aiguilles principales -->
+      <line id="hand-hour" x1="160" y1="160" x2="160" y2="100" stroke="var(--primary)" stroke-width="4.5" stroke-linecap="round"/>
+      <line id="hand-min" x1="160" y1="160" x2="160" y2="68" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
+      <line id="hand-sec" x1="160" y1="178" x2="160" y2="48" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round"/>
+      <circle cx="160" cy="160" r="6" fill="var(--primary)"/>
+      <circle cx="160" cy="160" r="2.5" fill="var(--accent)"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ═══ MODULES ═══ -->
+<div class="modules-zone">
+
+  <!-- Bloc 1 : Météo & espace aérien -->
+  <div class="zone-block">
+    <div class="zone-label">
+      <span class="zone-label-text">01 — Météo &amp; espace aérien</span>
+      <span class="zone-label-line"></span>
+    </div>
+    <div class="modules-grid">
+
+      <div class="mod-card span-2">
+        <div class="mod-head">
+          <span class="mod-badge free"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Libre</span>
+        </div>
+        <div class="mod-body">
+          <h3>METAR / TAF en direct</h3>
+          <p>Recherchez un aérodrome par son code OACI pour consulter les conditions météo actuelles et les prévisions.</p>
+          <div class="metar-icao-form">
+            <input type="text" id="icao-input" placeholder="LFSX" maxlength="4" value="LFSX">
+            <button onclick="fetchMetar()">Rechercher</button>
+          </div>
+          <div class="metar-box" id="metar-result">
+            <div class="metar-row"><span class="metar-label">Vent</span><span>—</span></div>
+            <div class="metar-row"><span class="metar-label">Visibilité</span><span>—</span></div>
+            <div class="metar-row"><span class="metar-label">Plafond</span><span>—</span></div>
+            <div class="metar-row"><span class="metar-label">Température</span><span>—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-head">
+          <span class="mod-badge free"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Libre</span>
+        </div>
+        <div class="mod-body">
+          <h3>Carte des zones de vol</h3>
+          <p>Restrictions UAS, zones interdites et réglementées via Géoportail.</p>
+          <a href="https://www.geoportail.gouv.fr/donnees/restrictions-uas-drones-de-loisir" target="_blank" class="mod-action primary">
+            Ouvrir la carte
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-head">
+          <span class="mod-badge free"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Libre</span>
+        </div>
+        <div class="mod-body">
+          <h3>Carte aéronautique OACI 1/500 000</h3>
+          <p>Carte VFR de référence : espaces aériens, fréquences, obstacles et règles de survol, éditée par l'IGN et le SIA.</p>
+          <a href="https://www.geoportail.gouv.fr/donnees/carte-oaci-vfr" target="_blank" class="mod-action primary">
+            Ouvrir la carte OACI
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-head">
+          <span class="mod-badge free"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Libre</span>
+        </div>
+        <div class="mod-body">
+          <h3>Indice Kp — activité géomagnétique</h3>
+          <p>Perturbations du champ magnétique terrestre pouvant affecter GPS et boussole. Données NOAA SWPC en temps réel.</p>
+          <div class="kp-gauge-wrap">
+            <svg viewBox="0 0 200 115" width="100%">
+              <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e8edf4" stroke-width="16" stroke-linecap="round"/>
+              <path id="kp-arc-fill" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round" stroke-dasharray="0 251" />
+              <text x="100" y="92" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="26" font-weight="700" fill="var(--primary)" id="kp-value">—</text>
+              <text x="100" y="108" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#9aa8b8" id="kp-time">—</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bloc 2 : Check-list & mission (connexion) -->
+  <div class="zone-block">
+    <div class="zone-label">
+      <span class="zone-label-text">02 — Check-list &amp; fiche de mission</span>
+      <span class="zone-label-line"></span>
+    </div>
+    <div class="modules-grid">
+
+      <div class="mod-card">
+        <div class="mod-head">
+          <span class="mod-badge locked"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Connexion</span>
+        </div>
+        <div class="mod-body">
+          <h3>Check-list pré-vol interactive</h3>
+          <p>Liste de contrôle complète avant décollage, avec sauvegarde de vos sessions.</p>
+          <div class="locked-preview">
+            <div class="locked-item"><span class="chk"></span> Niveau de batterie vérifié</div>
+            <div class="locked-item"><span class="chk"></span> Cartes mémoire formatées</div>
+            <div class="locked-item"><span class="chk"></span> Hélices inspectées</div>
+            <div class="locked-cta">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <p>Réservé aux comptes connectés</p>
+              <a href="/pages/connexion.html">Se connecter →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-head">
+          <span class="mod-badge locked"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Connexion</span>
+        </div>
+        <div class="mod-body">
+          <h3>Check-list météo personnalisée</h3>
+          <p>Vos critères Go/No-Go (vent, plafond, visibilité) enregistrés et vérifiés automatiquement à chaque recherche.</p>
+          <div class="locked-preview">
+            <div class="locked-item"><span class="chk"></span> Vent max. toléré</div>
+            <div class="locked-item"><span class="chk"></span> Plafond minimal</div>
+            <div class="locked-item"><span class="chk"></span> Visibilité minimale</div>
+            <div class="locked-cta">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <p>Réservé aux comptes connectés</p>
+              <a href="/pages/connexion.html">Se connecter →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-head">
+          <span class="mod-badge locked"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Connexion</span>
+        </div>
+        <div class="mod-body">
+          <h3>Fiche de mission PDF</h3>
+          <p>Générez un document de mission complet à archiver ou transmettre.</p>
+          <div class="locked-preview" style="height:108px;display:flex;align-items:center;justify-content:center;">
+            <div class="locked-cta" style="position:static;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <p>Réservé aux comptes connectés</p>
+              <a href="/pages/connexion.html">Se connecter →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bloc 3 : Documents réglementaires -->
+  <div class="zone-block" style="margin-bottom:0;">
+    <div class="zone-label">
+      <span class="zone-label-text">03 — Documents réglementaires</span>
+      <span class="zone-label-line"></span>
+    </div>
+    <div class="mod-card" style="padding:8px 22px;">
+      <div class="doc-list">
+        <div class="doc-row">
+          <div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="doc-info">
+            <h4>CERFA 15692*01 — Déclaration d'exploitant UAS</h4>
+            <span>Formulaire officiel DGAC</span>
+          </div>
+          <a class="doc-dl" href="https://www.service-public.fr/professionnels-entreprises/vosdroits/R51234" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="doc-row">
+          <div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="doc-info">
+            <h4>Arrêté espaces aériens — version consolidée</h4>
+            <span>Légifrance</span>
+          </div>
+          <a class="doc-dl" href="https://www.legifrance.gouv.fr" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
+        <div class="doc-row">
+          <div class="doc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div class="doc-info">
+            <h4>Guide DGAC — Catégorie Ouverte</h4>
+            <span>Document de référence</span>
+          </div>
+          <a class="doc-dl" href="https://www.ecologie.gouv.fr/drones-aeronefs-telepilotes" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="/assets/include.js"></script>
+<script>
+(function(){
+  var ticksGroup = document.getElementById('clock-ticks');
+  for(var i=0;i<60;i++){
+    var angle = i*6*Math.PI/180;
+    var isMajor = (i%5===0);
+    var r1 = isMajor ? 122 : 128;
+    var x1 = 160+r1*Math.sin(angle), y1 = 160-r1*Math.cos(angle);
+    var x2 = 160+134*Math.sin(angle), y2 = 160-134*Math.cos(angle);
+    var tick = document.createElementNS('http://www.w3.org/2000/svg','line');
+    tick.setAttribute('x1',x1); tick.setAttribute('y1',y1);
+    tick.setAttribute('x2',x2); tick.setAttribute('y2',y2);
+    tick.setAttribute('stroke', isMajor ? 'var(--primary)' : '#c5d0de');
+    tick.setAttribute('stroke-width', isMajor ? 2 : 0.6);
+    ticksGroup.appendChild(tick);
+  }
+
+  var numerals = document.getElementById('hour-numerals');
+  var hourLabels = [12,1,2,3,4,5,6,7,8,9,10,11];
+  hourLabels.forEach(function(num, idx){
+    if(num===3 || num===6 || num===9) return;
+    var a = idx*30*Math.PI/180;
+    var r = 107;
+    var x = 160+r*Math.sin(a), y = 160-r*Math.cos(a);
+    var t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',x); t.setAttribute('y', y+4);
+    t.setAttribute('font-size', num===12 ? 15 : 13);
+    t.textContent = num;
+    numerals.appendChild(t);
+  });
+
+  var utcTicks = document.getElementById('utc-ticks');
+  for(var j=0;j<24;j++){
+    var ua = j*15*Math.PI/180;
+    var uMajor = (j%6===0);
+    var ur1 = uMajor ? 35 : 38;
+    var ux1 = 160+ur1*Math.sin(ua), uy1 = 218-ur1*Math.cos(ua);
+    var ux2 = 160+42*Math.sin(ua), uy2 = 218-42*Math.cos(ua);
+    var utick = document.createElementNS('http://www.w3.org/2000/svg','line');
+    utick.setAttribute('x1',ux1); utick.setAttribute('y1',uy1);
+    utick.setAttribute('x2',ux2); utick.setAttribute('y2',uy2);
+    utick.setAttribute('stroke', uMajor ? 'var(--secondary)' : '#dde3ec');
+    utick.setAttribute('stroke-width', uMajor ? 1.3 : 0.6);
+    utcTicks.appendChild(utick);
+  }
+
+  var utcNumerals = document.getElementById('utc-numerals');
+  [0,6,12,18].forEach(function(h){
+    var a = h*15*Math.PI/180;
+    var r = 27;
+    var x = 160+r*Math.sin(a), y = 218-r*Math.cos(a);
+    var t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',x); t.setAttribute('y', y+3);
+    t.setAttribute('font-size', 8);
+    t.textContent = h;
+    utcNumerals.appendChild(t);
+  });
+})();
+
+function updateClock(now){
+  var h = now.getHours()%12, m = now.getMinutes(), s = now.getSeconds();
+  var hDeg = (h+m/60)*30;
+  var mDeg = (m+s/60)*6;
+  var sDeg = s*6;
+  document.getElementById('hand-hour').setAttribute('transform','rotate('+hDeg+' 160 160)');
+  document.getElementById('hand-min').setAttribute('transform','rotate('+mDeg+' 160 160)');
+  document.getElementById('hand-sec').setAttribute('transform','rotate('+sDeg+' 160 160)');
+
+  var utcH = now.getUTCHours() + now.getUTCMinutes()/60;
+  var utcDeg = utcH*15;
+  document.getElementById('utc-hand').setAttribute('transform','rotate('+utcDeg+' 160 218)');
+}
+
+function drawDayNightArc(sunrise, sunset){
+  var g = document.getElementById('daynight-arc');
+  g.innerHTML = '';
+  function pt(h, r){
+    var a = (h/24)*360*Math.PI/180;
+    return [160+r*Math.sin(a), 160-r*Math.cos(a)];
+  }
+  var r = 150;
+  var p1 = pt(sunrise, r), p2 = pt(sunset, r);
+  var largeArc = (sunset-sunrise) > 12 ? 1 : 0;
+  var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  var d = 'M '+p1[0]+' '+p1[1]+' A '+r+' '+r+' 0 '+largeArc+' 1 '+p2[0]+' '+p2[1];
+  path.setAttribute('d', d);
+  path.setAttribute('fill','none');
+  path.setAttribute('stroke','var(--accent)');
+  path.setAttribute('stroke-width','4');
+  path.setAttribute('stroke-linecap','round');
+  path.setAttribute('opacity','0.5');
+  g.appendChild(path);
+}
+
+function updateDashboard(){
+  var now = new Date();
+  updateClock(now);
+
+  document.getElementById('date-window').textContent =
+    String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0');
+
+  var jours = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
+  var mois = ['JANV','FEVR','MARS','AVR','MAI','JUIN','JUIL','AOUT','SEPT','OCT','NOV','DEC'];
+  document.getElementById('dash-date-engraved').textContent =
+    jours[now.getDay()]+' '+now.getDate()+' '+mois[now.getMonth()]+' '+now.getFullYear();
+
+  var lat = 47.82, lon = 6.38;
+  var dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
+  var decl = 23.45 * Math.sin((360/365)*(dayOfYear-81)*Math.PI/180);
+  var latRad = lat*Math.PI/180, declRad = decl*Math.PI/180;
+  var cosH = -Math.tan(latRad)*Math.tan(declRad);
+  cosH = Math.max(-1, Math.min(1, cosH));
+  var hourAngle = Math.acos(cosH)*180/Math.PI;
+  var solarNoon = 12 - lon/15;
+  var sunrise = solarNoon - hourAngle/15;
+  var sunset = solarNoon + hourAngle/15;
+
+  function fmt(h){
+    var hr = Math.floor(h), mn = Math.round((h-hr)*60);
+    if(mn===60){hr++;mn=0;}
+    return String(hr).padStart(2,'0')+':'+String(mn).padStart(2,'0');
+  }
+  document.getElementById('sunrise-text').textContent = fmt(sunrise);
+  document.getElementById('sunset-text').textContent = fmt(sunset);
+  drawDayNightArc(sunrise, sunset);
+}
+updateDashboard();
+setInterval(updateDashboard, 1000);
+
+function updateKpGauge(kp, timeTag){
+  var pct = Math.max(0, Math.min(9, kp)) / 9;
+  var arcLength = 251.3;
+  var fill = pct * arcLength;
+  var arcEl = document.getElementById('kp-arc-fill');
+  arcEl.setAttribute('stroke-dasharray', fill + ' ' + arcLength);
+
+  var color = 'var(--accent)';
+  if(kp >= 5) color = '#b94a3c';
+  else if(kp >= 4) color = '#c98a2e';
+  arcEl.setAttribute('stroke', color);
+
+  document.getElementById('kp-value').textContent = 'Kp ' + kp.toFixed(1);
+
+  if(timeTag){
+    var d = new Date(timeTag + 'Z');
+    var hh = String(d.getUTCHours()).padStart(2,'0');
+    var mm = String(d.getUTCMinutes()).padStart(2,'0');
+    document.getElementById('kp-time').textContent = hh + ':' + mm + ' UTC';
+  }
+}
+
+function fetchKpIndex(){
+  fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var last = data[data.length - 1];
+      updateKpGauge(parseFloat(last.Kp), last.time_tag);
+    })
+    .catch(function(){
+      document.getElementById('kp-value').textContent = '—';
+      document.getElementById('kp-time').textContent = 'indisponible';
+    });
+}
+fetchKpIndex();
+setInterval(fetchKpIndex, 5 * 60 * 1000);
+
+function fetchMetar(){
+  var icao = document.getElementById('icao-input').value.trim().toUpperCase();
+  if(icao.length !== 4){ alert('Code OACI à 4 lettres (ex: LFSX).'); return; }
+  document.getElementById('metar-result').innerHTML =
+    '<div class="metar-row"><span class="metar-label">Statut</span><span>Connexion au service météo en cours…</span></div>';
+  // Branchement API METAR à connecter ici
+}
+</script>
+
+</body>
+</html>
