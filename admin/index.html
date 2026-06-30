@@ -392,7 +392,7 @@ const AVAILABLE_MODULES = [
 // ── Vérification d'accès ──
 onAuthStateChanged(auth, user => {
   if(!user){
-    document.getElementById('gate-status').textContent = 'Vous n\\'êtes pas connecté.';
+    document.getElementById('gate-status').textContent = "Vous n'êtes pas connecté.";
     document.getElementById('gate-spinner').style.display = 'none';
     document.getElementById('gate-denied').style.display = 'block';
     return;
@@ -490,7 +490,7 @@ document.getElementById('btn-add-client').addEventListener('click', () => {
 document.getElementById('btn-create-client').addEventListener('click', async () => {
   const name = document.getElementById('new-client-name').value.trim();
   const email = document.getElementById('new-client-email').value.trim();
-  if(!name || !email){ alert('Renseignez le nom et l\\'email.'); return; }
+  if(!name || !email){ alert("Renseignez le nom et l'email."); return; }
   const pwd = genPassword();
   try{
     await createUserWithEmailAndPassword(auth, email, pwd);
@@ -570,7 +570,7 @@ document.getElementById('btn-create-stagiaire').addEventListener('click', async 
   const name = document.getElementById('new-stag-name').value.trim();
   const email = document.getElementById('new-stag-email').value.trim();
   const formation = document.getElementById('new-stag-formation').value.trim();
-  if(!name || !email){ alert('Renseignez le nom et l\\'email.'); return; }
+  if(!name || !email){ alert("Renseignez le nom et l'email."); return; }
   const pwd = genPassword();
   try{
     await createUserWithEmailAndPassword(auth, email, pwd);
