@@ -672,7 +672,9 @@ padding:60px 10% 0;
 .partner-card-p{background:white;border-radius:16px;padding:28px;border:1px solid #e8edf4;transition:.3s;}
 .partner-card-p:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.08);}
 .partner-card-p.featured{grid-column:span 2;}
-.partner-logo-p{width:56px;height:56px;border-radius:12px;background:#F5F7FA;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#7a8fa5;text-align:center;margin-bottom:16px;border:1px solid #e8edf4;}
+.partner-logo-p{width:56px;height:56px;border-radius:12px;background:#F5F7FA;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#7a8fa5;text-align:center;margin-bottom:16px;border:1px solid #e8edf4;overflow:hidden;}
+.partner-logo-p:has(img){background:transparent;border:none;padding:2px;}
+.partner-logo-p img{width:100%;height:100%;object-fit:contain;}
 .partner-cat-p{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A90E2;margin-bottom:6px;}
 .partner-name-p{font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:4px;}
 .partner-loc-p{font-size:.78rem;color:#7a8fa5;margin-bottom:12px;}
@@ -749,7 +751,9 @@ padding:60px 10% 0;
 .partner-card-p{background:white;border-radius:16px;padding:28px;border:1px solid #e8edf4;transition:.3s;}
 .partner-card-p:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.08);}
 .partner-card-p.featured{grid-column:span 2;}
-.partner-logo-p{width:56px;height:56px;border-radius:12px;background:#F5F7FA;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#7a8fa5;text-align:center;margin-bottom:16px;border:1px solid #e8edf4;}
+.partner-logo-p{width:56px;height:56px;border-radius:12px;background:#F5F7FA;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#7a8fa5;text-align:center;margin-bottom:16px;border:1px solid #e8edf4;overflow:hidden;}
+.partner-logo-p:has(img){background:transparent;border:none;padding:2px;}
+.partner-logo-p img{width:100%;height:100%;object-fit:contain;}
 .partner-cat-p{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4A90E2;margin-bottom:6px;}
 .partner-name-p{font-size:1rem;font-weight:700;color:#0B1F3A;margin-bottom:4px;}
 .partner-loc-p{font-size:.78rem;color:#7a8fa5;margin-bottom:12px;}
@@ -826,7 +830,7 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="logo-item-p">Industrie<br>Locale</div>
     <div class="logo-item-p">Filière<br>Viticole</div>
     <div class="logo-item-p"><img src="/assets/logos/aeroclubvesoul.jpeg" alt="Aéroclub"></div>
-    <div class="logo-item-p"><img src="/assets/logos/droneprocess.png" alt="DRONE PROCESS"></div>
+    <div class="logo-item-p">Partenaire<br>Formation</div>
     <div class="logo-item-p">Collectivité<br>Locale</div>
     <div class="logo-item-p"><img src="/assets/logos/sdis70.png" alt="SDIS 70"></div>
     <div class="logo-item-p">Agriculture<br>BFC</div>
@@ -834,7 +838,7 @@ document.addEventListener('DOMContentLoaded', function(){
     <div class="logo-item-p">Industrie<br>Locale</div>
     <div class="logo-item-p">Filière<br>Viticole</div>
     <div class="logo-item-p"><img src="/assets/logos/aeroclubvesoul.jpeg" alt="Aéroclub"></div>
-    <div class="logo-item-p"><img src="/assets/logos/droneprocess.png" alt="DRONE PROCESS"></div>
+    <div class="logo-item-p">Partenaire<br>Formation</div>
   </div>
 </div>
 
@@ -844,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function(){
   <h2 class="section-title" style="margin-bottom:40px;">Des solutions adaptées à chaque secteur</h2>
   <div class="partners-grid-p">
     <div class="partner-card-p featured">
-      <div class="partner-logo-p">SDIS<br>70</div>
+      <div class="partner-logo-p"><img src="/assets/logos/sdis70.png" alt="SDIS 70"></div>
       <div class="partner-cat-p">Sécurité civile</div>
       <div class="partner-name-p">SDIS 70 — Sapeurs-Pompiers de Haute-Saône</div>
       <div class="partner-loc-p">Vesoul, Haute-Saône (70)</div>
