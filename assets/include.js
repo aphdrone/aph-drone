@@ -54,6 +54,7 @@
     // Marquer le lien de navigation actif selon l'URL courante
     var current = window.location.pathname;
     document.querySelectorAll('#site-header nav a, .mobile-menu-sub a').forEach(function (a) {
+      if (a.getAttribute('href') === '#') return;
       try {
         var linkPath = new URL(a.href).pathname;
         if (linkPath === current) {
