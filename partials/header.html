@@ -1,0 +1,115 @@
+<div id="site-header">
+  <a href="/index.html" class="logo"><img src="/assets/logo.jpg" alt="APH Drone"/></a>
+  <nav>
+    <ul>
+      <li class="has-dropdown"><a href="/index.html">Accueil</a>
+        <ul class="dropdown">
+          <li><a href="/pages/apropos.html">À propos</a></li>
+          <li><a href="/pages/hebergement.html">Hébergement &amp; Restauration</a></li>
+          <li><a href="/pages/partenaires.html">Nos partenaires et clients</a></li>
+          <li><a href="/pages/actualites.html">Actualités</a></li>
+          <li><a href="/pages/recrutement.html">Recrutement</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown"><a href="/prestations.html">Prestations</a>
+        <ul class="dropdown">
+          <li><a href="/pages/prestations/surveillance.html">Surveillance &amp; Sécurité</a></li>
+          <li><a href="/pages/prestations/agriculture.html">Agriculture de précision</a></li>
+          <li><a href="/pages/prestations/thermographie.html">Thermographie</a></li>
+          <li><a href="/pages/prestations/inspection.html">Inspection technique</a></li>
+          <li><a href="/pages/prestations/cartographie.html">Cartographie &amp; Modélisation 3D</a></li>
+          <li><a href="/pages/prestations/environnement.html">Environnement &amp; Forêt</a></li>
+          <li><a href="/pages/prestations/sora-pdra.html">Expertise SORA &amp; PDRA</a></li>
+          <li><a href="/pages/prestations/conseil-audit.html">Conseil &amp; Audit Opérationnel</a></li>
+          <li><a href="/pages/prestations/mission-telepilote.html">Mission Télépilote Professionnel</a></li>
+          <li><a href="/pages/prestations/photo-video.html">Photo &amp; Vidéo</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown"><a href="/formations.html">Formations</a>
+        <ul class="dropdown">
+          <li><a href="/pages/formations/initiation-a1a3.html">Initiation A1/A3</a></li>
+          <li><a href="/pages/formations/bapd-a2.html">BAPD — Catégorie A2</a></li>
+          <li><a href="/pages/formations/cats-sts.html">Préparation CATS STS</a></li>
+          <li><a href="/pages/formations/vol-nuit.html">Vol de nuit</a></li>
+          <li><a href="/pages/formations/sylviculture.html">Sylviculture, faune &amp; biodiversité</a></li>
+          <li><a href="/pages/formations/securite-secours.html">Surveillance, Sécurité &amp; Secours</a></li>
+          <li><a href="/pages/formations/agriculture.html">Agriculture de précision</a></li>
+          <li><a href="/pages/formations/thermographie.html">Thermographie</a></li>
+          <li><a href="/pages/formations/cartographie.html">Cartographie &amp; Modélisation 3D</a></li>
+          <li><a href="/pages/formations/donnees-exploitables.html">Production de Données Exploitables</a></li>
+          <li><a href="/pages/formations/inspection.html">Inspection Technique</a></li>
+          <li><a href="/pages/formations/maitrise-pilotage.html">Maîtrise opérationnelle</a></li>
+          <li><a href="/pages/formations/maj-reglementaire.html">Mise à niveau réglementaire</a></li>
+          <li><a href="/pages/formations/sora-pdra.html">Catégorie Spécifique</a></li>
+          <li><a href="/pages/formations/changer-carriere.html">Changer de carrière</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown"><a href="#">Outils</a>
+        <ul class="dropdown">
+          <li><a href="/pages/outils/reglementation.html">Réglementation</a></li>
+          <li><a href="/pages/outils/preparation-vol.html">Préparation de vol</a></li>
+        </ul>
+      </li>
+      <li><a href="/pages/contact.html">Contact</a></li>
+      <li>
+        <a href="/pages/connexion.html" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:8px 16px;color:white;font-size:13px;font-weight:500;text-decoration:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Se connecter
+        </a>
+      </li>
+      <li><div class="search-box"><input type="text" placeholder="Rechercher..."/><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div></li>
+    </ul>
+  </nav>
+  <button id="burger-btn" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+
+<!-- ── Menu mobile ── -->
+<div id="mobile-menu">
+  <button id="mobile-menu-close" onclick="toggleMobileMenu()">✕</button>
+  <div class="mobile-menu-section">Navigation</div>
+  <a href="/index.html" class="mobile-menu-item">Accueil</a>
+  <div class="mobile-menu-sub">
+    <a href="/pages/apropos.html">À propos</a>
+    <a href="/pages/hebergement.html">Hébergement &amp; Restauration</a>
+    <a href="/pages/partenaires.html">Nos partenaires et clients</a>
+    <a href="/pages/recrutement.html">Recrutement</a>
+  </div>
+  <div class="mobile-menu-section">Prestations</div>
+  <div class="mobile-menu-sub">
+    <a href="/pages/prestations/surveillance.html">Surveillance &amp; Sécurité</a>
+    <a href="/pages/prestations/agriculture.html">Agriculture de précision</a>
+    <a href="/pages/prestations/thermographie.html">Thermographie</a>
+    <a href="/pages/prestations/inspection.html">Inspection technique</a>
+    <a href="/pages/prestations/cartographie.html">Cartographie &amp; Modélisation 3D</a>
+    <a href="/pages/prestations/environnement.html">Environnement &amp; Forêt</a>
+    <a href="/pages/prestations/sora-pdra.html">Expertise SORA &amp; PDRA</a>
+    <a href="/pages/prestations/conseil-audit.html">Conseil &amp; Audit Opérationnel</a>
+    <a href="/pages/prestations/mission-telepilote.html">Mission Télépilote Professionnel</a>
+    <a href="/pages/prestations/photo-video.html">Photo &amp; Vidéo</a>
+  </div>
+  <div class="mobile-menu-section">Formations</div>
+  <div class="mobile-menu-sub">
+    <a href="/pages/formations/initiation-a1a3.html">Initiation A1/A3</a>
+    <a href="/pages/formations/bapd-a2.html">BAPD — Catégorie A2</a>
+    <a href="/pages/formations/cats-sts.html">Préparation CATS STS</a>
+    <a href="/pages/formations/vol-nuit.html">Vol de nuit</a>
+    <a href="/pages/formations/sylviculture.html">Sylviculture, faune &amp; biodiversité</a>
+    <a href="/pages/formations/securite-secours.html">Surveillance, Sécurité &amp; Secours</a>
+    <a href="/pages/formations/agriculture.html">Agriculture de précision</a>
+    <a href="/pages/formations/thermographie.html">Thermographie</a>
+    <a href="/pages/formations/cartographie.html">Cartographie &amp; Modélisation 3D</a>
+    <a href="/pages/formations/donnees-exploitables.html">Production de Données Exploitables</a>
+    <a href="/pages/formations/inspection.html">Inspection Technique</a>
+    <a href="/pages/formations/maitrise-pilotage.html">Maîtrise opérationnelle</a>
+    <a href="/pages/formations/maj-reglementaire.html">Mise à niveau réglementaire</a>
+    <a href="/pages/formations/sora-pdra.html">Catégorie Spécifique</a>
+    <a href="/pages/formations/changer-carriere.html">Changer de carrière</a>
+  </div>
+  <div class="mobile-menu-section">Outils</div>
+  <div class="mobile-menu-sub">
+    <a href="/pages/outils/reglementation.html">Réglementation</a>
+    <a href="/pages/outils/preparation-vol.html">Préparation de vol</a>
+  </div>
+  <a href="/pages/contact.html" class="mobile-menu-item">Contact</a>
+  <a href="/pages/connexion.html" class="mobile-menu-item" style="color:#4A90E2;">Se connecter</a>
+</div>
