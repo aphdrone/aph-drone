@@ -86,26 +86,6 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
 .locked-cta p{font-size:12px;font-weight:600;color:var(--primary);}
 .locked-cta a{font-size:11px;color:var(--secondary);text-decoration:none;font-weight:600;}
 
-/* ── Check-list pré-vol interactive (déverrouillée) ── */
-.chk-app{display:flex;flex-direction:column;gap:14px;}
-.chk-progress-row{display:flex;justify-content:space-between;align-items:baseline;}
-.chk-progress-row .cnt{font-size:13px;font-weight:700;color:var(--primary);}
-.chk-progress-row .pct{font-size:11px;font-weight:700;color:var(--secondary);font-family:var(--mono);}
-.chk-track{width:100%;height:7px;background:var(--light);border-radius:20px;overflow:hidden;}
-.chk-fill{height:100%;background:linear-gradient(90deg,var(--secondary),var(--accent));border-radius:20px;width:0%;transition:width .5s ease;}
-.chk-cat{margin-top:4px;}
-.chk-cat-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#9aa8b8;margin-bottom:6px;font-family:var(--mono);}
-.chk-row{display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;user-select:none;}
-.chk-row input{width:16px;height:16px;accent-color:var(--secondary);cursor:pointer;flex-shrink:0;}
-.chk-row span{font-size:12.5px;color:#33415c;transition:.15s;}
-.chk-row input:checked ~ span{color:#9aa8b8;text-decoration:line-through;}
-.chk-actions{display:flex;gap:8px;margin-top:6px;}
-.chk-btn{flex:1;font-size:11px;font-weight:700;padding:9px;border-radius:8px;border:1.5px solid #dde3ec;background:white;color:var(--secondary);cursor:pointer;transition:.15s;text-align:center;}
-.chk-btn:hover{border-color:var(--secondary);}
-.chk-btn.primary{background:var(--secondary);color:white;border-color:var(--secondary);}
-.chk-btn.primary:hover{background:var(--accent);border-color:var(--accent);}
-.chk-last{font-size:10.5px;color:#9aa8b8;text-align:center;font-family:var(--mono);}
-
 /* ── Documents list ── */
 .doc-list{display:flex;flex-direction:column;}
 .doc-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #eef1f6;}
@@ -325,37 +305,22 @@ body{background:#fff;color:#222;overflow-x:hidden;padding-top:80px;}
     </div>
     <div class="modules-grid">
 
-      <div class="mod-card" id="card-checklist-prevol">
+      <div class="mod-card">
         <div class="mod-head">
-          <span class="mod-badge locked" id="badge-checklist-prevol"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Connexion</span>
+          <span class="mod-badge locked"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Connexion</span>
         </div>
         <div class="mod-body">
           <h3>Check-list pré-vol interactive</h3>
           <p>Liste de contrôle complète avant décollage, avec sauvegarde de vos sessions.</p>
-
-          <div class="locked-preview" id="locked-checklist-prevol">
+          <div class="locked-preview">
             <div class="locked-item"><span class="chk"></span> Niveau de batterie vérifié</div>
             <div class="locked-item"><span class="chk"></span> Cartes mémoire formatées</div>
             <div class="locked-item"><span class="chk"></span> Hélices inspectées</div>
             <div class="locked-cta">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               <p>Réservé aux comptes connectés</p>
-              <a href="/pages/connexion.html">Se connecter →</a>
+              <a href="/pages/Outil/checklist-prevol.html">Ouvrir l'outil →</a>
             </div>
-          </div>
-
-          <div class="chk-app" id="chk-app" style="display:none;">
-            <div class="chk-progress-row">
-              <span class="cnt"><span id="chk-count">0</span>/<span id="chk-total">0</span> vérifications</span>
-              <span class="pct" id="chk-pct">0%</span>
-            </div>
-            <div class="chk-track"><div class="chk-fill" id="chk-fill"></div></div>
-            <div id="chk-list"></div>
-            <div class="chk-actions">
-              <button class="chk-btn" id="btn-chk-reset">Réinitialiser</button>
-              <button class="chk-btn primary" id="btn-chk-archive">Archiver la session</button>
-            </div>
-            <div class="chk-last" id="chk-last"></div>
           </div>
         </div>
       </div>
@@ -652,142 +617,6 @@ function fetchMetar(){
       box.innerHTML = '<div class="metar-row"><span class="metar-label">Statut</span><span>Service indisponible. Réessayez dans un instant.</span></div>';
     });
 }
-</script>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAV5NQWfp8n9RkTrHSwqssBJ4R9lNAuYK8",
-  authDomain: "aph-drone.firebaseapp.com",
-  projectId: "aph-drone",
-  storageBucket: "aph-drone.firebasestorage.app",
-  messagingSenderId: "316810168380",
-  appId: "1:316810168380:web:66cb916cec4fdc00b9db39"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// ── Catalogue de la check-list pré-vol ──
-const CHECKLIST = [
-  { cat: 'Drone', items: [
-    'Niveau de batterie vérifié',
-    'Hélices inspectées (fissures, jeu)',
-    'Bras et moteurs vérifiés',
-    'Firmware à jour',
-    'Caméra / nacelle fonctionnelle'
-  ]},
-  { cat: 'Accessoires', items: [
-    'Cartes mémoire formatées',
-    'Batteries télécommande chargées',
-    'Filtres ND si besoin'
-  ]},
-  { cat: 'Environnement', items: [
-    'Zone de vol vérifiée (Géoportail / AlphaTango)',
-    'Météo Go/No-Go validée',
-    'NOTAM consultés'
-  ]},
-  { cat: 'Administratif', items: [
-    'Assurance à jour',
-    'Déclaration de vol effectuée si requise',
-    'Autorisation du propriétaire du terrain obtenue'
-  ]}
-];
-
-let currentUser = null;
-let checklistState = {}; // { "item text": true/false }
-let lastSession = null;
-
-onAuthStateChanged(auth, user => {
-  if(!user) return; // état verrouillé conservé par défaut
-  currentUser = user;
-  document.getElementById('locked-checklist-prevol').style.display = 'none';
-  document.getElementById('badge-checklist-prevol').outerHTML =
-    '<span class="mod-badge free"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> Déverrouillé</span>';
-  document.getElementById('chk-app').style.display = 'flex';
-  loadChecklist();
-});
-
-function docIdFromEmail(email){
-  return email.replace(/[^a-zA-Z0-9]/g, '_');
-}
-
-async function loadChecklist(){
-  try{
-    const snap = await getDoc(doc(db, 'checklists_prevol', docIdFromEmail(currentUser.email)));
-    if(snap.exists()){
-      const data = snap.data();
-      checklistState = data.items || {};
-      lastSession = data.lastArchivedAt || null;
-    }
-  }catch(e){}
-  renderChecklist();
-}
-
-function renderChecklist(){
-  const list = document.getElementById('chk-list');
-  list.innerHTML = '';
-  let total = 0, checked = 0;
-  CHECKLIST.forEach(group => {
-    const catDiv = document.createElement('div');
-    catDiv.className = 'chk-cat';
-    catDiv.innerHTML = `<div class="chk-cat-label">${group.cat}</div>`;
-    group.items.forEach(item => {
-      total++;
-      const isChecked = !!checklistState[item];
-      if(isChecked) checked++;
-      const row = document.createElement('label');
-      row.className = 'chk-row';
-      row.innerHTML = `<input type="checkbox" ${isChecked ? 'checked' : ''} data-item="${item.replace(/"/g,'&quot;')}"><span>${item}</span>`;
-      catDiv.appendChild(row);
-    });
-    list.appendChild(catDiv);
-  });
-  document.getElementById('chk-count').textContent = checked;
-  document.getElementById('chk-total').textContent = total;
-  const pct = total ? Math.round((checked/total)*100) : 0;
-  document.getElementById('chk-pct').textContent = pct + '%';
-  document.getElementById('chk-fill').style.width = pct + '%';
-  document.getElementById('chk-last').textContent = lastSession
-    ? 'Dernière session archivée le ' + new Date(lastSession).toLocaleDateString('fr-FR')
-    : 'Aucune session archivée pour le moment.';
-
-  list.querySelectorAll('input[type=checkbox]').forEach(cb => {
-    cb.addEventListener('change', () => {
-      checklistState[cb.dataset.item] = cb.checked;
-      saveChecklist();
-      renderChecklist();
-    });
-  });
-}
-
-async function saveChecklist(){
-  try{
-    await setDoc(doc(db, 'checklists_prevol', docIdFromEmail(currentUser.email)), {
-      items: checklistState,
-      email: currentUser.email,
-      lastArchivedAt: lastSession
-    }, { merge: true });
-  }catch(e){}
-}
-
-document.getElementById('btn-chk-reset').addEventListener('click', () => {
-  if(!confirm('Réinitialiser toutes les cases de la check-list ?')) return;
-  checklistState = {};
-  saveChecklist();
-  renderChecklist();
-});
-
-document.getElementById('btn-chk-archive').addEventListener('click', () => {
-  lastSession = Date.now();
-  checklistState = {};
-  saveChecklist();
-  renderChecklist();
-});
 </script>
 
 </body>
