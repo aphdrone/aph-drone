@@ -5,225 +5,245 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Espace Stagiaire — APH Drone</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
 <style>
-:root{--primary:#0B1F3A;--secondary:#1F5FAF;--accent:#4A90E2;--light:#F5F7FA;}
+:root{--primary:#0B1F3A;--secondary:#1F5FAF;--accent:#4A90E2;--light:#F5F7FA;--green:#16a34a;--gold:#c8960c;}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{background:var(--light);color:#222;min-height:100vh;}
+body{background:var(--light);color:#222;min-height:100vh;padding-top:80px;}
 
-/* ── LOGIN ── */
-#login-screen{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,var(--primary) 0%,#1a3a6b 100%);
-  position:relative;overflow:hidden;
-}
-#login-screen::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;}
-.login-box{background:white;border-radius:24px;padding:48px;width:400px;box-shadow:0 32px 80px rgba(0,0,0,.3);text-align:center;position:relative;z-index:1;}
-.login-logo{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--secondary),var(--accent));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 24px rgba(31,95,175,.3);}
-.login-logo svg{width:32px;height:32px;color:white;}
-.login-box h1{font-size:1.4rem;font-weight:700;color:var(--primary);margin-bottom:6px;}
-.login-box p{font-size:.85rem;color:#7a8fa5;margin-bottom:32px;}
-.login-box input{width:100%;padding:12px 16px;border:1.5px solid #dde3ec;border-radius:10px;font-size:.9rem;margin-bottom:12px;outline:none;transition:.2s;font-family:'Inter',sans-serif;}
-.login-box input:focus{border-color:var(--accent);}
-.btn-login{width:100%;padding:13px;background:var(--secondary);color:white;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;}
-.btn-login:hover{background:var(--accent);}
-#login-error{color:#dc2626;font-size:.82rem;margin-top:8px;display:none;}
-.login-footer{font-size:11px;color:#9aa8b8;margin-top:20px;}
+/* ── Gate ── */
+#gate{position:fixed;inset:0;background:linear-gradient(135deg,var(--primary) 0%,#1a3a6b 100%);display:flex;align-items:center;justify-content:center;z-index:9999;}
+.gate-box{background:white;border-radius:20px;padding:40px;width:100%;max-width:360px;text-align:center;}
+.gate-box img{width:64px;height:64px;border-radius:50%;margin-bottom:16px;}
+.gate-box h2{font-size:1.2rem;color:var(--primary);margin-bottom:6px;}
+.gate-box p{font-size:.85rem;color:#7a8fa5;margin-bottom:20px;}
+.gate-spinner{width:28px;height:28px;border:3px solid #e0e8f0;border-top-color:var(--secondary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.gate-denied{color:#dc2626;font-size:.85rem;font-weight:600;margin-top:12px;}
+.gate-link{display:inline-block;margin-top:16px;font-size:.82rem;color:var(--secondary);text-decoration:none;font-weight:600;}
 
-/* ── ESPACE ── */
-#espace{display:none;}
+/* ── App ── */
+#stag-app{display:none;}
 
-/* Header */
-.es-header{
-  background:var(--primary);padding:0 40px;
-  display:flex;align-items:center;justify-content:space-between;
-  height:64px;position:sticky;top:0;z-index:100;
-}
-.es-header-logo{display:flex;align-items:center;gap:12px;}
-.es-header-logo img{width:40px;height:40px;border-radius:50%;object-fit:cover;}
-.es-header-logo span{color:white;font-size:.88rem;font-weight:600;}
-.es-header-right{display:flex;align-items:center;gap:16px;}
-.es-user{display:flex;align-items:center;gap:8px;}
-.es-user-av{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;}
-.es-user-name{color:rgba(255,255,255,.8);font-size:.82rem;}
-.btn-es-logout{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:none;padding:6px 14px;border-radius:6px;font-size:.78rem;cursor:pointer;transition:.2s;}
-.btn-es-logout:hover{background:rgba(255,255,255,.2);color:white;}
+/* Hero */
+.stag-hero{background:linear-gradient(135deg,var(--primary) 0%,#1a3a6b 100%);padding:48px 5%;position:relative;overflow:hidden;}
+.stag-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;}
+.stag-hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.stag-hero-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:8px;}
+.stag-hero h1{font-size:1.8rem;color:white;font-weight:800;margin-bottom:6px;}
+.stag-hero p{color:rgba(255,255,255,.7);font-size:.92rem;margin-bottom:28px;}
 
-/* Hero perso */
-.es-hero{
-  background:linear-gradient(135deg,var(--primary),#1a3a6b);
-  padding:48px 40px 40px;color:white;
-}
-.es-hero-welcome{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
-.es-hero-name{font-size:2rem;font-weight:800;margin-bottom:6px;}
-.es-hero-sub{font-size:.9rem;color:rgba(255,255,255,.6);}
-.es-hero-stats{display:flex;gap:32px;margin-top:28px;}
-.es-stat{text-align:center;}
-.es-stat-num{font-size:1.6rem;font-weight:800;color:var(--accent);}
-.es-stat-label{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+.progress-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px 26px;backdrop-filter:blur(6px);}
+.progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
+.progress-top .count{font-size:1.5rem;font-weight:800;color:white;}
+.progress-top .count span{font-size:.9rem;font-weight:500;color:rgba(255,255,255,.55);}
+.progress-top .pct{font-size:.85rem;font-weight:700;color:var(--accent);}
+.progress-track{width:100%;height:10px;background:rgba(255,255,255,.12);border-radius:20px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#7fc8ff);border-radius:20px;width:0%;transition:width 1.1s cubic-bezier(.4,0,.2,1);}
 
-/* Body */
-.es-body{padding:32px 40px;max-width:1100px;margin:0 auto;}
-.es-section-title{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
-.es-section-title::after{content:'';flex:1;height:1px;background:#e8edf4;}
+.badges-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.badge-pill{display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:.76rem;color:rgba(255,255,255,.35);font-weight:600;transition:.2s;}
+.badge-pill.earned{background:rgba(255,255,255,.14);color:white;border-color:rgba(255,255,255,.25);}
+.badge-pill svg{width:14px;height:14px;flex-shrink:0;}
 
-/* Formations */
-.formations-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:40px;}
-.formation-card{
-  background:white;border-radius:16px;padding:24px;
-  border:1px solid #e8edf4;transition:.3s;
-  display:flex;flex-direction:column;gap:14px;
-}
-.formation-card:hover{box-shadow:0 8px 28px rgba(0,0,0,.08);transform:translateY(-2px);}
-.fc-header{display:flex;align-items:center;gap:12px;}
-.fc-icon{width:44px;height:44px;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.fc-icon svg{width:22px;height:22px;color:var(--secondary);}
-.fc-name{font-size:.95rem;font-weight:700;color:var(--primary);}
-.fc-desc{font-size:.82rem;color:#666;line-height:1.65;}
+/* Section wrap */
+.stag-section{max-width:1100px;margin:0 auto;padding:44px 5% 10px;}
+.stag-section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;}
+.stag-section-head h2{font-size:1.2rem;color:var(--primary);font-weight:700;}
+.stag-section-head p{font-size:.82rem;color:#94a3b8;margin-top:3px;}
 
-/* Signature présence */
-.fc-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #f0f4f8;}
-.fc-date{font-size:.75rem;color:#7a8fa5;}
-.btn-signer{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:8px 16px;border-radius:8px;
-  background:var(--secondary);color:white;
-  border:none;font-size:.78rem;font-weight:600;
-  cursor:pointer;transition:.2s;
-}
-.btn-signer:hover{background:var(--accent);}
-.btn-signer.signed{background:#dcfce7;color:#16a34a;cursor:default;}
-.btn-signer.signed:hover{background:#dcfce7;}
+/* Formation cards */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
+.form-card{background:white;border:1px solid #e8edf4;border-radius:16px;padding:22px;transition:.25s;position:relative;overflow:hidden;}
+.form-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(11,31,58,.1);border-color:var(--accent);}
+.form-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--secondary),var(--accent));}
+.form-card-badge{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;color:var(--green);background:#dcfce7;padding:4px 10px;border-radius:20px;margin-bottom:14px;}
+.form-card h3{font-size:1rem;color:var(--primary);font-weight:700;margin-bottom:10px;line-height:1.35;}
+.form-card-link{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--secondary);text-decoration:none;margin-top:6px;}
+.form-card-link:hover{color:var(--accent);gap:9px;}
+.form-card-link svg{width:14px;height:14px;transition:.2s;}
+
+.empty-state{background:white;border:1.5px dashed #dde3ec;border-radius:16px;padding:44px 24px;text-align:center;color:#94a3b8;font-size:.88rem;}
+.empty-state svg{width:36px;height:36px;color:#cbd5e1;margin-bottom:12px;}
 
 /* Documents */
-.docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:40px;}
-.doc-card{
-  background:white;border-radius:12px;padding:18px 20px;
-  border:1px solid #e8edf4;
-  display:flex;align-items:center;gap:14px;
-  text-decoration:none;transition:.3s;
-}
-.doc-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);border-color:var(--accent);}
-.doc-icon{width:40px;height:40px;border-radius:10px;background:#eff6ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.doc-icon svg{width:20px;height:20px;color:var(--secondary);}
-.doc-name{font-size:.85rem;font-weight:600;color:var(--primary);}
-.doc-type{font-size:.72rem;color:#7a8fa5;margin-top:2px;}
+.doc-list{display:flex;flex-direction:column;gap:10px;}
+.doc-row{display:flex;align-items:center;gap:14px;background:white;border:1px solid #e8edf4;border-radius:12px;padding:14px 18px;transition:.2s;}
+.doc-row:hover{border-color:var(--accent);}
+.doc-icon{width:38px;height:38px;border-radius:9px;background:#eef4fd;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--secondary);}
+.doc-icon svg{width:18px;height:18px;}
+.doc-info{flex:1;min-width:0;}
+.doc-info .name{font-size:.88rem;font-weight:600;color:var(--primary);}
+.doc-info .meta{font-size:.75rem;color:#94a3b8;margin-top:1px;}
+.doc-dl{width:36px;height:36px;border-radius:9px;border:1px solid #e8edf4;display:flex;align-items:center;justify-content:center;color:#64748b;text-decoration:none;transition:.2s;flex-shrink:0;}
+.doc-dl:hover{background:var(--secondary);color:white;border-color:var(--secondary);}
 
-/* Historique signatures */
-.signatures-list{background:white;border-radius:12px;border:1px solid #e8edf4;overflow:hidden;margin-bottom:40px;}
-.sig-item{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid #f5f7fa;}
-.sig-item:last-child{border:none;}
-.sig-dot{width:8px;height:8px;border-radius:50%;background:#16a34a;flex-shrink:0;}
-.sig-formation{font-size:.85rem;font-weight:600;color:var(--primary);}
-.sig-date{font-size:.75rem;color:#7a8fa5;margin-left:auto;}
-.sig-download{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:.75rem;font-weight:600;color:var(--secondary);
-  background:var(--light);padding:4px 10px;border-radius:6px;
-  text-decoration:none;cursor:pointer;border:none;transition:.2s;
-}
-.sig-download:hover{background:var(--secondary);color:white;}
+/* Emargement */
+.emarg-list{display:flex;flex-direction:column;gap:12px;}
+.emarg-row{background:white;border:1px solid #e8edf4;border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.emarg-info h4{font-size:.92rem;color:var(--primary);font-weight:700;margin-bottom:3px;}
+.emarg-info p{font-size:.76rem;color:#94a3b8;}
+.emarg-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 17px;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:.15s;}
+.btn-primary{background:var(--secondary);color:white;}
+.btn-primary:hover{background:var(--accent);}
+.btn-outline{background:white;color:var(--secondary);border:1.5px solid #dde3ec;}
+.btn-outline:hover{border-color:var(--secondary);}
+.btn-success{background:#dcfce7;color:var(--green);}
+.btn-success svg{width:15px;height:15px;}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
 
-/* Aucune donnée */
-.empty-state{text-align:center;padding:40px;color:#7a8fa5;font-size:.85rem;background:white;border-radius:12px;border:1px dashed #e0e8f0;}
+/* Modal signature */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(11,31,58,.55);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:white;border-radius:18px;padding:30px;width:100%;max-width:420px;}
+.modal-box h3{font-size:1.05rem;color:var(--primary);margin-bottom:6px;}
+.modal-box p{font-size:.82rem;color:#7a8fa5;margin-bottom:20px;line-height:1.5;}
+.f-group{margin-bottom:16px;}
+.f-group label{display:block;font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+.f-group input{width:100%;padding:11px 14px;border:1.5px solid #dde3ec;border-radius:9px;font-size:.9rem;font-family:'Playfair Display',serif;font-style:italic;outline:none;}
+.f-group input:focus{border-color:var(--accent);}
+.f-check{display:flex;align-items:flex-start;gap:10px;font-size:.8rem;color:#475569;line-height:1.5;margin-bottom:20px;}
+.f-check input{width:16px;height:16px;margin-top:2px;flex-shrink:0;}
+.modal-actions{display:flex;gap:10px;}
+.modal-actions .btn{flex:1;justify-content:center;}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--primary);color:white;padding:13px 20px;border-radius:10px;font-size:.85rem;font-weight:500;box-shadow:0 12px 32px rgba(0,0,0,.2);z-index:2000;display:none;}
 
-/* Toast */
-#toast{
-  position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
-  background:var(--primary);color:white;
-  padding:12px 24px;border-radius:10px;
-  font-size:.85rem;font-weight:500;
-  z-index:9999;opacity:0;transition:.3s;
-  pointer-events:none;white-space:nowrap;
+@media(max-width:768px){
+  .stag-hero h1{font-size:1.4rem;}
+  .progress-top{flex-direction:column;align-items:flex-start;gap:4px;}
+  .emarg-row{flex-direction:column;align-items:flex-start;}
 }
-#toast.show{opacity:1;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+<!-- ═══ Header ═══ -->
+<div id="header-placeholder"></div>
+
+<!-- ═══ GATE ═══ -->
+<div id="gate">
+  <div class="gate-box">
+    <img src="../assets/logo.jpg" alt="APH Drone">
+    <h2>Espace Stagiaire</h2>
+    <p id="gate-status">Vérification de l'accès…</p>
+    <div class="gate-spinner" id="gate-spinner"></div>
+    <div id="gate-denied" style="display:none;">
+      <p class="gate-denied">Accès refusé. Merci de vous connecter avec votre compte stagiaire.</p>
+      <a href="connexion.html" class="gate-link">← Retour à la connexion</a>
     </div>
-    <h1>Espace Stagiaire</h1>
-    <p>Connectez-vous avec les identifiants fournis par APH Drone</p>
-    <input type="email" id="login-email" placeholder="Votre email" autocomplete="email">
-    <input type="password" id="login-password" placeholder="Votre mot de passe" onkeydown="if(event.key==='Enter') doLogin()">
-    <button class="btn-login" onclick="doLogin()">Se connecter</button>
-    <p id="login-error">Email ou mot de passe incorrect.</p>
-    <p class="login-footer">Vos identifiants vous ont été communiqués par APH Drone<br>Contact : 06 95 39 07 76</p>
   </div>
 </div>
 
-<!-- ESPACE STAGIAIRE -->
-<div id="espace">
-  <div class="es-header">
-    <div class="es-header-logo">
-      <img src="../assets/logo.jpg" alt="APH Drone" onerror="this.style.display='none'">
-      <span>APH Drone — Espace Stagiaire</span>
-    </div>
-    <div class="es-header-right">
-      <div class="es-user">
-        <div class="es-user-av" id="user-av">?</div>
-        <span class="es-user-name" id="user-name"></span>
+<!-- ═══ APP ═══ -->
+<div id="stag-app">
+
+  <!-- Hero + progression -->
+  <section class="stag-hero">
+    <div class="stag-hero-inner">
+      <p class="stag-hero-eyebrow">Espace personnel</p>
+      <h1 id="stag-welcome">Bienvenue</h1>
+      <p id="stag-sub">Retrouvez vos formations, vos documents et vos émargements.</p>
+
+      <div class="progress-card">
+        <div class="progress-top">
+          <div class="count"><span id="prog-count">0</span> <span>/ 15 formations débloquées</span></div>
+          <div class="pct" id="prog-pct">0%</div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+        <div class="badges-row" id="badges-row">
+          <div class="badge-pill" data-badge="1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
+            Premier pas
+          </div>
+          <div class="badge-pill" data-badge="5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
+            En bonne voie
+          </div>
+          <div class="badge-pill" data-badge="10">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
+            Confirmé
+          </div>
+          <div class="badge-pill" data-badge="15">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3a2 2 0 0 1-2 4M7 5H4a2 2 0 0 0 2 4"/></svg>
+            Toutes formations
+          </div>
+        </div>
       </div>
-      <button class="btn-es-logout" onclick="doLogout()">Déconnexion</button>
     </div>
-  </div>
+  </section>
 
-  <div class="es-hero">
-    <div class="es-hero-welcome">Bonjour</div>
-    <div class="es-hero-name" id="hero-name">—</div>
-    <div class="es-hero-sub" id="hero-sub">—</div>
-    <div class="es-hero-stats">
-      <div class="es-stat">
-        <div class="es-stat-num" id="stat-formations">0</div>
-        <div class="es-stat-label">Formation(s)</div>
-      </div>
-      <div class="es-stat">
-        <div class="es-stat-num" id="stat-docs">0</div>
-        <div class="es-stat-label">Document(s)</div>
-      </div>
-      <div class="es-stat">
-        <div class="es-stat-num" id="stat-signatures">0</div>
-        <div class="es-stat-label">Présence(s) signée(s)</div>
-      </div>
+  <!-- Mes formations -->
+  <section class="stag-section">
+    <div class="stag-section-head">
+      <div><h2>Mes formations</h2><p>Modules auxquels vous avez accès</p></div>
     </div>
-  </div>
-
-  <div class="es-body">
-
-    <!-- Formations -->
-    <div class="es-section-title">Mes formations</div>
-    <div class="formations-grid" id="formations-grid">
-      <div class="empty-state">Chargement...</div>
+    <div class="form-grid" id="formations-grid">
+      <div class="empty-state">Chargement…</div>
     </div>
+  </section>
 
-    <!-- Documents -->
-    <div class="es-section-title">Mes documents</div>
-    <div class="docs-grid" id="docs-grid">
-      <div class="empty-state">Chargement...</div>
+  <!-- Documents -->
+  <section class="stag-section">
+    <div class="stag-section-head">
+      <div><h2>Mes documents</h2><p>Supports de cours, convention, attestations</p></div>
     </div>
-
-    <!-- Historique présences -->
-    <div class="es-section-title">Historique des présences</div>
-    <div class="signatures-list" id="signatures-list">
-      <div class="empty-state">Aucune signature enregistrée</div>
+    <div class="doc-list" id="doc-list">
+      <div class="empty-state">Chargement…</div>
     </div>
+  </section>
 
+  <!-- Émargement -->
+  <section class="stag-section" style="padding-bottom:60px;">
+    <div class="stag-section-head">
+      <div><h2>Émargement</h2><p>Signez votre présence et téléchargez votre attestation</p></div>
+    </div>
+    <div class="emarg-list" id="emarg-list">
+      <div class="empty-state">Chargement…</div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══ Modal signature ═══ -->
+<div class="modal-overlay" id="modal-sign">
+  <div class="modal-box">
+    <h3 id="sign-title">Signer ma présence</h3>
+    <p>En signant, vous attestez avoir suivi la session de formation indiquée, conformément aux exigences réglementaires DGAC.</p>
+    <div class="f-group">
+      <label>Signature (tapez votre nom complet)</label>
+      <input type="text" id="sign-name" placeholder="Prénom Nom">
+    </div>
+    <div class="f-check">
+      <input type="checkbox" id="sign-confirm">
+      <label for="sign-confirm">Je certifie sur l'honneur avoir suivi cette session de formation en présentiel ou distanciel, à la date du jour.</label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+      <button class="btn btn-primary" id="btn-confirm-sign">Valider ma signature</button>
+    </div>
   </div>
 </div>
 
-<div id="toast"></div>
+<div class="toast" id="toast"></div>
 
+<!-- ═══ Bouton téléphone ═══ -->
+<a id="back-top" href="tel:0695390776">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.95-2H6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 10a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 18z"/></svg>
+</a>
+
+<!-- ═══ Footer ═══ -->
+<div id="footer-placeholder"></div>
+
+<script src="/assets/include.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+import { getAuth, onAuthStateChanged, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, query, where, orderBy, Timestamp }
+import { getFirestore, collection, getDocs, query, where, addDoc, doc }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -235,279 +255,268 @@ const firebaseConfig = {
   appId: "1:316810168380:web:66cb916cec4fdc00b9db39"
 };
 
-const FORMATIONS_LABELS = {
-  'initiation':'Initiation A1/A3',
-  'bapd':'BAPD — Catégorie A2',
-  'cats-sts':'Préparation CATS STS',
-  'vol-nuit':'Vol de nuit',
-  'sylviculture':'Sylviculture, faune & biodiversité',
-  'securite':'Surveillance, Sécurité & Secours',
-  'agriculture':'Agriculture de précision',
-  'thermographie':'Thermographie',
-  'cartographie':'Cartographie & Modélisation 3D',
-  'donnees':'Production de Données Exploitables',
-  'inspection':'Inspection Technique',
-  'maitrise':'Maîtrise opérationnelle & perfectionnement',
-  'maj-reglementaire':'Mise à niveau réglementaire DGAC / EASA',
-  'sora-pdra':'Gestion des opérations en catégorie Spécifique',
-  'changer-carriere':'Changer de carrière — métiers du drone',
-};
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// ── Catalogue des 15 formations : nom Firestore → { slug page, description courte } ──
+// ⚠️ À VÉRIFIER : adapte le champ "url" si le nom réel de tes fichiers formations diffère.
+const CATALOGUE = {
+  'Initiation A1/A3':                    { url:'/formations/initiation-a1a3.html',              desc:'Bases réglementaires et pratiques du vol en catégorie ouverte.' },
+  'BAPD A2':                              { url:'/formations/bapd-a2.html',                       desc:'Brevet d\'aptitude pour piloter en sous-catégorie A2.' },
+  'CATS STS':                             { url:'/formations/cats-sts.html',                      desc:'Préparation à l\'examen CATS et aux scénarios standards.' },
+  'Vol de nuit':                          { url:'/formations/vol-de-nuit.html',                   desc:'Réglementation et pratique du vol nocturne.' },
+  'Sylviculture & biodiversité':          { url:'/formations/sylviculture-biodiversite.html',     desc:'Usages du drone en milieu forestier et naturel.' },
+  'Surveillance, Sécurité & Secours':     { url:'/formations/surveillance-securite-secours.html', desc:'Missions opérationnelles au profit des services de secours.' },
+  'Agriculture de précision':             { url:'/formations/agriculture-precision.html',         desc:'Imagerie multispectrale et pulvérisation ciblée.' },
+  'Thermographie':                        { url:'/formations/thermographie.html',                 desc:'Diagnostics thermiques bâtiment et photovoltaïque.' },
+  'Cartographie & 3D':                    { url:'/formations/cartographie-3d.html',               desc:'Modélisation et restitution 3D par photogrammétrie.' },
+  'Production de données exploitables':   { url:'/formations/production-donnees.html',            desc:'Traitement et livraison de données géospatiales.' },
+  'Inspection Technique':                 { url:'/formations/inspection-technique.html',          desc:'Inspection d\'ouvrages, toitures et infrastructures.' },
+  'Maîtrise opérationnelle':              { url:'/formations/maitrise-operationnelle.html',       desc:'Perfectionnement du pilotage en conditions réelles.' },
+  'Mise à niveau réglementaire':          { url:'/formations/mise-a-niveau-reglementaire.html',   desc:'Actualisation des connaissances réglementaires DGAC.' },
+  'Catégorie Spécifique':                 { url:'/formations/categorie-specifique.html',          desc:'Opérations en catégorie Specific, dossiers SORA.' },
+  'Changer de carrière':                  { url:'/formations/changer-de-carriere.html',           desc:'Reconversion professionnelle vers les métiers du drone.' }
+};
+const TOTAL_FORMATIONS = Object.keys(CATALOGUE).length;
+
 let currentStagiaire = null;
-
-// ── Login ──
-window.doLogin = async function(){
-  const email = document.getElementById('login-email').value.trim();
-  const pwd = document.getElementById('login-password').value;
-  try {
-    await signInWithEmailAndPassword(auth, email, pwd);
-  } catch(e){
-    document.getElementById('login-error').style.display='block';
-  }
-};
-
-window.doLogout = async function(){
-  await signOut(auth);
-};
+let currentStagId = null;
+let pendingSign = null;
 
 onAuthStateChanged(auth, async user => {
-  if(user){
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('espace').style.display='block';
-    await chargerProfil(user.email);
-  } else {
-    document.getElementById('login-screen').style.display='flex';
-    document.getElementById('espace').style.display='none';
-    currentStagiaire = null;
+  if(!user){ denyAccess("Vous n'êtes pas connecté."); return; }
+  try{
+    const snap = await getDocs(query(collection(db,'stagiaires'), where('email','==',user.email)));
+    if(snap.empty){ denyAccess("Ce compte n'est pas enregistré comme stagiaire."); return; }
+    const d = snap.docs[0];
+    currentStagId = d.id;
+    currentStagiaire = d.data();
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('stag-app').style.display = 'block';
+    renderWelcome();
+    renderFormations();
+    renderDocuments();
+    renderEmargement();
+  }catch(e){
+    denyAccess('Erreur de connexion : ' + e.message);
   }
 });
 
-// ── Charger profil stagiaire ──
-async function chargerProfil(email){
-  try {
-    const q = query(collection(db,'stagiaires'), where('email','==',email));
-    const snap = await getDocs(q);
-    if(snap.empty){ showToast('Profil introuvable. Contactez APH Drone.'); return; }
-
-    const docSnap = snap.docs[0];
-    currentStagiaire = { id: docSnap.id, ...docSnap.data() };
-    const d = currentStagiaire;
-
-    // Header
-    document.getElementById('user-av').textContent = (d.prenom||'?')[0].toUpperCase();
-    document.getElementById('user-name').textContent = d.prenom + ' ' + d.nom;
-
-    // Hero
-    document.getElementById('hero-name').textContent = d.prenom + ' ' + d.nom;
-    document.getElementById('hero-sub').textContent = (d.entreprise||'Stagiaire APH Drone') + ' — ' + email;
-
-    // Formations actives
-    const formationsActives = Object.entries(d.formations||{}).filter(([k,v])=>v).map(([k])=>k);
-    document.getElementById('stat-formations').textContent = formationsActives.length;
-    document.getElementById('stat-docs').textContent = (d.documents||[]).length;
-
-    afficherFormations(formationsActives);
-    afficherDocuments(d.documents||[]);
-    await chargerSignatures(email);
-
-  } catch(e){ showToast('Erreur de chargement : '+e.message); }
+function denyAccess(msg){
+  document.getElementById('gate-status').textContent = msg;
+  document.getElementById('gate-spinner').style.display = 'none';
+  document.getElementById('gate-denied').style.display = 'block';
 }
 
-// ── Formations ──
-function afficherFormations(formations){
+function renderWelcome(){
+  const prenom = (currentStagiaire.name || '').split(' ')[0] || '';
+  document.getElementById('stag-welcome').textContent = prenom ? 'Bienvenue, ' + prenom : 'Bienvenue';
+  const modules = currentStagiaire.modules || [];
+  document.getElementById('prog-count').textContent = modules.length;
+  const pct = Math.round((modules.length / TOTAL_FORMATIONS) * 100);
+  document.getElementById('prog-pct').textContent = pct + '%';
+  setTimeout(() => { document.getElementById('progress-fill').style.width = pct + '%'; }, 200);
+
+  document.querySelectorAll('.badge-pill').forEach(b => {
+    const threshold = parseInt(b.dataset.badge, 10);
+    if(modules.length >= threshold) b.classList.add('earned');
+  });
+}
+
+function renderFormations(){
   const grid = document.getElementById('formations-grid');
-  if(!formations.length){
-    grid.innerHTML='<div class="empty-state">Aucune formation activée pour le moment.<br>Contactez APH Drone.</div>';
+  const modules = currentStagiaire.modules || [];
+  if(!modules.length){
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Aucune formation débloquée pour le moment.<br>Contactez APH Drone pour activer vos accès.
+    </div>`;
     return;
   }
-  const today = new Date().toLocaleDateString('fr-FR');
-  grid.innerHTML='';
-  formations.forEach(fId => {
-    const label = FORMATIONS_LABELS[fId] || fId;
+  grid.innerHTML = '';
+  modules.forEach(name => {
+    const info = CATALOGUE[name] || { url:'#', desc:'' };
     const card = document.createElement('div');
-    card.className='formation-card';
-    card.innerHTML=`
-      <div class="fc-header">
-        <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-        <div class="fc-name">${label}</div>
-      </div>
-      <div class="fc-desc">Formation APH Drone certifiée DGAC. Accédez à vos supports de cours et signez votre présence quotidienne.</div>
-      <div class="fc-footer">
-        <span class="fc-date">Aujourd'hui : ${today}</span>
-        <button class="btn-signer" id="btn-${fId}" onclick="signerPresence('${fId}','${label}')">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
-          Signer ma présence
-        </button>
-      </div>`;
+    card.className = 'form-card';
+    card.innerHTML = `
+      <span class="form-card-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M20 6 9 17l-5-5"/></svg>
+        Débloquée
+      </span>
+      <h3>${name}</h3>
+      <p style="font-size:.82rem;color:#7a8fa5;line-height:1.5;">${info.desc}</p>
+      <a href="${info.url}" class="form-card-link">
+        Accéder au contenu
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>`;
     grid.appendChild(card);
   });
 }
 
-// ── Documents ──
-function afficherDocuments(docs){
-  const grid = document.getElementById('docs-grid');
+function renderDocuments(){
+  const list = document.getElementById('doc-list');
+  const docs = currentStagiaire.documents || [];
   if(!docs.length){
-    grid.innerHTML='<div class="empty-state">Aucun document disponible pour le moment.</div>';
+    list.innerHTML = `<div class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      Aucun document disponible pour le moment.
+    </div>`;
     return;
   }
-  grid.innerHTML='';
+  list.innerHTML = '';
   docs.forEach(d => {
-    const a = document.createElement('a');
-    a.className='doc-card';
-    a.href=d.url;a.target='_blank';
-    a.innerHTML=`
-      <div class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-      <div>
-        <div class="doc-name">${d.nom}</div>
-        <div class="doc-type">Cliquer pour ouvrir</div>
-      </div>`;
-    grid.appendChild(a);
+    const row = document.createElement('div');
+    row.className = 'doc-row';
+    row.innerHTML = `
+      <div class="doc-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      </div>
+      <div class="doc-info">
+        <div class="name">${d.name}</div>
+        <div class="meta">${d.type || 'Document'}</div>
+      </div>
+      <a class="doc-dl" href="${d.url}" target="_blank" title="Télécharger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </a>`;
+    list.appendChild(row);
   });
 }
 
-// ── Signer présence + générer PDF ──
-window.signerPresence = async function(formationId, formationLabel){
-  if(!currentStagiaire) return;
-  const btn = document.getElementById('btn-'+formationId);
-  btn.disabled=true;
-  btn.textContent='Signature en cours...';
-
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('fr-FR');
-  const heureStr = now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-
-  try {
-    // Enregistrer dans Firestore
-    await addDoc(collection(db,'signatures'),{
-      stagiaire: currentStagiaire.prenom + ' ' + currentStagiaire.nom,
-      email: currentStagiaire.email,
-      stagiaireId: currentStagiaire.id,
-      formation: formationLabel,
-      formationId: formationId,
-      date: dateStr,
-      heure: heureStr,
-      timestamp: Timestamp.now(),
-    });
-
-    // Générer PDF attestation
-    genererPDFPresence(formationLabel, dateStr, heureStr);
-
-    // Mettre à jour le bouton
-    btn.className='btn-signer signed';
-    btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg> Présence signée';
-
-    showToast('Présence signée pour ' + formationLabel);
-    await chargerSignatures(currentStagiaire.email);
-
-  } catch(e){
-    showToast('Erreur : '+e.message);
-    btn.disabled=false;
-    btn.textContent='Signer ma présence';
+async function renderEmargement(){
+  const list = document.getElementById('emarg-list');
+  const modules = currentStagiaire.modules || [];
+  if(!modules.length){
+    list.innerHTML = `<div class="empty-state">Débloquez une formation pour pouvoir émarger votre présence.</div>`;
+    return;
   }
-};
+  let signedFormations = [];
+  try{
+    const snap = await getDocs(query(collection(db,'emargements'), where('stagiaireId','==',currentStagId)));
+    snap.forEach(d => signedFormations.push(d.data()));
+  }catch(e){}
 
-// ── Générer PDF ──
-function genererPDFPresence(formation, date, heure){
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF();
-
-  // En-tête
-  pdf.setFillColor(11,31,58);
-  pdf.rect(0,0,210,40,'F');
-  pdf.setTextColor(255,255,255);
-  pdf.setFontSize(18);pdf.setFont('helvetica','bold');
-  pdf.text('APH DRONE', 20, 18);
-  pdf.setFontSize(10);pdf.setFont('helvetica','normal');
-  pdf.text('Attestation de présence en formation', 20, 28);
-  pdf.text('Luxeuil-les-Bains — Haute-Saône (70)', 20, 35);
-
-  // Corps
-  pdf.setTextColor(11,31,58);
-  pdf.setFontSize(14);pdf.setFont('helvetica','bold');
-  pdf.text('ATTESTATION DE PRÉSENCE', 105, 60, {align:'center'});
-
-  pdf.setDrawColor(74,144,226);
-  pdf.setLineWidth(0.5);
-  pdf.line(20, 65, 190, 65);
-
-  pdf.setFontSize(11);pdf.setFont('helvetica','normal');pdf.setTextColor(60,60,60);
-  const d = currentStagiaire;
-  const lines = [
-    ['Stagiaire :', d.prenom + ' ' + d.nom],
-    ['Email :', d.email],
-    ['Entreprise :', d.entreprise || '—'],
-    ['Formation :', formation],
-    ['Date :', date],
-    ['Heure de signature :', heure],
-  ];
-
-  let y = 80;
-  lines.forEach(([label, val]) => {
-    pdf.setFont('helvetica','bold');pdf.setTextColor(11,31,58);
-    pdf.text(label, 25, y);
-    pdf.setFont('helvetica','normal');pdf.setTextColor(60,60,60);
-    pdf.text(val, 90, y);
-    y += 12;
+  list.innerHTML = '';
+  modules.forEach(name => {
+    const signature = signedFormations.find(s => s.formation === name);
+    const row = document.createElement('div');
+    row.className = 'emarg-row';
+    if(signature){
+      row.innerHTML = `
+        <div class="emarg-info">
+          <h4>${name}</h4>
+          <p>Signé le ${new Date(signature.timestamp).toLocaleDateString('fr-FR')} par ${signature.signature}</p>
+        </div>
+        <div class="emarg-actions">
+          <span class="btn btn-success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+            Présence signée
+          </span>
+          <button class="btn btn-outline" data-pdf="${name}">Télécharger l'attestation</button>
+        </div>`;
+    } else {
+      row.innerHTML = `
+        <div class="emarg-info">
+          <h4>${name}</h4>
+          <p>Présence non encore signée</p>
+        </div>
+        <div class="emarg-actions">
+          <button class="btn btn-primary" data-sign="${name}">Signer ma présence</button>
+        </div>`;
+    }
+    list.appendChild(row);
   });
 
-  pdf.setDrawColor(230,230,230);
-  pdf.line(20, y+5, 190, y+5);
-
-  pdf.setFontSize(9);pdf.setTextColor(120,120,120);
-  pdf.text('Document généré automatiquement le '+date+' à '+heure, 105, y+15, {align:'center'});
-  pdf.text('APH Drone SASU — Luxeuil-les-Bains — Tel : 06 95 39 07 76', 105, y+22, {align:'center'});
-  pdf.text('Ce document constitue une attestation de présence horodatée.', 105, y+29, {align:'center'});
-
-  pdf.save('Attestation_presence_'+formation.replace(/\s+/g,'_')+'_'+date.replace(/\//g,'-')+'.pdf');
+  list.querySelectorAll('[data-sign]').forEach(btn => {
+    btn.addEventListener('click', () => openSignModal(btn.dataset.sign));
+  });
+  list.querySelectorAll('[data-pdf]').forEach(btn => {
+    btn.addEventListener('click', () => generateAttestation(btn.dataset.pdf, signedFormations.find(s => s.formation === btn.dataset.pdf)));
+  });
 }
 
-// ── Charger signatures ──
-async function chargerSignatures(email){
-  try {
-    const q = query(collection(db,'signatures'), where('email','==',email), orderBy('timestamp','desc'));
-    const snap = await getDocs(q);
-    document.getElementById('stat-signatures').textContent = snap.size;
+function openSignModal(formation){
+  pendingSign = formation;
+  document.getElementById('sign-title').textContent = 'Signer ma présence — ' + formation;
+  document.getElementById('sign-name').value = '';
+  document.getElementById('sign-confirm').checked = false;
+  document.getElementById('modal-sign').classList.add('open');
+}
+window.closeModal = function(){ document.getElementById('modal-sign').classList.remove('open'); };
 
-    const list = document.getElementById('signatures-list');
-    if(snap.empty){
-      list.innerHTML='<div class="empty-state">Aucune présence signée pour le moment.</div>';
-      return;
-    }
-    list.innerHTML='';
-    snap.forEach(ds => {
-      const s = ds.data();
-      const div = document.createElement('div');
-      div.className='sig-item';
-      div.innerHTML=`
-        <div class="sig-dot"></div>
-        <div>
-          <div class="sig-formation">${s.formation}</div>
-          <div style="font-size:.72rem;color:#7a8fa5;">${s.date} à ${s.heure}</div>
-        </div>
-        <div class="sig-date" style="margin-left:auto;display:flex;align-items:center;gap:8px;">
-          <button class="sig-download" onclick="regenPDF('${ds.id}','${s.formation}','${s.date}','${s.heure}')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            PDF
-          </button>
-        </div>`;
-      list.appendChild(div);
+document.getElementById('btn-confirm-sign').addEventListener('click', async () => {
+  const name = document.getElementById('sign-name').value.trim();
+  const confirmed = document.getElementById('sign-confirm').checked;
+  if(!name || !confirmed){ showToast("Merci de renseigner votre nom et de cocher la case d'attestation."); return; }
+  try{
+    await addDoc(collection(db,'emargements'), {
+      stagiaireId: currentStagId,
+      stagiaireName: currentStagiaire.name || name,
+      formation: pendingSign,
+      signature: name,
+      timestamp: Date.now()
     });
-  } catch(e){}
+    closeModal();
+    showToast('Présence signée avec succès.');
+    renderEmargement();
+  }catch(e){
+    showToast('Erreur : ' + e.message);
+  }
+});
+
+function generateAttestation(formation, signature){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const primary = [11,31,58];
+  const secondary = [31,95,175];
+
+  doc.setFillColor(...primary);
+  doc.rect(0, 0, 210, 38, 'F');
+  doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.text('APH Drone', 20, 20);
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  doc.text('Attestation de présence en formation', 20, 28);
+
+  doc.setTextColor(30,30,30);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(13);
+  doc.text('Attestation', 20, 56);
+
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(11);
+  const lines = [
+    'APH Drone SASU atteste que :',
+    '',
+    (currentStagiaire.name || signature.stagiaireName || '—'),
+    '',
+    'a suivi la session de formation suivante :',
+    '',
+    formation,
+    '',
+    'Date de signature : ' + new Date(signature.timestamp).toLocaleDateString('fr-FR'),
+    'Signature électronique : ' + signature.signature
+  ];
+  let y = 70;
+  lines.forEach(line => { doc.text(line, 20, y); y += 8; });
+
+  doc.setDrawColor(...secondary);
+  doc.line(20, y+6, 190, y+6);
+  doc.setFontSize(9);
+  doc.setTextColor(120,120,120);
+  doc.text('APH Drone — Luxeuil-les-Bains (70) — Formateur : Arnaud MOREAU', 20, y+16);
+  doc.text('Document généré automatiquement depuis l\'espace stagiaire APH Drone.', 20, y+22);
+
+  doc.save('Attestation_' + formation.replace(/[^a-z0-9]/gi,'_') + '.pdf');
 }
 
-window.regenPDF = function(id, formation, date, heure){
-  genererPDFPresence(formation, date, heure);
-};
-
-// ── Toast ──
 function showToast(msg){
-  const t = document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3500);
 }
 </script>
 </body>
