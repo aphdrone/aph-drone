@@ -65,10 +65,11 @@ body{background:var(--light);color:#222;min-height:100vh;padding-top:80px;}
 .progress-track{width:100%;height:10px;background:rgba(255,255,255,.12);border-radius:20px;overflow:hidden;}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#7fc8ff);border-radius:20px;width:0%;transition:width 1.1s cubic-bezier(.4,0,.2,1);}
 
-.badges-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
-.badge-pill{display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-size:.76rem;color:rgba(255,255,255,.35);font-weight:600;transition:.2s;}
-.badge-pill.earned{background:rgba(255,255,255,.14);color:white;border-color:rgba(255,255,255,.25);}
-.badge-pill svg{width:14px;height:14px;flex-shrink:0;}
+.doc-cards-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px;}
+.doc-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px 18px;backdrop-filter:blur(6px);text-decoration:none;cursor:pointer;transition:.2s;display:block;}
+.doc-card:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28);transform:translateY(-2px);}
+.doc-card svg{width:22px;height:22px;color:var(--accent);margin-bottom:12px;}
+.doc-card h4{font-size:.85rem;color:white;font-weight:700;line-height:1.35;}
 
 /* Section wrap */
 .stag-section{max-width:1100px;margin:0 auto;padding:44px 5% 10px;}
@@ -137,6 +138,7 @@ body{background:var(--light);color:#222;min-height:100vh;padding-top:80px;}
   .stag-hero h1{font-size:1.4rem;}
   .progress-top{flex-direction:column;align-items:flex-start;gap:4px;}
   .emarg-row{flex-direction:column;align-items:flex-start;}
+  .doc-cards-row{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
@@ -183,31 +185,24 @@ body{background:var(--light);color:#222;min-height:100vh;padding-top:80px;}
         </div>
       </div>
 
-      <div class="progress-card">
-        <div class="progress-top">
-          <div class="count"><span id="prog-count">0</span> <span>/ 15 formations débloquées</span></div>
-          <div class="pct" id="prog-pct">0%</div>
-        </div>
-        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-
-        <div class="badges-row" id="badges-row">
-          <div class="badge-pill" data-badge="1">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
-            Premier pas
-          </div>
-          <div class="badge-pill" data-badge="5">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
-            En bonne voie
-          </div>
-          <div class="badge-pill" data-badge="10">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"/></svg>
-            Confirmé
-          </div>
-          <div class="badge-pill" data-badge="15">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 5h3a2 2 0 0 1-2 4M7 5H4a2 2 0 0 0 2 4"/></svg>
-            Toutes formations
-          </div>
-        </div>
+      <div class="doc-cards-row">
+        <a href="#" class="doc-card" data-doc="fiche-renseignements">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          <h4>Fiche renseignements</h4>
+        </a>
+        <a href="#" class="doc-card" data-doc="attestation-zone-exclusion">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="M9 12l2 2 4-4"/></svg>
+          <h4>Attestation zone d'exclusion</h4>
+        </a>
+        <a href="#" class="doc-card" data-doc="formulaire-satisfaction">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+          <h4>Formulaire de satisfaction</h4>
+        </a>
+        <a href="#" class="doc-card" data-doc="formulaire-reclamation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+          <h4>Formulaire de réclamation</h4>
+        </a>
+      </div>
       </div>
     </div>
   </section>
@@ -405,16 +400,6 @@ function denyAccess(msg){
 function renderWelcome(){
   const prenom = (currentStagiaire.name || '').split(' ')[0] || '';
   document.getElementById('stag-welcome').textContent = prenom ? 'Bienvenue, ' + prenom : 'Bienvenue';
-  const modules = currentStagiaire.modules || [];
-  document.getElementById('prog-count').textContent = modules.length;
-  const pct = Math.round((modules.length / TOTAL_FORMATIONS) * 100);
-  document.getElementById('prog-pct').textContent = pct + '%';
-  setTimeout(() => { document.getElementById('progress-fill').style.width = pct + '%'; }, 200);
-
-  document.querySelectorAll('.badge-pill').forEach(b => {
-    const threshold = parseInt(b.dataset.badge, 10);
-    if(modules.length >= threshold) b.classList.add('earned');
-  });
 }
 
 function renderFormations(){
@@ -629,6 +614,14 @@ document.getElementById('btn-save-account').addEventListener('click', async () =
   }catch(e){
     showToast('Erreur : ' + e.message);
   }
+});
+
+document.querySelectorAll('.doc-card').forEach(card => {
+  card.addEventListener('click', e => {
+    e.preventDefault();
+    // TODO : remplacer par le vrai lien du formulaire une fois créé (data-doc identifie le document)
+    showToast('Formulaire "' + card.querySelector('h4').textContent + '" — bientôt disponible.');
+  });
 });
 
 function showToast(msg){
