@@ -1078,6 +1078,9 @@ async function loadOutils(){
         <td class="cell-sub">${o.desc || '—'}</td>
         <td class="cell-sub">${o.url || '—'}</td>
         <td><div class="row-actions">
+          <a class="icon-btn" title="Ouvrir l'outil" href="${o.url}" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+          </a>
           <button class="icon-btn" title="Supprimer" data-del-outil="${d.id}">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
           </button>
