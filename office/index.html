@@ -437,7 +437,7 @@ tr:last-child td{border-bottom:none;}
 </div>
 
 <!-- ═══ MODAL : Nouvelle / modifier mission ═══ -->
-<div class="modal-overlay" id="modal-mission-edit">
+<div class="modal-overlay" id="modal-mission-edit" style="z-index:1100;">
   <div class="modal-box">
     <h3 id="mission-edit-title">Nouvelle mission</h3>
     <div class="f-group">
@@ -628,11 +628,18 @@ const AVAILABLE_MODULES = [
   'Maîtrise opérationnelle','Mise à niveau réglementaire','Catégorie Spécifique','Changer de carrière'
 ];
 
+const PRESTATIONS = [
+  'Sécurité, Recherche & Secours','Agriculture & Arboriculture','Thermographie infrarouge',
+  'Inspection technique','Cartographie & Modélisation 3D','Environnement, Forêt & Biodiversité',
+  'Expertise SORA & PDRA','Conseil & Audit Opérationnel','Mission Télépilote Professionnel',
+  'Photo & Vidéo aérienne'
+];
+
 const missionSelect = document.getElementById('edit-mission-nom');
-AVAILABLE_MODULES.forEach(mod => {
+PRESTATIONS.forEach(p => {
   const opt = document.createElement('option');
-  opt.value = mod;
-  opt.textContent = mod;
+  opt.value = p;
+  opt.textContent = p;
   missionSelect.appendChild(opt);
 });
 
