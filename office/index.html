@@ -208,6 +208,10 @@ tr:last-child td{border-bottom:none;}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
         Publications
       </button>
+      <button class="admin-nav-item" data-panel="panel-outils">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        Outils
+      </button>
       <a class="admin-nav-item" href="/index.html" style="margin-top:10px;padding-top:11px;border-top:1px solid rgba(255,255,255,.1);">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
         Retour au site
@@ -323,8 +327,54 @@ tr:last-child td{border-bottom:none;}
       </div>
     </div>
 
+    <!-- ── Panel : Outils ── -->
+    <div class="admin-panel" id="panel-outils">
+      <div class="admin-topbar">
+        <div><h1>Outils</h1><p>Outils accessibles aux comptes connectés (préparation de vol, espace stagiaire...)</p></div>
+        <button class="btn btn-primary" id="btn-add-outil">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Ajouter un outil
+        </button>
+      </div>
+      <div class="admin-content">
+        <div class="panel-section">
+          <div class="panel-section-body" style="padding-top:14px;">
+            <table>
+              <thead><tr><th>Outil</th><th>Description</th><th>Lien</th><th></th></tr></thead>
+              <tbody id="outils-tbody">
+                <tr><td colspan="4" class="empty-row">Chargement…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
+</div>
+
+<!-- ═══ MODAL : Ajouter un outil ═══ -->
+<div class="modal-overlay" id="modal-outil">
+  <div class="modal-box">
+    <h3>Nouvel outil</h3>
+    <div class="f-group">
+      <label>Nom de l'outil</label>
+      <input type="text" id="new-outil-nom" placeholder="Ex : Check-list météo personnalisée">
+    </div>
+    <div class="f-group">
+      <label>Description courte</label>
+      <input type="text" id="new-outil-desc" placeholder="Ex : Vos critères Go/No-Go enregistrés automatiquement">
+    </div>
+    <div class="f-group">
+      <label>Lien vers l'outil</label>
+      <input type="text" id="new-outil-url" placeholder="Ex : /pages/preparation-vol.html#meteo">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('modal-outil')">Annuler</button>
+      <button class="btn btn-primary" id="btn-create-outil">Ajouter</button>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ MODAL : Ajouter un client ═══ -->
@@ -542,6 +592,7 @@ onAuthStateChanged(auth, user => {
   document.getElementById('admin-email-display').textContent = user.email;
   loadClients();
   loadStagiaires();
+  loadOutils();
 });
 
 document.getElementById('btn-logout').addEventListener('click', () => {
@@ -818,6 +869,65 @@ document.getElementById('btn-reset-pwd-client').addEventListener('click', async 
     showToast('Email de réinitialisation envoyé à ' + email);
   }catch(e){
     showToast('Erreur : ' + e.message);
+  }
+});
+
+// ── Outils ──
+async function loadOutils(){
+  const tbody = document.getElementById('outils-tbody');
+  try{
+    const snap = await getDocs(collection(db,'outils'));
+    if(snap.empty){
+      tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Aucun outil pour le moment.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = '';
+    snap.forEach(d => {
+      const o = d.data();
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="cell-main">${o.nom || '—'}</td>
+        <td class="cell-sub">${o.desc || '—'}</td>
+        <td class="cell-sub">${o.url || '—'}</td>
+        <td><div class="row-actions">
+          <button class="icon-btn" title="Supprimer" data-del-outil="${d.id}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          </button>
+        </div></td>`;
+      tbody.appendChild(tr);
+    });
+    document.querySelectorAll('[data-del-outil]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if(!confirm('Supprimer cet outil ?')) return;
+        await deleteDoc(doc(db,'outils',btn.dataset.delOutil));
+        showToast('Outil supprimé.');
+        loadOutils();
+      });
+    });
+  }catch(e){
+    tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Erreur de chargement : ' + e.message + '</td></tr>';
+  }
+}
+
+document.getElementById('btn-add-outil').addEventListener('click', () => {
+  document.getElementById('new-outil-nom').value = '';
+  document.getElementById('new-outil-desc').value = '';
+  document.getElementById('new-outil-url').value = '';
+  openModal('modal-outil');
+});
+
+document.getElementById('btn-create-outil').addEventListener('click', async () => {
+  const nom = document.getElementById('new-outil-nom').value.trim();
+  const desc = document.getElementById('new-outil-desc').value.trim();
+  const url = document.getElementById('new-outil-url').value.trim();
+  if(!nom || !url){ alert('Renseignez au moins le nom et le lien.'); return; }
+  try{
+    await addDoc(collection(db,'outils'), { nom, desc, url, createdAt: Date.now() });
+    closeModal('modal-outil');
+    showToast('Outil ajouté.');
+    loadOutils();
+  }catch(e){
+    alert('Erreur : ' + e.message);
   }
 });
 
