@@ -444,13 +444,16 @@ tr:last-child td{border-bottom:none;}
       <button class="fiche-tab active" data-tab="tab-missions">Missions</button>
       <button class="fiche-tab" data-tab="tab-docs">Documents</button>
       <button class="fiche-tab" data-tab="tab-devis">Devis</button>
+      <button class="fiche-tab" data-tab="tab-factures">Factures</button>
     </div>
 
     <!-- Missions -->
     <div class="fiche-panel active" id="tab-missions">
       <div class="mini-list" id="mission-admin-list"></div>
       <div class="mini-add-form">
-        <input type="text" id="new-mission-nom" placeholder="Nom de la mission" class="full">
+        <select id="new-mission-nom" class="full">
+          <option value="">— Choisir une prestation —</option>
+        </select>
         <input type="date" id="new-mission-date">
         <select id="new-mission-statut">
           <option>Planifiée</option>
@@ -493,13 +496,31 @@ tr:last-child td{border-bottom:none;}
         <select id="new-devis-statut">
           <option>Envoyé</option>
           <option>Accepté</option>
-          <option>Payé</option>
           <option>Refusé</option>
         </select>
       </div>
       <button class="btn btn-outline btn-sm" id="btn-add-devis" style="width:100%;justify-content:center;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Ajouter le devis/facture
+        Ajouter le devis
+      </button>
+    </div>
+
+    <!-- Factures -->
+    <div class="fiche-panel" id="tab-factures">
+      <div class="mini-list" id="facture-admin-list"></div>
+      <div class="mini-add-form">
+        <input type="text" id="new-facture-ref" placeholder="Référence (ex: FAC-2026-014)">
+        <input type="number" id="new-facture-montant" placeholder="Montant € HT">
+        <input type="date" id="new-facture-date">
+        <select id="new-facture-statut">
+          <option>Émise</option>
+          <option>Payée</option>
+          <option>En retard</option>
+        </select>
+      </div>
+      <button class="btn btn-outline btn-sm" id="btn-add-facture" style="width:100%;justify-content:center;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Ajouter la facture
       </button>
     </div>
 
@@ -576,6 +597,14 @@ const AVAILABLE_MODULES = [
   'Cartographie & 3D','Production de données exploitables','Inspection Technique',
   'Maîtrise opérationnelle','Mise à niveau réglementaire','Catégorie Spécifique','Changer de carrière'
 ];
+
+const missionSelect = document.getElementById('new-mission-nom');
+AVAILABLE_MODULES.forEach(mod => {
+  const opt = document.createElement('option');
+  opt.value = mod;
+  opt.textContent = mod;
+  missionSelect.appendChild(opt);
+});
 
 // ── Vérification d'accès ──
 onAuthStateChanged(auth, user => {
@@ -705,6 +734,7 @@ async function openClientFicheModal(clientId){
   renderMissionAdminList(data.missions || []);
   renderClientDocAdminList(data.documents || []);
   renderDevisAdminList(data.devis || []);
+  renderFactureAdminList(data.factures || []);
   openModal('modal-client-fiche');
 }
 
@@ -852,6 +882,56 @@ document.getElementById('btn-add-devis').addEventListener('click', async () => {
   document.getElementById('new-devis-date').value = '';
   renderDevisAdminList(arr);
   showToast('Devis ajouté.');
+});
+
+// Factures (distinctes des devis)
+function renderFactureAdminList(factures){
+  const list = document.getElementById('facture-admin-list');
+  if(!factures.length){ list.innerHTML = '<div class="mini-empty">Aucune facture enregistrée.</div>'; return; }
+  list.innerHTML = '';
+  factures.forEach((f, i) => {
+    const row = document.createElement('div');
+    row.className = 'mini-row';
+    row.innerHTML = `
+      <div class="info">
+        <div class="name">${f.reference || '—'} · ${f.montant ? f.montant+' € HT' : ''}</div>
+        <div class="sub">${f.date ? new Date(f.date).toLocaleDateString('fr-FR') : ''} — ${f.statut}</div>
+      </div>
+      <button class="icon-btn" title="Supprimer" data-del-facture="${i}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      </button>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('[data-del-facture]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const clientId = window._currentModalClientId;
+      const data = await getClientData(clientId);
+      let arr = (data.factures || []).slice();
+      arr.splice(parseInt(btn.dataset.delFacture, 10), 1);
+      await updateDoc(doc(db,'clients',clientId), { factures: arr });
+      renderFactureAdminList(arr);
+      showToast('Facture supprimée.');
+    });
+  });
+}
+
+document.getElementById('btn-add-facture').addEventListener('click', async () => {
+  const clientId = window._currentModalClientId;
+  if(!clientId) return;
+  const reference = document.getElementById('new-facture-ref').value.trim();
+  const montant = document.getElementById('new-facture-montant').value.trim();
+  const date = document.getElementById('new-facture-date').value;
+  const statut = document.getElementById('new-facture-statut').value;
+  if(!reference){ alert('Renseignez une référence.'); return; }
+  const data = await getClientData(clientId);
+  let arr = (data.factures || []).slice();
+  arr.push({ reference, montant, date, statut });
+  await updateDoc(doc(db,'clients',clientId), { factures: arr });
+  document.getElementById('new-facture-ref').value = '';
+  document.getElementById('new-facture-montant').value = '';
+  document.getElementById('new-facture-date').value = '';
+  renderFactureAdminList(arr);
+  showToast('Facture ajoutée.');
 });
 
 document.getElementById('btn-reset-pwd-stag').addEventListener('click', async () => {
