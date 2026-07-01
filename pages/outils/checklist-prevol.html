@@ -62,6 +62,15 @@ body{background:var(--light);color:#222;min-height:100vh;padding-top:80px;}
 .chk-check-icon{color:#22c55e;opacity:0;transform:scale(.5);transition:.2s;flex-shrink:0;}
 
 .chk-actions{display:flex;gap:10px;margin-top:26px;}
+
+.verdict-banner{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;border-radius:10px;margin-top:18px;font-family:var(--mono);border:1.5px solid;}
+.verdict-banner .dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+.verdict-banner .label{font-size:1.05rem;font-weight:800;letter-spacing:.04em;}
+.verdict-banner .sub{font-size:.72rem;font-weight:600;opacity:.75;margin-left:4px;}
+.verdict-banner.nogo{background:#fff2e0;border-color:#fcd9a8;color:#b45309;}
+.verdict-banner.nogo .dot{background:#f59e0b;box-shadow:0 0 8px rgba(245,158,11,.5);}
+.verdict-banner.go{background:#dcfce7;border-color:#bbf7d0;color:#15803d;}
+.verdict-banner.go .dot{background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.5);}
 .chk-btn{flex:1;font-size:.82rem;font-weight:700;padding:12px;border-radius:9px;border:1.5px solid #dde3ec;background:white;color:var(--secondary);cursor:pointer;transition:.15s;text-align:center;font-family:var(--mono);letter-spacing:.02em;}
 .chk-btn:hover{border-color:var(--secondary);}
 .chk-btn.primary{background:var(--secondary);color:white;border-color:var(--secondary);}
@@ -130,6 +139,11 @@ body{background:var(--light);color:#222;min-height:100vh;padding-top:80px;}
       </div>
       <div class="chk-body">
         <div id="chk-list"></div>
+        <div class="verdict-banner nogo" id="verdict-banner">
+          <span class="dot"></span>
+          <span class="label" id="verdict-label">NO-GO</span>
+          <span class="sub" id="verdict-sub">Vérifications incomplètes</span>
+        </div>
         <div class="chk-actions">
           <button class="chk-btn" id="btn-chk-reset">TOUT RÉINITIALISER</button>
         </div>
@@ -266,12 +280,23 @@ function renderChecklist(){
 
   const lamp = document.getElementById('status-lamp');
   const lampText = document.getElementById('status-lamp-text');
+  const banner = document.getElementById('verdict-banner');
+  const verdictLabel = document.getElementById('verdict-label');
+  const verdictSub = document.getElementById('verdict-sub');
   if(pct === 100){
     lamp.classList.add('go');
     lampText.textContent = 'PRÊT AU DÉCOLLAGE';
+    banner.classList.remove('nogo');
+    banner.classList.add('go');
+    verdictLabel.textContent = 'GO';
+    verdictSub.textContent = 'Toutes les vérifications sont validées';
   } else {
     lamp.classList.remove('go');
     lampText.textContent = 'EN COURS';
+    banner.classList.remove('go');
+    banner.classList.add('nogo');
+    verdictLabel.textContent = 'NO-GO';
+    verdictSub.textContent = (total - checked) + ' vérification' + (total-checked>1?'s':'') + ' restante' + (total-checked>1?'s':'');
   }
 
   list.querySelectorAll('input[type=checkbox]').forEach(cb => {
