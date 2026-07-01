@@ -67,5 +67,12 @@
   document.addEventListener('DOMContentLoaded', function () {
     loadPartial('/partials/header.html', 'header-placeholder', initHeaderBehavior);
     loadPartial('/partials/footer.html', 'footer-placeholder');
+
+    // Bandeau de consentement cookies (RGPD), chargé une seule fois sur toute page
+    if (!document.querySelector('script[src="/assets/cookies.js"]')) {
+      var cookieScript = document.createElement('script');
+      cookieScript.src = '/assets/cookies.js';
+      document.body.appendChild(cookieScript);
+    }
   });
 })();

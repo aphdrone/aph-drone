@@ -176,7 +176,7 @@
 
   window.openCookieSettings = openModal;
 
-  document.addEventListener('DOMContentLoaded', function(){
+  function init(){
     injectStyles();
     var consent = getConsent();
     if(consent === null){
@@ -186,5 +186,11 @@
       applyConsent(consent.tiers);
       if(!consent.tiers) blockThirdPartyEmbeds();
     }
-  });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
