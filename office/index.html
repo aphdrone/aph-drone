@@ -447,6 +447,10 @@ tr:last-child td{border-bottom:none;}
       </select>
     </div>
     <div class="f-group">
+      <label>Lieu</label>
+      <input type="text" id="edit-mission-lieu" placeholder="Ex : Luxeuil-les-Bains (70)">
+    </div>
+    <div class="f-group">
       <label>Date</label>
       <input type="date" id="edit-mission-date">
     </div>
@@ -457,6 +461,14 @@ tr:last-child td{border-bottom:none;}
         <option>En cours</option>
         <option>Terminée</option>
       </select>
+    </div>
+    <div class="f-group">
+      <label>Description / notes internes</label>
+      <textarea id="edit-mission-desc" rows="3" placeholder="Détails de la mission, contraintes, matériel utilisé..." style="width:100%;padding:10px 13px;border:1.5px solid #dde3ec;border-radius:8px;font-size:.86rem;font-family:'Inter',sans-serif;resize:vertical;outline:none;"></textarea>
+    </div>
+    <div class="f-group">
+      <label>Montant € HT (optionnel)</label>
+      <input type="number" id="edit-mission-montant" placeholder="Ex : 850">
     </div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal('modal-mission-edit')">Annuler</button>
@@ -768,7 +780,7 @@ function renderMissionAdminList(missions){
     row.innerHTML = `
       <div class="info">
         <div class="name">${m.nom}</div>
-        <div class="sub">${m.date ? new Date(m.date).toLocaleDateString('fr-FR') : ''} — ${m.statut}</div>
+        <div class="sub">${m.date ? new Date(m.date).toLocaleDateString('fr-FR') : ''}${m.lieu ? ' — '+m.lieu : ''} — ${m.statut}</div>
       </div>
       <button class="icon-btn" title="Modifier" data-edit-mission="${i}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
@@ -798,19 +810,28 @@ function openMissionEditModal(index){
   window._missionEditIndex = index;
   const titleEl = document.getElementById('mission-edit-title');
   const nomEl = document.getElementById('edit-mission-nom');
+  const lieuEl = document.getElementById('edit-mission-lieu');
   const dateEl = document.getElementById('edit-mission-date');
   const statutEl = document.getElementById('edit-mission-statut');
+  const descEl = document.getElementById('edit-mission-desc');
+  const montantEl = document.getElementById('edit-mission-montant');
   if(index === null){
     titleEl.textContent = 'Nouvelle mission';
     nomEl.value = '';
+    lieuEl.value = '';
     dateEl.value = '';
     statutEl.value = 'Planifiée';
+    descEl.value = '';
+    montantEl.value = '';
   } else {
     titleEl.textContent = 'Modifier la mission';
     const m = window._currentMissionsCache[index];
     nomEl.value = m.nom || '';
+    lieuEl.value = m.lieu || '';
     dateEl.value = m.date || '';
     statutEl.value = m.statut || 'Planifiée';
+    descEl.value = m.desc || '';
+    montantEl.value = m.montant || '';
   }
   openModal('modal-mission-edit');
 }
@@ -821,8 +842,11 @@ document.getElementById('btn-save-mission').addEventListener('click', async () =
   const clientId = window._currentModalClientId;
   if(!clientId) return;
   const nom = document.getElementById('edit-mission-nom').value.trim();
+  const lieu = document.getElementById('edit-mission-lieu').value.trim();
   const date = document.getElementById('edit-mission-date').value;
   const statut = document.getElementById('edit-mission-statut').value;
+  const desc = document.getElementById('edit-mission-desc').value.trim();
+  const montant = document.getElementById('edit-mission-montant').value.trim();
   if(!nom){
     const sel = document.getElementById('edit-mission-nom');
     sel.style.borderColor = '#dc2626';
@@ -833,10 +857,11 @@ document.getElementById('btn-save-mission').addEventListener('click', async () =
   }
   const data = await getClientData(clientId);
   let arr = (data.missions || []).slice();
+  const missionData = { nom, lieu, date, statut, desc, montant };
   if(window._missionEditIndex === null || window._missionEditIndex === undefined){
-    arr.push({ nom, date, statut });
+    arr.push(missionData);
   } else {
-    arr[window._missionEditIndex] = { nom, date, statut };
+    arr[window._missionEditIndex] = missionData;
   }
   await updateDoc(doc(db,'clients',clientId), { missions: arr });
   closeModal('modal-mission-edit');
