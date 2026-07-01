@@ -775,7 +775,14 @@ document.getElementById('btn-add-mission').addEventListener('click', async () =>
   const nom = document.getElementById('new-mission-nom').value.trim();
   const date = document.getElementById('new-mission-date').value;
   const statut = document.getElementById('new-mission-statut').value;
-  if(!nom){ alert('Renseignez le nom de la mission.'); return; }
+  if(!nom){
+    const sel = document.getElementById('new-mission-nom');
+    sel.style.borderColor = '#dc2626';
+    sel.focus();
+    showToast('Merci de choisir une prestation dans la liste avant d\'ajouter.');
+    setTimeout(() => { sel.style.borderColor = ''; }, 2500);
+    return;
+  }
   const data = await getClientData(clientId);
   let arr = (data.missions || []).slice();
   arr.push({ nom, date, statut });
